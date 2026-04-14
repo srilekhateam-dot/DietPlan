@@ -22,660 +22,245 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    line-height: 1.6;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
 
-  /* LANDING OVERVIEW */
-  .landing-overview {
-    background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 70%);
-    border-bottom: 1px solid var(--border);
-    padding: 52px 24px 36px;
-  }
-  .landing-inner {
-    max-width: 1000px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
-  }
-  .landing-badge {
-    display: inline-block;
-    background: var(--teal-light); color: var(--teal-dark);
-    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-    padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
-  }
-  .landing-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.7rem, 4vw, 2.4rem);
-    font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 14px;
-  }
+
+  
+  .landing-overview { background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 70%); border-bottom: 1px solid var(--border); padding: 52px 24px 36px; }
+  .landing-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .landing-badge { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+  .landing-title { font-family: 'Fraunces', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 14px; }
   .landing-title em { color: var(--teal); font-style: italic; }
   .landing-desc { color: #374151; font-size: 14.5px; line-height: 1.75; margin-bottom: 20px; }
   .landing-nutrients { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  .ln-chip {
-    padding: 6px 14px; border-radius: 50px;
-    background: var(--white); border: 1.5px solid var(--border);
-    font-size: 13px; font-weight: 500; color: var(--text);
-    text-decoration: none; transition: all 0.2s;
-  }
+  .ln-chip { padding: 6px 14px; border-radius: 50px; background: var(--white); border: 1.5px solid var(--border); font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none; transition: all 0.2s; }
   .ln-chip:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .landing-readmore {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: var(--teal); font-weight: 600; font-size: 14px;
-    text-decoration: none; border-bottom: 1.5px solid var(--teal);
-    padding-bottom: 2px;
-  }
-  .landing-cards {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-  }
-  .ln-card {
-    background: var(--white); border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); padding: 18px 14px; text-align: center;
-    transition: all 0.2s;
-  }
+  .landing-readmore { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1.5px solid var(--teal); padding-bottom: 2px; }
+  .landing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ln-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 18px 14px; text-align: center; transition: all 0.2s; }
   .ln-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,158,143,0.1); }
   .ln-card-icon { font-size: 1.8rem; margin-bottom: 6px; }
   .ln-card-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 3px; }
   .ln-card-sub { font-size: 11.5px; color: var(--muted); }
   .landing-cta-row { text-align: center; margin-top: 32px; }
-  .btn-get-started {
-    display: inline-block; background: var(--teal); color: #fff;
-    text-decoration: none; padding: 13px 36px; border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
-    transition: background 0.2s, transform 0.15s;
-  }
+  .btn-get-started { display: inline-block; background: var(--teal); color: #fff; text-decoration: none; padding: 13px 36px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; transition: background 0.2s, transform 0.15s; }
   .btn-get-started:hover { background: var(--teal-dark); transform: translateY(-1px); }
 
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 32px;
-    height: 60px;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-  }
-  .nav-brand {
-    font-family: 'Fraunces', serif;
-    font-size: 1.3rem;
-    color: var(--teal);
-    font-weight: 600;
-    letter-spacing: -0.5px;
-  }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+  .nav-brand { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--teal); font-weight: 600; letter-spacing: -0.5px; }
   .nav-brand span { color: var(--text); font-weight: 300; font-style: italic; }
   .nav-links { display: flex; gap: 6px; }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 13.5px;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 20px;
-    transition: all 0.2s;
-  }
-  .nav-links a:hover, .nav-links a.active {
-    background: var(--teal-light);
-    color: var(--teal);
-  }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 40px 24px 32px;
-    background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%);
-    border-bottom: 1px solid var(--border);
-  }
-  .hero h1 {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
+  .hero { text-align: center; padding: 40px 24px 32px; background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%); border-bottom: 1px solid var(--border); }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
   .hero h1 em { color: var(--teal); font-style: italic; }
   .hero p { color: var(--muted); max-width: 460px; margin: 0 auto; font-size: 14.5px; }
 
-  /* PROGRESS BAR */
-  .progress-wrap {
-    max-width: 1000px; margin: 0 auto 10px;
-    display: flex; gap: 8px; align-items: center;
-  }
-  .progress-step {
-    flex: 1; height: 4px; border-radius: 4px;
-    background: var(--border); transition: background 0.5s;
-  }
+  .progress-wrap { max-width: 1120px; margin: 0 auto 10px; display: flex; gap: 8px; align-items: center; }
+  .progress-step { flex: 1; height: 4px; border-radius: 4px; background: var(--border); transition: background 0.5s; }
   .progress-step.done { background: var(--teal); }
-  .progress-label {
-    font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px;
-    text-align: center; margin-bottom: 20px; text-transform: uppercase;
-    max-width: 1000px; margin-left: auto; margin-right: auto;
-  }
+  .progress-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-align: center; margin-bottom: 20px; text-transform: uppercase; max-width: 1120px; margin-left: auto; margin-right: auto; }
+  .progress-area { max-width: 1120px; margin: 0 auto; padding: 20px 24px 0; }
 
-  /* WRAPPER — matches landing overview width */
-  .page-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-  }
+  /* ── MAIN TWO-COLUMN LAYOUT ── */
+  .page-outer { max-width: 1120px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: 1fr 290px; gap: 24px; align-items: start; }
+  .form-column { min-width: 0; }
 
-  /* CARD */
-  .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--card-shadow);
-    padding: 32px;
-    margin-bottom: 28px;
-    border: 1px solid var(--border);
-  }
-  .step-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--teal);
-    margin-bottom: 6px;
-  }
-  .section-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 24px;
-  }
+  /* ── SIDEBAR ── */
+  .sidebar-column { position: relative; top: 120px; }
+  .hcb-sidebar { background: var(--white); border-radius: var(--radius); box-shadow: var(--card-shadow); border: 1px solid var(--border); padding: 24px 20px; }
+  .hcb-sidebar-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .hcb-sidebar-title { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .hcb-sidebar-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+  .hcb-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
+  .hcb-tab { padding: 6px 0; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; flex: 1; text-align: center; }
+  .hcb-tab.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .hcb-field-row { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 14px; }
+  .hcb-input-wrap { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .hcb-input-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .hcb-input { width: 100% !important; border: 1.5px solid var(--border) !important; border-radius: 8px !important; padding: 10px 8px !important; font-size: 15px !important; background: var(--bg) !important; text-align: center; box-shadow: none !important; font-family: 'DM Sans', sans-serif; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .hcb-input:focus { border-color: var(--teal) !important; box-shadow: 0 0 0 3px rgba(26,158,143,0.15) !important; background: var(--white) !important; }
+  .hcb-sep { font-size: 18px; color: var(--border); padding-bottom: 8px; flex-shrink: 0; }
+  .hcb-result-box { background: var(--teal-light); border: 1.5px solid #c8ede9; border-radius: var(--radius-sm); padding: 16px; text-align: center; margin-bottom: 14px; }
+  .hcb-result-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal-dark); margin-bottom: 8px; }
+  .hcb-result-val { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 600; color: var(--teal); line-height: 1; }
+  .hcb-result-unit { font-size: 12px; color: var(--teal-dark); font-weight: 600; margin-top: 3px; }
+  .hcb-use-btn { width: 100%; background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 11px 16px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'DM Sans', sans-serif; letter-spacing: 0.2px; }
+  .hcb-use-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+  .hcb-divider { height: 1px; background: var(--border); margin: 18px 0; }
+  .hcb-tip { font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 8px; padding: 10px 12px; line-height: 1.6; border: 1px solid var(--border); }
 
-  /* FORM GRID */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 32px; margin-bottom: 28px; border: 1px solid var(--border); }
+  .step-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 24px; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group.full { grid-column: 1 / -1; }
   .form-group label { font-size: 12.5px; font-weight: 600; color: var(--text); }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    background: var(--bg);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    width: 100%;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(26,158,143,0.12);
-    background: var(--white);
-  }
+  .form-group input, .form-group select, .form-group textarea { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white); }
   .form-group textarea { resize: vertical; min-height: 80px; }
 
-  /* PHONE INPUT with flag prefix */
-  .phone-input-wrap {
-    display: flex;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    background: var(--bg);
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .phone-input-wrap:focus-within {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(26,158,143,0.12);
-    background: var(--white);
-  }
-  .phone-prefix {
-    display: flex; align-items: center; gap: 6px;
-    padding: 10px 12px;
-    background: #f0f2f4;
-    border-right: 1.5px solid var(--border);
-    font-size: 13px; font-weight: 600; color: var(--text);
-    white-space: nowrap;
-    user-select: none;
-  }
-  .phone-input-wrap input {
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    flex: 1;
-  }
-  .phone-input-wrap input:focus { box-shadow: none !important; background: transparent !important; }
-  .phone-privacy {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 11.5px; color: var(--muted);
-    margin-top: 5px;
-    padding: 5px 10px;
-    background: #f0faf9;
-    border-radius: 6px;
-    border: 1px solid #c8ede9;
-  }
-  .phone-privacy svg { flex-shrink: 0; }
+  /* ── PHONE ── */
+  .phone-input-wrap { display: flex; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; }
+  .phone-input-wrap:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white); }
+  .phone-prefix { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: #f0f2f4; border-right: 1.5px solid var(--border); font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; user-select: none; }
+  .phone-input-wrap input { border: none !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; flex: 1; }
+  /* .contact-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 5px; padding: 5px 10px; background: #f0faf9; border-radius: 6px; border: 1px solid #c8ede9; } */
+  .contact-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: #f0faf9;
+  border-radius: 6px;
+  border: 1px solid #c8ede9;
 
-  /* BUTTONS */
-  .btn-primary {
-    background: var(--teal);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 13px 32px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    display: block;
-    width: 100%;
-    margin-top: 24px;
-  }
+  width: 100%;
+  grid-column: 1 / -1;
+}
+  /* ── CONTACT ROW: phone + email side by side ── */
+  .contact-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+  .btn-primary { background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; display: block; width: 100%; margin-top: 24px; }
   .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-secondary {
-    background: var(--bg);
-    color: var(--muted);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 32px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    width: 100%;
-    margin-top: 10px;
-  }
+  .btn-secondary { background: var(--bg); color: var(--muted); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 10px; }
   .btn-secondary:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
 
-  /* RESULTS */
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 6px;
-  }
-  .metric-card {
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 20px 16px;
-    text-align: center;
-    border: 1px solid var(--border);
-  }
-  .metric-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
-  }
-  .metric-value {
-    font-family: 'Fraunces', serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--teal);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  /* ── RESULTS / BMI BAR ── */
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 6px; }
+  .metric-card { background: var(--bg); border-radius: var(--radius-sm); padding: 20px 16px; text-align: center; border: 1px solid var(--border); }
+  .metric-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .metric-value { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; }
   .metric-sub { font-size: 12px; color: var(--muted); }
 
-  /* BMI BAR */
-  .bmi-bar-wrap { margin-top: 10px; }
-  .bmi-bar {
-    height: 8px; border-radius: 4px;
-    background: linear-gradient(to right, #60d394, #f4d03f, #e67e22, #e74c3c);
-    position: relative; margin-bottom: 4px;
+  .bmi-bar-wrap { margin-top: 14px; }
+  .bmi-bar-track {
+    position: relative; height: 10px; border-radius: 6px; margin-bottom: 6px; overflow: visible;
+    background: linear-gradient(to right, #5bc8f5 0% 23%, #60d394 23% 50%, #f4a742 50% 75%, #e74c3c 75% 100%);
   }
-  .bmi-marker {
-    position: absolute; top: -3px;
-    width: 14px; height: 14px;
-    border-radius: 50%; background: var(--white);
-    border: 2.5px solid var(--teal);
-    transform: translateX(-50%);
-    transition: left 0.8s cubic-bezier(.4,0,.2,1);
-  }
-  .bmi-labels {
-    display: flex; justify-content: space-between;
-    font-size: 10px; color: var(--muted);
-  }
+  .bmi-marker-pin { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: var(--white); border: 3px solid #1c2230; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: left 0.8s cubic-bezier(.4,0,.2,1), border-color 0.4s; z-index: 2; }
+  .bmi-zones { display: flex; font-size: 9.5px; margin-top: 2px; }
+  .bmi-zone { flex: 1; text-align: center; font-weight: 600; }
+  .bmi-zone:first-child { text-align: left; }
+  .bmi-zone:last-child { text-align: right; }
+  .bmi-cat-label { margin-top: 6px; font-size: 12px; font-weight: 700; text-align: center; }
 
-  /* TOGGLE CHIPS */
+  /* ── CHIPS ── */
   .chip-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .chip {
-    padding: 8px 18px;
-    border-radius: 50px;
-    border: 1.5px solid var(--border);
-    background: var(--bg);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.2s;
-    user-select: none;
-  }
+  .chip { padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
   .chip:hover { border-color: var(--teal); color: var(--teal); }
   .chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
 
-  /* ACCORDION */
-  .accordion-item {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    margin-bottom: 12px;
-    overflow: hidden;
-  }
-  .accordion-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 20px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14.5px;
-    background: var(--bg);
-    transition: background 0.2s;
-    user-select: none;
-  }
+  .time-chip-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .time-chip { padding: 10px 20px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; display: flex; align-items: center; gap: 7px; }
+  .time-chip:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+  .time-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .tc-hrs { font-size: 11px; opacity: 0.7; }
+  .time-chip-hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+
+  /* ── ACCORDION ── */
+  .accordion-item { border: 1.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden; }
+  .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 14.5px; background: var(--bg); transition: background 0.2s; user-select: none; }
   .accordion-header:hover { background: var(--teal-light); }
-  .accordion-header .chevron {
-    transition: transform 0.3s;
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .accordion-header .chevron { transition: transform 0.3s; font-size: 12px; color: var(--muted); }
   .accordion-header.open .chevron { transform: rotate(180deg); }
-  .accordion-body {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s;
-    padding: 0 20px;
-    background: var(--white);
-  }
+  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 20px; background: var(--white); }
   .accordion-body.open { max-height: 500px; padding: 18px 20px; }
 
-  /* YES/NO toggle */
   .yn-toggle { display: flex; gap: 10px; margin: 10px 0 14px; }
-  .yn-btn {
-    padding: 7px 22px;
-    border-radius: 50px;
-    border: 1.5px solid var(--border);
-    background: var(--bg);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
+  .yn-btn { padding: 7px 22px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
   .yn-btn.yes.active { background: var(--teal); border-color: var(--teal); color: #fff; }
   .yn-btn.no.active { background: #f44336; border-color: #f44336; color: #fff; }
 
-  /* HEALTH CONDITIONS DROPDOWN */
-  .health-conditions-wrap {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .health-conditions-wrap:focus-within { border-color: var(--teal); }
-  .health-dd-trigger {
-    padding: 10px 14px;
-    cursor: pointer;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 14px; color: var(--muted);
-    user-select: none;
-    background: var(--bg);
-    transition: background 0.2s;
-  }
+  .health-conditions-wrap { border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); overflow: hidden; }
+  .health-dd-trigger { padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--muted); user-select: none; }
   .health-dd-trigger:hover { background: var(--teal-light); color: var(--teal); }
-  .health-dd-list {
-    display: none;
-    border-top: 1.5px solid var(--border);
-    background: var(--white);
-    max-height: 260px;
-    overflow-y: auto;
-    padding: 6px 0;
-  }
+  .health-dd-list { display: none; border-top: 1.5px solid var(--border); background: var(--white); max-height: 260px; overflow-y: auto; padding: 6px 0; }
   .health-dd-list.open { display: block; }
-  .health-option {
-    padding: 10px 16px;
-    font-size: 13.5px;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 10px;
-    transition: background 0.15s;
-  }
+  .health-option { padding: 10px 16px; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.15s; }
   .health-option:hover { background: var(--teal-light); }
-  .health-option input[type="checkbox"] {
-    accent-color: var(--teal); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer;
-  }
-  .health-option-other-input {
-    margin: 0 16px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    color: var(--text);
-    background: var(--bg);
-    outline: none;
-    width: calc(100% - 32px);
-    display: none;
-    transition: border-color 0.2s;
-  }
+  .health-option input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+  .health-option-other-input { margin: 0 16px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: var(--bg); outline: none; width: calc(100% - 32px); display: none; }
   .health-option-other-input:focus { border-color: var(--teal); background: var(--white); }
   .selected-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .tag {
-    background: var(--teal-light); color: var(--teal-dark);
-    border-radius: 20px; padding: 3px 10px 3px 12px;
-    font-size: 12px; font-weight: 600;
-    display: flex; align-items: center; gap: 5px;
-  }
+  .tag { background: var(--teal-light); color: var(--teal-dark); border-radius: 20px; padding: 3px 10px 3px 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
   .tag-x { cursor: pointer; font-weight: 700; color: var(--teal); }
 
-  /* TIME RANGE — 12hr format */
-  .time-range { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
-  .time-select-wrap {
-    display: flex; align-items: center; gap: 4px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .time-select-wrap:focus-within {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(26,158,143,0.12);
-  }
-  .time-select-wrap select {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 9px 8px !important;
-    font-size: 14px;
-    width: auto;
-  }
-  .time-sep {
-    font-weight: 700; font-size: 16px; color: var(--muted);
-    padding: 0 4px;
-  }
-  .time-ampm {
-    background: var(--teal-light);
-    padding: 9px 10px;
-    font-size: 12px; font-weight: 700; color: var(--teal-dark);
-    border-left: 1.5px solid var(--border);
-  }
-  .time-range span { color: var(--muted); font-size: 13px; }
+  /* .hidden-section { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; display: none; }
+  .hidden-section.revealed { opacity: 1; transform: translateY(0); pointer-events: all; display: block; } */
 
-  /* MULTI SELECT DROPDOWN */
-  .multi-dropdown-wrap { position: relative; }
-  .multi-dropdown-trigger {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    background: var(--bg);
-    cursor: pointer;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 14px; color: var(--muted);
-    transition: border-color 0.2s;
-    user-select: none;
-  }
-  .multi-dropdown-trigger:hover { border-color: var(--teal); }
-  .multi-dropdown-menu {
-    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    z-index: 200;
-    display: none;
-    max-height: 240px; overflow-y: auto;
-    padding: 6px 0;
-    width: 100%;
-  }
-  .multi-dropdown-menu.open { display: block; }
-  .multi-option {
-    padding: 10px 16px;
-    font-size: 13.5px;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 10px;
-    transition: background 0.15s;
-    width: 100%;
-  }
-  .multi-option:hover { background: var(--teal-light); }
-  .multi-option input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
-  .multi-option span { line-height: 1.4; }
-
-  /* HIDDEN SECTIONS */
-  .hidden-section {
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-    display: none;
-  }
-  .hidden-section.revealed {
-    opacity: 1; transform: translateY(0);
-    pointer-events: all;
-    display: block;
-  }
-
-  /* FORM ROW */
-  .form-row { display: flex; gap: 14px; margin-top: 14px; }
-  .form-row .form-group { flex: 1; }
-
-  /* SUBSECTION LABEL */
-  .sub-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
-
-  /* VALIDATION */
   .error-msg { font-size: 11.5px; color: #e74c3c; margin-top: 3px; display: none; }
-  .form-group.has-error input,
-  .form-group.has-error select { border-color: #e74c3c; }
+  .form-group.has-error input, .form-group.has-error select { border-color: #e74c3c; }
   .form-group.has-error .error-msg { display: block; }
 
-  /* SUBMIT ROW */
   .submit-row { display: flex; gap: 14px; margin-top: 24px; }
   .submit-row .btn-primary, .submit-row .btn-secondary { margin: 0; }
 
-  /* READ MORE LINK */
-  .read-more-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: var(--teal); font-weight: 600; font-size: 13.5px;
-    text-decoration: none; margin-top: 10px;
-    padding: 6px 0;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color 0.2s;
-  }
+  .read-more-link { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 13.5px; text-decoration: none; margin-top: 10px; padding: 6px 0; border-bottom: 1.5px solid transparent; transition: border-color 0.2s; }
   .read-more-link:hover { border-color: var(--teal); }
 
-  /* CONSENT CHECKBOX */
-  .consent-box {
-    display: flex; align-items: flex-start; gap: 12px;
-    background: #f0faf9;
-    border: 1.5px solid #c8ede9;
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  .consent-box input[type="checkbox"] {
-    accent-color: var(--teal);
-    width: 17px; height: 17px;
-    flex-shrink: 0;
-    margin-top: 2px;
-    cursor: pointer;
-  }
-  .consent-box label {
-    font-size: 13px; color: #374151; line-height: 1.5;
-    cursor: pointer;
-  }
+  .consent-box { display: flex; align-items: flex-start; gap: 12px; background: #f0faf9; border: 1.5px solid #c8ede9; border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 20px; cursor: pointer; }
+  .consent-box input[type="checkbox"] { accent-color: var(--teal); width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+  .consent-box label { font-size: 13px; color: #374151; line-height: 1.5; cursor: pointer; }
   .consent-box label strong { color: var(--teal-dark); }
-  .consent-box .whatsapp-icon {
-    color: #25D366; font-weight: 700;
-  }
+  .whatsapp-icon { color: #25D366; font-weight: 700; }
 
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    nav { padding: 0 16px; }
-    .nav-links a { padding: 6px 10px; font-size: 12.5px; }
-    .card { padding: 22px 16px; }
-    .form-grid { grid-template-columns: 1fr; }
-    .results-grid { grid-template-columns: 1fr; }
-    .form-row { flex-direction: column; }
-    .submit-row { flex-direction: column; }
-    .landing-inner { grid-template-columns: 1fr; gap: 24px; }
-    .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .ln-card { padding: 12px 8px; }
-    .ln-card-icon { font-size: 1.4rem; }
-    .page-wrap { padding: 0 16px 80px; }
-  }
+  .section-divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .sub-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
+  .sub-chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sub-chip { padding: 6px 14px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
+  .sub-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .drink-options { margin-top: 10px; }
+  .meals-select { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; width: 100%; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  .meals-select:focus { border-color: var(--teal); }
 
-  /* FADE IN animation for page load */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   .card { animation: fadeUp 0.4s ease both; }
   .card:nth-child(2) { animation-delay: 0.05s; }
   .card:nth-child(3) { animation-delay: 0.1s; }
 
-  /* MEALS SELECT */
-  .meals-select {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    background: var(--bg);
-    outline: none;
-    width: 100%;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
+  @media (max-width: 820px) {
+    .page-outer { grid-template-columns: 1fr; }
+    .sidebar-column { position: static; order: -1; }
+    nav { padding: 0 16px; }
+    .card { padding: 22px 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .contact-row { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .submit-row { flex-direction: column; }
+    .landing-inner { grid-template-columns: 1fr; gap: 24px; }
+    .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .ln-card { padding: 12px 8px; }
   }
-  .meals-select:focus { border-color: var(--teal); }
+/* MAKE RESULTS + STEPS 2-4 WIDER */
+.wide-card {
+  width: calc(118% + 180px);
+  /* margin-left: 8px; */
+  padding: 25px 25px;
+}
 
-  .section-divider { height: 1px; background: var(--border); margin: 24px 0; }
 
-  /* DRINK OPTIONS sub-section */
-  .drink-options { margin-top: 10px; }
-  .sub-chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
-  .sub-chip {
-    padding: 6px 14px;
-    border-radius: 50px;
-    border: 1.5px solid var(--border);
-    background: var(--bg);
-    font-size: 12.5px; font-weight: 500; color: var(--text);
-    cursor: pointer; transition: all 0.2s; user-select: none;
-  }
-  .sub-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+#female-extra-row .form-group input,
+#female-extra-row .form-group select {
+  width: 100%;
+}
 
-  /* PROGRESS AREA */
-  .progress-area {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px 24px 0;
-  }
+.hcb-input::placeholder {
+  color: #c6cbd2;   /* light grey */
+  opacity: 2;       /* ensures full visibility */
+}
+
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="topnav">
   <div class="nav-brand">Nutri<span>Plan</span></div>
   <div class="nav-links">
@@ -686,7 +271,6 @@
   </div>
 </nav>
 
-<!-- NUTRITION OVERVIEW LANDING -->
 <section class="landing-overview" id="nutrition-overview">
   <div class="landing-inner">
     <div class="landing-text">
@@ -703,36 +287,12 @@
       <a href="education.html" class="landing-readmore">Read full Nutrition Guide →</a>
     </div>
     <div class="landing-cards">
-      <div class="ln-card">
-        <div class="ln-card-icon">🌾</div>
-        <div class="ln-card-name">Carbohydrates</div>
-        <div class="ln-card-sub">Primary energy source</div>
-      </div>
-      <div class="ln-card">
-        <div class="ln-card-icon">🥩</div>
-        <div class="ln-card-name">Proteins</div>
-        <div class="ln-card-sub">Build & repair tissues</div>
-      </div>
-      <div class="ln-card">
-        <div class="ln-card-icon">🥑</div>
-        <div class="ln-card-name">Fats</div>
-        <div class="ln-card-sub">Stored energy & hormones</div>
-      </div>
-      <div class="ln-card">
-        <div class="ln-card-icon">🍊</div>
-        <div class="ln-card-name">Vitamins</div>
-        <div class="ln-card-sub">Regulate body processes</div>
-      </div>
-      <div class="ln-card">
-        <div class="ln-card-icon">⚡</div>
-        <div class="ln-card-name">Minerals</div>
-        <div class="ln-card-sub">Bone & nerve support</div>
-      </div>
-      <div class="ln-card">
-        <div class="ln-card-icon">💧</div>
-        <div class="ln-card-name">Water</div>
-        <div class="ln-card-sub">Hydration & digestion</div>
-      </div>
+      <div class="ln-card"><div class="ln-card-icon">🌾</div><div class="ln-card-name">Carbohydrates</div><div class="ln-card-sub">Primary energy source</div></div>
+      <div class="ln-card"><div class="ln-card-icon">🥩</div><div class="ln-card-name">Proteins</div><div class="ln-card-sub">Build & repair tissues</div></div>
+      <div class="ln-card"><div class="ln-card-icon">🥑</div><div class="ln-card-name">Fats</div><div class="ln-card-sub">Stored energy & hormones</div></div>
+      <div class="ln-card"><div class="ln-card-icon">🍊</div><div class="ln-card-name">Vitamins</div><div class="ln-card-sub">Regulate body processes</div></div>
+      <div class="ln-card"><div class="ln-card-icon">⚡</div><div class="ln-card-name">Minerals</div><div class="ln-card-sub">Bone & nerve support</div></div>
+      <div class="ln-card"><div class="ln-card-icon">💧</div><div class="ln-card-name">Water</div><div class="ln-card-sub">Hydration & digestion</div></div>
     </div>
   </div>
   <div class="landing-cta-row">
@@ -740,13 +300,11 @@
   </div>
 </section>
 
-<!-- HERO -->
 <section class="hero">
   <h1>Build Your <em>Personalized</em><br/>Diet Plan</h1>
   <p>Enter your body metrics and lifestyle details to receive a tailored nutrition plan crafted for your goals.</p>
 </section>
 
-<!-- PROGRESS AREA (full width matching landing) -->
 <div class="progress-area" id="form-section">
   <div class="progress-label" id="progress-label">Step 1 of 4 — Your Body Metrics</div>
   <div class="progress-wrap" id="progress-wrap">
@@ -757,740 +315,608 @@
   </div>
 </div>
 
-<div class="page-wrap">
+<div class="page-outer">
 
-  <!-- STEP 1: USER INFO -->
-  <div class="card">
-    <div class="step-label">Step 1</div>
-    <div class="section-title">Tell Us About Yourself</div>
+  <!-- MAIN FORM COLUMN -->
+  <div class="form-column">
 
-    <div class="form-grid">
-      <div class="form-group" id="fg-name">
-        <label>Name</label>
-        <input type="text" id="inp-name" placeholder="John Doe"/>
-        <span class="error-msg">Please enter your name</span>
-      </div>
-      <div class="form-group" id="fg-age">
-        <label>Age</label>
-        <input type="number" id="inp-age" placeholder="30" min="10" max="100"/>
-        <span class="error-msg">Please enter a valid age</span>
-      </div>
-      <div class="form-group" id="fg-gender">
-        <label>Gender</label>
-        <select id="inp-gender">
-          <option value="">Select Gender</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-        <span class="error-msg">Please select gender</span>
-      </div>
-      <div class="form-group" id="fg-height">
-        <label>Height (cm)</label>
-        <input type="number" id="inp-height" placeholder="170" min="100" max="250"/>
-        <span class="error-msg">Please enter height</span>
-      </div>
-      <div class="form-group" id="fg-weight">
-        <label>Weight (kg)</label>
-        <input type="number" id="inp-weight" placeholder="70" min="20" max="300"/>
-        <span class="error-msg">Please enter weight</span>
-      </div>
-      <div class="form-group" id="fg-activity">
-        <label>Activity Level</label>
-        <select id="inp-activity">
-          <option value="">Select Activity Level</option>
-          <option value="1.2">Sedentary (no exercise)</option>
-          <option value="1.375">Lightly active (1–3 days/wk)</option>
-          <option value="1.55">Moderately active (3–5 days/wk)</option>
-          <option value="1.725">Very active (6–7 days/wk)</option>
-          <option value="1.9">Super active (athlete/physical job)</option>
-        </select>
-        <span class="error-msg">Please select activity level</span>
-      </div>
-      <div class="form-group" id="fg-waist">
-        <label>Waist (cm)</label>
-        <input type="number" id="inp-waist" placeholder="80" min="40" max="200"/>
-        <span class="error-msg">Required</span>
-      </div>
-      <div class="form-group" id="fg-hip">
-        <label>Hip (cm)</label>
-        <input type="number" id="inp-hip" placeholder="95" min="40" max="200"/>
-        <span class="error-msg">Required</span>
-      </div>
-      <div class="form-group full" id="fg-neck">
-        <label>Neck (cm)</label>
-        <input type="number" id="inp-neck" placeholder="38" min="20" max="80" style="max-width:280px;"/>
-        <span class="error-msg">Required</span>
-      </div>
+    <!-- STEP 1 -->
+    <div class="card">
+      <div class="step-label">Step 1</div>
+      <div class="section-title">Tell Us About Yourself</div>
 
-      <!-- Phone number -->
-      <div class="form-group full">
-        <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
-        <div class="phone-input-wrap">
-          <div class="phone-prefix">
-            <span>🇮🇳</span>
-            <span>+91</span>
-          </div>
-          <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10"/>
+      <div class="form-grid">
+        <div class="form-group" id="fg-name">
+          <label>Name</label>
+          <input type="text" id="inp-name" placeholder="John Doe"/>
+          <span class="error-msg">Please enter your name</span>
         </div>
-        <div class="phone-privacy">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          Your number is private — we will never share or disclose it to any third party.
+        <div class="form-group" id="fg-age">
+          <label>Age</label>
+          <input type="number" id="inp-age" placeholder="30" min="10" max="100"/>
+          <span class="error-msg">Please enter a valid age</span>
         </div>
-      </div>
-    </div>
-
-    <button class="btn-primary" onclick="generateResult()">Generate Result →</button>
-  </div>
-
-  <!-- RESULTS (hidden initially) -->
-  <div class="card hidden-section" id="results-section">
-    <div class="step-label">Your Result</div>
-    <div class="section-title">Your Body Metrics</div>
-
-    <div class="results-grid">
-      <div class="metric-card">
-        <div class="metric-label">Body Mass Index</div>
-        <div class="metric-value" id="r-bmi">—</div>
-        <div class="metric-sub" id="r-bmi-cat">—</div>
-        <div class="bmi-bar-wrap">
-          <div class="bmi-bar"><div class="bmi-marker" id="bmi-marker" style="left:50%"></div></div>
-          <div class="bmi-labels"><span>Underweight</span><span>Normal</span><span>Obese</span></div>
+        <div class="form-group" id="fg-gender">
+          <label>Gender</label>
+          <select id="inp-gender">
+            <option value="">Select Gender</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+          <span class="error-msg">Please select gender</span>
         </div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Body Fat %</div>
-        <div class="metric-value" id="r-fat">—</div>
-        <div class="metric-sub" id="r-fat-cat">—</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Daily Calories</div>
-        <div class="metric-value" id="r-cal">—</div>
-        <div class="metric-sub">kcal / day</div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-      <p style="font-size:13px;color:var(--muted);">Want to understand more about these metrics?</p>
-      <a href="education.html" class="read-more-link">Read more about Nutrition & Nutrients →</a>
-    </div>
-  </div>
-
-  <!-- STEP 2: HEALTH (hidden initially) -->
-  <div class="card hidden-section" id="health-section">
-    <div class="step-label">Step 2</div>
-    <div class="section-title">Your Health</div>
-
-    <div class="form-group">
-      <label>Health Conditions</label>
-      <div class="health-conditions-wrap">
-        <div class="health-dd-trigger" onclick="toggleHealthDD()">
-          <span id="health-dd-placeholder">Select conditions (click to expand)</span>
-          <span id="health-dd-arrow">▾</span>
+        <div class="form-group" id="fg-height">
+          <label>Height (cm)</label>
+          <input type="number" id="inp-height" placeholder="170" min="100" max="250"/>
+          <span class="error-msg">Please enter height (100–250 cm)</span>
         </div>
-        <div class="health-dd-list" id="health-dd-list">
-          <label class="health-option"><input type="checkbox" value="Diabetes" onchange="handleCondition(this)"/><span>Diabetes</span></label>
-          <label class="health-option"><input type="checkbox" value="Hypertension" onchange="handleCondition(this)"/><span>Hypertension</span></label>
-          <label class="health-option"><input type="checkbox" value="PCOS/PCOD" onchange="handleCondition(this)"/><span>PCOS/PCOD</span></label>
-          <label class="health-option"><input type="checkbox" value="Thyroid" onchange="handleCondition(this)"/><span>Thyroid Disorder</span></label>
-          <label class="health-option"><input type="checkbox" value="High Cholesterol" onchange="handleCondition(this)"/><span>High Cholesterol</span></label>
-          <label class="health-option"><input type="checkbox" value="Anemia" onchange="handleCondition(this)"/><span>Anemia</span></label>
-          <label class="health-option"><input type="checkbox" value="IBS" onchange="handleCondition(this)"/><span>IBS / Gut Issues</span></label>
-          <label class="health-option"><input type="checkbox" value="None" onchange="handleCondition(this)"/><span>None</span></label>
-          <label class="health-option" id="other-condition-option">
-            <input type="checkbox" value="Other" onchange="handleCondition(this); toggleOtherInput(this)"/>
-            <span>Other (specify below)</span>
-          </label>
-          <input type="text" class="health-option-other-input" id="other-condition-input" placeholder="e.g. Kidney stones, Migraine..." oninput="updateOtherCondition(this)"/>
+        <div class="form-group" id="fg-weight">
+          <label>Weight (kg)</label>
+          <input type="number" id="inp-weight" placeholder="70" min="20" max="300"/>
+          <span class="error-msg">Please enter weight</span>
         </div>
-      </div>
-      <div class="selected-tags" id="conditions-tags"></div>
-    </div>
+        <div class="form-group" id="fg-activity">
+          <label>Activity Level</label>
+          <select id="inp-activity">
+            <option value="">Select Activity Level</option>
+            <option value="1.2">Sedentary (no exercise)</option>
+            <option value="1.375">Lightly active (1–3 days/wk)</option>
+            <option value="1.55">Moderately active (3–5 days/wk)</option>
+            <option value="1.725">Very active (6–7 days/wk)</option>
+            <option value="1.9">Super active (athlete/physical job)</option>
+          </select>
+          <span class="error-msg">Please select activity level</span>
+        </div>
+        <!-- <div class="form-group" id="fg-waist">
+          <label>Waist (cm)</label>
+          <input type="number" id="inp-waist" placeholder="80" min="40" max="200"/>
+          <span class="error-msg">Required</span>
+        </div>
+        <div class="form-group" id="fg-hip">
+          <label>Hip (cm)</label>
+          <input type="number" id="inp-hip" placeholder="95" min="40" max="200"/>
+          <span class="error-msg">Required</span>
+        </div>
+        <div class="form-group full" id="fg-neck">
+          <label>Neck (cm)</label>
+          <input type="number" id="inp-neck" placeholder="38" min="20" max="80" style="max-width:280px;"/>
+          <span class="error-msg">Required</span>
+        </div> -->
 
-    <div class="form-group" style="margin-top:18px;">
-      <label>Allergies</label>
-      <input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..."/>
-    </div>
-  </div>
+        <div class="form-group" id="fg-waist">
+  <label>Waist (cm)</label>
+  <input type="number" id="inp-waist" placeholder="80"/>
+</div>
 
-  <!-- STEP 3: DIET PREFERENCES (hidden initially) -->
-  <div class="card hidden-section" id="prefs-section">
-    <div class="step-label">Step 3</div>
-    <div class="section-title">Your Diet Preferences</div>
+<!-- NEW ROW -->
+<div class="form-group" id="fg-neck">
+  <label>Neck (cm)</label>
+  <input type="number" id="inp-neck" placeholder="38"/>
+</div>
 
-
-      <div class="form-group" style="margin-top:18px;">
-      <label>Diet Preferences</label>
-      <select class="diet-select" id="inp-diet">
-        <option value="">Select type of Diet</option>
-        <option>Vegeterian</option><option>Non Vegetarian</option><option>Eggeterian</option>
-      </select>
-    </div>
-
-    <div class="form-group"style="margin-top:18px;">
-      <label>Meals Per Day</label>
-      <select class="meals-select" id="inp-meals">
-        <option value="">Select number</option>
-        <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-      </select>
-    </div>
-
-
+<!-- FEMALE ONLY ROW -->
+<div id="female-extra-row" class="form-group full" style="display:none;">
+  
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%;">
     
-    <div class="form-group" style="margin-top:18px;">
-      <label>Type of Meal</label>
-      <div class="chip-group" id="meal-types">
-        <div class="chip" onclick="toggleChip(this)">Breakfast</div>
-        <div class="chip" onclick="toggleChip(this)">Mid Morning</div>
-        <div class="chip" onclick="toggleChip(this)">Lunch</div>
-        <div class="chip" onclick="toggleChip(this)">Evening Snacks</div>
-        <div class="chip" onclick="toggleChip(this)">Dinner</div>
+    <div class="form-group">
+      <label>Hip (cm)</label>
+      <input type="number" id="inp-hip" placeholder="95"/>
+    </div>
+
+    <div class="form-group">
+      <label>Pregnant/Lactating</label>
+      <select id="inp-preg">
+        <option value="">Select</option>
+         <option>No</option>
+        <option>Pregnant</option>
+        <option>Lactating</option>
+      </select>
+    </div>
+
+  </div>
+
+</div>
+
+        <!-- PHONE + EMAIL side by side -->
+     <div class="contact-row">
+  <div class="form-group">
+    <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+    <div class="phone-input-wrap">
+      <div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div>
+      <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+    <input type="email" id="inp-email" placeholder="you@example.com"/>
+  </div>
+</div>
+
+<!-- ✅ ONE COMBINED PRIVACY -->
+<div class="contact-hint">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </svg>
+  Your phone number and email are private — we will never share or disclose them to any third party.
+</div>
+      </div>
+
+      <button class="btn-primary" onclick="generateResult()">Generate Result →</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="card hidden-section wide-card" id="results-section">
+      <div class="step-label">Your Result</div>
+      <div class="section-title">Your Body Metrics</div>
+      <div class="results-grid">
+        <div class="metric-card">
+          <div class="metric-label">Body Mass Index</div>
+          <div class="metric-value" id="r-bmi">—</div>
+          <div class="metric-sub" id="r-bmi-cat">—</div>
+          <div class="bmi-bar-wrap">
+            <div class="bmi-bar-track">
+              <div class="bmi-marker-pin" id="bmi-marker" style="left:50%"></div>
+            </div>
+            <div class="bmi-zones">
+              <span class="bmi-zone" style="color:#5bc8f5;">Under</span>
+              <span class="bmi-zone" style="color:#60d394;">Normal</span>
+              <span class="bmi-zone" style="color:#f4a742;">Over</span>
+              <span class="bmi-zone" style="color:#e74c3c;">Obese</span>
+            </div>
+            <div class="bmi-cat-label" id="bmi-cat-label"></div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Body Fat %</div>
+          <div class="metric-value" id="r-fat">—</div>
+          <div class="metric-sub" id="r-fat-cat">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Daily Calories</div>
+          <div class="metric-value" id="r-cal">—</div>
+          <div class="metric-sub">kcal / day</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <p style="font-size:13px;color:var(--muted);">Want to understand more about these metrics?</p>
+        <a href="education.html" class="read-more-link">Read more about Nutrition & Nutrients →</a>
       </div>
     </div>
 
-    <div class="form-group" style="margin-top:18px;">
-      <label>Eating Time Window</label>
-      <div class="time-range">
-        <!-- Start time -->
-        <div class="time-select-wrap">
-          <select id="start-hr" onchange="updateTimeDisplay()">
-            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8" selected>8</option><option value="9">9</option>
-            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
-          </select>
-          <span class="time-sep">:</span>
-          <select id="start-min" onchange="updateTimeDisplay()">
-            <option value="00" selected>00</option><option value="15">15</option>
-            <option value="30">30</option><option value="45">45</option>
-          </select>
-          <select id="start-ampm" onchange="updateTimeDisplay()" style="border-left:1.5px solid var(--border);padding:9px 8px;background:var(--teal-light);font-size:12px;font-weight:700;color:var(--teal-dark);">
-            <option value="AM" selected>AM</option><option value="PM">PM</option>
-          </select>
+    <!-- STEP 2 -->
+    <div class="card hidden-section wide-card" id="health-section">
+      <div class="step-label">Step 2</div>
+      <div class="section-title">Your Health</div>
+      <div class="form-group">
+        <label>Health Conditions</label>
+        <div class="health-conditions-wrap">
+          <div class="health-dd-trigger" onclick="toggleHealthDD()">
+            <span id="health-dd-placeholder">Select conditions (click to expand)</span>
+            <span id="health-dd-arrow">▾</span>
+          </div>
+          <div class="health-dd-list" id="health-dd-list">
+            <label class="health-option"><input type="checkbox" value="Diabetes" onchange="handleCondition(this)"/><span>Diabetes</span></label>
+            <label class="health-option"><input type="checkbox" value="Hypertension" onchange="handleCondition(this)"/><span>Hypertension</span></label>
+            <label class="health-option"><input type="checkbox" value="PCOS/PCOD" onchange="handleCondition(this)"/><span>PCOS/PCOD</span></label>
+            <label class="health-option"><input type="checkbox" value="Thyroid" onchange="handleCondition(this)"/><span>Thyroid Disorder</span></label>
+            <label class="health-option"><input type="checkbox" value="High Cholesterol" onchange="handleCondition(this)"/><span>High Cholesterol</span></label>
+            <label class="health-option"><input type="checkbox" value="Anemia" onchange="handleCondition(this)"/><span>Anemia</span></label>
+            <label class="health-option"><input type="checkbox" value="IBS" onchange="handleCondition(this)"/><span>IBS / Gut Issues</span></label>
+            <label class="health-option"><input type="checkbox" value="None" onchange="handleCondition(this)"/><span>None</span></label>
+            <label class="health-option" id="other-condition-option">
+              <input type="checkbox" value="Other" onchange="handleCondition(this); toggleOtherInput(this)"/>
+              <span>Other (specify below)</span>
+            </label>
+            <input type="text" class="health-option-other-input" id="other-condition-input" placeholder="e.g. Kidney stones, Migraine..." oninput="updateOtherCondition(this)"/>
+          </div>
         </div>
-
-        <span>to</span>
-
-        <!-- End time -->
-        <div class="time-select-wrap">
-          <select id="end-hr" onchange="updateTimeDisplay()">
-            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option>
-            <option value="10">10</option><option value="11">11</option><option value="12" selected>12</option>
-          </select>
-          <span class="time-sep">:</span>
-          <select id="end-min" onchange="updateTimeDisplay()">
-            <option value="00" selected>00</option><option value="15">15</option>
-            <option value="30">30</option><option value="45">45</option>
-          </select>
-          <select id="end-ampm" onchange="updateTimeDisplay()" style="border-left:1.5px solid var(--border);padding:9px 8px;background:var(--teal-light);font-size:12px;font-weight:700;color:var(--teal-dark);">
-            <option value="AM">AM</option><option value="PM" selected>PM</option>
-          </select>
-        </div>
+        <div class="selected-tags" id="conditions-tags"></div>
       </div>
-      <input type="hidden" id="eat-start-val" value="08:00"/>
-      <input type="hidden" id="eat-end-val" value="20:00"/>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Allergies</label>
+        <input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..."/>
+      </div>
     </div>
 
-    <div class="section-divider"></div>
-
-    <!-- PREFERRED FOOD -->
-    <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
-    <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
-
-    <!-- Morning Drinks -->
-    <div class="accordion-item" id="drinks-section">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <span>Morning Drinks</span>
-        <span class="chevron">▾</span>
+    <!-- STEP 3 -->
+   <div class="card hidden-section wide-card" id="prefs-section">
+      <div class="step-label">Step 3</div>
+      <div class="section-title">Your Diet Preferences</div>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Diet Preferences</label>
+        <select class="diet-select" id="inp-diet">
+          <option value="">Select type of Diet</option>
+          <option>Vegetarian</option><option>Non Vegetarian</option><option>Eggetarian</option>
+        </select>
       </div>
-      <div class="accordion-body">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Do you drink morning drinks?</p>
-        <div class="yn-toggle">
-          <button class="yn-btn yes active" onclick="ynToggle(this,'yes')">Yes</button>
-          <button class="yn-btn no" onclick="ynToggle(this,'no')">No</button>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Meals Per Day</label>
+        <select class="meals-select" id="inp-meals">
+          <option value="">Select number</option>
+          <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Type of Meal</label>
+        <div class="chip-group" id="meal-types">
+          <div class="chip" onclick="toggleChip(this)">Breakfast</div>
+          <div class="chip" onclick="toggleChip(this)">Mid Morning</div>
+          <div class="chip" onclick="toggleChip(this)">Lunch</div>
+          <div class="chip" onclick="toggleChip(this)">Evening Snacks</div>
+          <div class="chip" onclick="toggleChip(this)">Dinner</div>
         </div>
-        <div class="drink-options" id="drink-opts">
-          
-          <div class="sub-label">Choose your drinks</div>
+      </div>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Eating Time Window</label>
+        <div class="time-chip-group" id="time-window-chips">
+          <div class="time-chip" onclick="selectTimeChip(this)" data-value="8:00 AM to 7:00 PM">8 AM – 7 PM <span class="tc-hrs">(11 hrs)</span></div>
+          <div class="time-chip" onclick="selectTimeChip(this)" data-value="8:00 AM to 8:00 PM">8 AM – 8 PM <span class="tc-hrs">(12 hrs)</span></div>
+          <div class="time-chip" onclick="selectTimeChip(this)" data-value="9:00 AM to 7:00 PM">9 AM – 7 PM <span class="tc-hrs">(10 hrs)</span></div>
+          <div class="time-chip" onclick="selectTimeChip(this)" data-value="9:00 AM to 8:00 PM">9 AM – 8 PM <span class="tc-hrs">(11 hrs)</span></div>
+        </div>
+        <div class="time-chip-hint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Tap your preferred eating window for the day
+        </div>
+        <input type="hidden" id="eat-window-val" value=""/>
+      </div>
+      <div class="section-divider"></div>
+      <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
+      <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
+      <div class="accordion-item" id="drinks-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Morning Drinks</span><span class="chevron">▾</span></div>
+        <div class="accordion-body">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Do you drink morning drinks?</p>
+          <div class="yn-toggle">
+            <button class="yn-btn yes active" onclick="ynToggle(this,'yes')">Yes</button>
+            <button class="yn-btn no" onclick="ynToggle(this,'no')">No</button>
+          </div>
+          <div class="drink-options" id="drink-opts">
+            <div class="sub-label">Choose your drinks</div>
+            <div class="sub-chip-group">
+              <div class="sub-chip" onclick="toggleChip(this)">Warm Water</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Lemon & Honey</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Green Tea</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Black Coffee</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Herbal Tea</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Milk</div>
+              <div class="sub-chip" onclick="toggleChip(this)">Detox Water</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item" id="nuts-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Nuts & Seeds</span><span class="chevron">▾</span></div>
+        <div class="accordion-body">
+          <div class="sub-label">Nuts</div>
           <div class="sub-chip-group">
-            <div class="sub-chip" onclick="toggleChip(this)">Warm Water</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Lemon & Honey</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Green Tea</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Black Coffee</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Herbal Tea</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Milk</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Detox Water</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Almonds</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Walnuts</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Cashews</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Pistachios</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Peanuts</div>
+          </div>
+          <div class="sub-label">Seeds</div>
+          <div class="sub-chip-group">
+            <div class="sub-chip" onclick="toggleChip(this)">Sunflower Seeds</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Chia Seeds</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Flaxseeds</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Pumpkin Seeds</div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item" id="fruits-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Fruits</span><span class="chevron">▾</span></div>
+        <div class="accordion-body">
+          <div class="sub-chip-group">
+            <div class="sub-chip" onclick="toggleChip(this)">Apple</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Banana</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Orange</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Papaya</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Pomegranate</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Guava</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Mango</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Berries</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Grapes</div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item" id="veggies-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Vegetables</span><span class="chevron">▾</span></div>
+        <div class="accordion-body">
+          <div class="sub-chip-group">
+            <div class="sub-chip" onclick="toggleChip(this)">Spinach</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Broccoli</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Carrot</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Cucumber</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Tomato</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Capsicum</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Beetroot</div>
+            <div class="sub-chip" onclick="toggleChip(this)">Zucchini</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Nuts & Seeds -->
-   <div class="accordion-item" id="nuts-section">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <span>Nuts & Seeds</span>
-        <span class="chevron">▾</span>
+    <!-- STEP 4 -->
+   <div class="card hidden-section wide-card" id="symptoms-section">
+      <div class="step-label">Step 4</div>
+      <div class="section-title">Current Symptoms</div>
+      <div class="chip-group" id="symptoms-group">
+        <div class="chip" onclick="toggleChip(this)">Fatigue</div>
+        <div class="chip" onclick="toggleChip(this)">Hair Fall</div>
+        <div class="chip" onclick="toggleChip(this)">Weak Immunity</div>
+        <div class="chip" onclick="toggleChip(this)">Joint Pain</div>
+        <div class="chip" onclick="toggleChip(this)">Poor Sleep</div>
+        <div class="chip" onclick="toggleChip(this)">Lack of Focus</div>
+        <div class="chip" onclick="toggleChip(this)">Bloating</div>
+        <div class="chip" onclick="toggleChip(this)">Low Energy</div>
+        <div class="chip" onclick="toggleChip(this)">Frequent Illness</div>
+        <div class="chip" onclick="toggleChip(this)">Mood Swings</div>
+        <div class="chip" onclick="toggleChip(this)">Breathlessness</div>
+        <div class="chip" onclick="toggleChip(this)">Skin Issues</div>
       </div>
-      <div class="accordion-body">
-        <div class="sub-label">Nuts</div>
-        <div class="sub-chip-group">
-          <div class="sub-chip" onclick="toggleChip(this)">Almonds</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Walnuts</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Cashews</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Pistachios</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Peanuts</div>
-        </div>
-        <div class="sub-label">Seeds</div>
-        <div class="sub-chip-group">
-          <div class="sub-chip" onclick="toggleChip(this)">Sunflower Seeds</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Chia Seeds</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Flaxseeds</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Pumpkin Seeds</div>
-        </div>
+      <div class="section-divider"></div>
+      <div class="section-title" style="margin-bottom:12px;">Any Queries or Comments <span style="font-family:'DM Sans';font-size:13px;color:var(--muted);font-weight:400;">(optional)</span></div>
+      <div class="form-group">
+        <textarea id="inp-comments" placeholder="Write your questions, goals, or any special requirements here..."></textarea>
       </div>
-    </div>
-
-    <!-- Fruits -->
-    <div class="accordion-item" id="fruits-section">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <span>Fruits</span>
-        <span class="chevron">▾</span>
+      <div class="consent-box" onclick="document.getElementById('consent-wa').click(); event.stopPropagation();">
+        <input type="checkbox" id="consent-wa" onclick="event.stopPropagation()"/>
+        <label for="consent-wa">
+          I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan and follow-up guidance. <strong>We will only reach out regarding your nutrition plan and will never send spam or share your details.</strong>
+        </label>
       </div>
-      <div class="accordion-body">
-        <div class="sub-chip-group">
-          <div class="sub-chip" onclick="toggleChip(this)">Apple</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Banana</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Orange</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Papaya</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Pomegranate</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Guava</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Mango</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Berries</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Grapes</div>
-        </div>
+      <div class="submit-row">
+        <button id="submitBtn" class="btn-primary" onclick="submitForm()" style="flex:2;">Submit My Plan Request</button>
+        <button class="btn-secondary" onclick="clearForm()" style="flex:1;">Clear All</button>
       </div>
     </div>
 
-    <!-- Vegetables -->
-   <div class="accordion-item" id="veggies-section">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <span>Vegetables</span>
-        <span class="chevron">▾</span>
+    <!-- SUCCESS -->
+    <div class="card hidden-section wide-card" id="success-section" style="text-align:center;padding:48px 32px;">
+      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+      <div class="section-title" style="margin-bottom:8px;">Plan Request Submitted!</div>
+      <p style="color:var(--muted);margin-bottom:24px;">Your personalized diet plan is being prepared. We'll reach out to you shortly based on your inputs.</p>
+      <a href="education.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 32px;">Explore Nutrition Education →</a>
+    </div>
+
+  </div><!-- /form-column -->
+
+  <!-- RIGHT SIDEBAR: Height Converter -->
+  <div class="sidebar-column">
+    <div class="hcb-sidebar">
+      <div class="hcb-sidebar-badge">📏 Tool</div>
+      <div class="hcb-sidebar-title">Height Converter</div>
+      <div class="hcb-sidebar-sub">Convert ft & in or inches to cm, then apply directly to the Height field.</div>
+
+      <div class="hcb-tabs">
+        <div class="hcb-tab active" onclick="switchHcbTab(this,'ft-in')">ft &amp; in</div>
+        <div class="hcb-tab" onclick="switchHcbTab(this,'in')">inches</div>
       </div>
-      <div class="accordion-body">
-        <div class="sub-chip-group">
-          <div class="sub-chip" onclick="toggleChip(this)">Spinach</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Broccoli</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Carrot</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Cucumber</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Tomato</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Capsicum</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Beetroot</div>
-          <div class="sub-chip" onclick="toggleChip(this)">Zucchini</div>
+
+      <!-- ft + in panel -->
+      <div id="hcb-panel-ft-in">
+        <div class="hcb-field-row">
+          <div class="hcb-input-wrap">
+            <span class="hcb-input-label">Feet</span>
+            <input class="hcb-input" type="number" id="hcb-ft" placeholder="5" min="1" max="9" oninput="convertFtIn()"/>
+          </div>
+          <div class="hcb-sep">·</div>
+          <div class="hcb-input-wrap">
+            <span class="hcb-input-label">Inches</span>
+            <input class="hcb-input" type="number" id="hcb-in" placeholder="7" min="0" max="11" oninput="convertFtIn()"/>
+          </div>
         </div>
+        <div class="hcb-result-box">
+          <div class="hcb-result-label">Result</div>
+          <div class="hcb-result-val" id="hcb-ftin-result">—</div>
+          <div class="hcb-result-unit">centimetres</div>
+        </div>
+        <!-- <button class="hcb-use-btn" onclick="useHcbValue('hcb-ftin-result')">↑ Use This Height in Form</button> -->
       </div>
+
+      <!-- inches-only panel -->
+      <div id="hcb-panel-in" style="display:none;">
+        <div class="hcb-field-row">
+          <div class="hcb-input-wrap">
+            <span class="hcb-input-label">Total Inches</span>
+            <input class="hcb-input" type="number" id="hcb-inch-only" placeholder="67" min="1" max="120" oninput="convertInchOnly()"/>
+          </div>
+        </div>
+        <div class="hcb-result-box">
+          <div class="hcb-result-label">Result</div>
+          <div class="hcb-result-val" id="hcb-inch-result">—</div>
+          <div class="hcb-result-unit">centimetres</div>
+        </div>
+        <button class="hcb-use-btn" onclick="useHcbValue('hcb-inch-result')">↑ Use This Height in Form</button>
+      </div>
+
+      <!-- <div class="hcb-divider"></div>
+      <div class="hcb-tip">Enter your height above and click <strong>Use This Height</strong> to auto-fill the Height (cm) field in the form.</div> -->
     </div>
   </div>
 
-  <!-- SYMPTOMS + COMMENTS (hidden initially) -->
-  <div class="card hidden-section" id="symptoms-section">
-    <div class="step-label">Step 4</div>
-    <div class="section-title">Current Symptoms</div>
-
-    <div class="chip-group" id="symptoms-group">
-      <div class="chip" onclick="toggleChip(this)">Fatigue</div>
-      <div class="chip" onclick="toggleChip(this)">Hair Fall</div>
-      <div class="chip" onclick="toggleChip(this)">Weak Immunity</div>
-      <div class="chip" onclick="toggleChip(this)">Joint Pain</div>
-      <div class="chip" onclick="toggleChip(this)">Poor Sleep</div>
-      <div class="chip" onclick="toggleChip(this)">Lack of Focus</div>
-      <div class="chip" onclick="toggleChip(this)">Bloating</div>
-      <div class="chip" onclick="toggleChip(this)">Low Energy</div>
-      <div class="chip" onclick="toggleChip(this)">Frequent Illness</div>
-      <div class="chip" onclick="toggleChip(this)">Mood Swings</div>
-      <div class="chip" onclick="toggleChip(this)">Breathlessness</div>
-      <div class="chip" onclick="toggleChip(this)">Skin Issues</div>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <div class="section-title" id="comments-section" style="margin-bottom:12px;">Any Queries or Comments <span style="font-family:'DM Sans';font-size:13px;color:var(--muted);font-weight:400;">(optional)</span></div>
-    <div class="form-group">
-      <textarea id="inp-comments" placeholder="Write your questions, goals, or any special requirements here..."></textarea>
-    </div>
-
-    <!-- WHATSAPP CONSENT -->
-    <div class="consent-box" onclick="document.getElementById('consent-wa').click(); event.stopPropagation();">
-      <input type="checkbox" id="consent-wa" onclick="event.stopPropagation()"/>
-      <label for="consent-wa">
-        I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan and follow-up guidance. <strong>We will only reach out regarding your nutrition plan and will never send spam or share your details.</strong>
-      </label>
-    </div>
-
-    <div class="submit-row">
-      <button class="btn-primary" onclick="submitForm()" style="flex:2;">Submit My Plan Request</button>
-      <button class="btn-secondary" onclick="clearForm()" style="flex:1;">Clear All</button>
-    </div>
-  </div>
-
-  <!-- SUCCESS MESSAGE -->
-  <div class="card hidden-section" id="success-section" style="text-align:center;padding:48px 32px;">
-    <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
-    <div class="section-title" style="margin-bottom:8px;">Plan Request Submitted!</div>
-    <p style="color:var(--muted);margin-bottom:24px;">Your personalized diet plan is being prepared. We'll reach out to you shortly based on your inputs.</p>
-    <a href="education.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 32px;">Explore Nutrition Education →</a>
-  </div>
-
-</div><!-- end page-wrap -->
+</div><!-- /page-outer -->
 
 <script>
-// ---- GOOGLE SHEETS INTEGRATION ----
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
-
 async function sendToSheet(data) {
-  try {
-    await fetch(SHEET_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-  } catch(e) {
-    console.warn("Sheet submission error:", e);
-  }
+  try { await fetch(SHEET_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(data) }); } catch(e) { console.warn("Sheet error:", e); }
 }
 
-
-
-// ---- PROGRESS ----
 function setProgress(step) {
   const labels = ['Step 1 of 4 — Your Body Metrics','Step 2 of 4 — Health Info','Step 3 of 4 — Preferences','Step 4 of 4 — Symptoms & Submit'];
-  document.getElementById('progress-label').textContent = labels[step-1] || labels[0];
-  for(let i=1;i<=4;i++){
-    document.getElementById('ps'+i).classList.toggle('done', i<=step);
-  }
+  document.getElementById('progress-label').textContent = labels[step-1];
+  for(let i=1;i<=4;i++) document.getElementById('ps'+i).classList.toggle('done', i<=step);
 }
 setProgress(1);
 
-// ---- VALIDATION ----
+function switchHcbTab(tab, panel) {
+  document.querySelectorAll('.hcb-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('hcb-panel-ft-in').style.display = panel === 'ft-in' ? '' : 'none';
+  document.getElementById('hcb-panel-in').style.display  = panel === 'in'    ? '' : 'none';
+}
+function convertFtIn() {
+  const ft = parseFloat(document.getElementById('hcb-ft').value) || 0;
+  const inch = parseFloat(document.getElementById('hcb-in').value) || 0;
+  const cm = Math.round((ft * 30.48) + (inch * 2.54));
+  document.getElementById('hcb-ftin-result').textContent = (ft>0||inch>0) ? cm : '—';
+}
+function convertInchOnly() {
+  const inch = parseFloat(document.getElementById('hcb-inch-only').value);
+  const cm = Math.round(inch * 2.54);
+  document.getElementById('hcb-inch-result').textContent = (!isNaN(cm)&&inch>0) ? cm : '—';
+}
+function useHcbValue(resultId) {
+  const val = document.getElementById(resultId).textContent;
+  if(val && val !== '—') {
+    const inp = document.getElementById('inp-height');
+    inp.value = val;
+    inp.style.borderColor = 'var(--teal)';
+    inp.style.boxShadow = '0 0 0 3px rgba(26,158,143,0.2)';
+    setTimeout(() => { inp.style.borderColor=''; inp.style.boxShadow=''; }, 1800);
+    document.getElementById('fg-height').classList.remove('has-error');
+    inp.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+function selectTimeChip(el) {
+  document.querySelectorAll('#time-window-chips .time-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('eat-window-val').value = el.dataset.value;
+}
+
 function validate() {
   const fields = [
-    {id:'fg-name', inp:'inp-name', check: v=>v.trim().length>0},
-    {id:'fg-age', inp:'inp-age', check: v=>v>=5&&v<=110},
+    {id:'fg-name',   inp:'inp-name',   check: v=>v.trim().length>0},
+    {id:'fg-age',    inp:'inp-age',    check: v=>v>=5&&v<=110},
     {id:'fg-gender', inp:'inp-gender', check: v=>v!=''},
     {id:'fg-height', inp:'inp-height', check: v=>v>=100&&v<=250},
     {id:'fg-weight', inp:'inp-weight', check: v=>v>=20&&v<=300},
-    {id:'fg-activity', inp:'inp-activity', check: v=>v!=''},
-    {id:'fg-waist', inp:'inp-waist', check: v=>v>=40&&v<=200},
-    {id:'fg-neck', inp:'inp-neck', check: v=>v>=20&&v<=80},
+    {id:'fg-activity',inp:'inp-activity',check: v=>v!=''},
+    {id:'fg-waist',  inp:'inp-waist',  check: v=>v>=40&&v<=200},
+    {id:'fg-neck',   inp:'inp-neck',   check: v=>v>=20&&v<=80},
   ];
   let ok = true;
   fields.forEach(f=>{
     const fg = document.getElementById(f.id);
-    const val = document.getElementById(f.inp).value;
-    const valid = f.check(val);
+    const valid = f.check(document.getElementById(f.inp).value);
     fg.classList.toggle('has-error', !valid);
     if(!valid) ok=false;
   });
   return ok;
 }
 
-// ---- CALCULATIONS ----
-function calcBMI(wt, ht) { return (wt / ((ht/100)**2)).toFixed(1); }
-function bmiCategory(bmi) {
-  if(bmi<18.5) return 'Underweight';
-  if(bmi<25) return 'Normal weight';
-  if(bmi<30) return 'Overweight';
-  return 'Obese';
-}
-function calcBodyFat(gender, bmi, age) {
-  const sex = gender==='Female'?1:0;
-  return Math.max(5, (1.20*bmi + 0.23*age - 10.8*sex - 5.4)).toFixed(1);
-}
-function calcCalories(gender, wt, ht, age, activity) {
-  let bmr;
-  if(gender==='Female') bmr = 655 + (9.6*wt) + (1.8*ht) - (4.7*age);
-  else bmr = 66 + (13.7*wt) + (5*ht) - (6.8*age);
-  return Math.round(bmr * (parseFloat(activity)||1.2));
-}
-function bmiToPercent(bmi) {
-  return Math.min(100, Math.max(0, ((bmi-15)/25)*100)).toFixed(1)+'%';
-}
+function calcBMI(wt,ht) { return (wt/((ht/100)**2)).toFixed(1); }
+function bmiCategory(b) { if(b<18.5) return 'Underweight'; if(b<25) return 'Normal weight'; if(b<30) return 'Overweight'; return 'Obese'; }
+function bmiColor(b) { if(b<18.5) return '#5bc8f5'; if(b<25) return '#60d394'; if(b<30) return '#f4a742'; return '#e74c3c'; }
+function bmiToBarPct(bmi) { const MIN=15,RANGE=25; const c=Math.min(40,Math.max(15,parseFloat(bmi))); return ((c-MIN)/RANGE*100).toFixed(1)+'%'; }
+function calcBodyFat(gender,bmi,age) { const sex=gender==='Female'?1:0; return Math.max(5,(1.20*bmi+0.23*age-10.8*sex-5.4)).toFixed(1); }
+function calcCalories(gender,wt,ht,age,activity) { let bmr=gender==='Female'?655+9.6*wt+1.8*ht-4.7*age:66+13.7*wt+5*ht-6.8*age; return Math.round(bmr*(parseFloat(activity)||1.2)); }
 
-// ---- TIME DISPLAY ----
-function updateTimeDisplay() {
-  const sh = document.getElementById('start-hr').value;
-  const sm = document.getElementById('start-min').value;
-  const sa = document.getElementById('start-ampm').value;
-  const eh = document.getElementById('end-hr').value;
-  const em = document.getElementById('end-min').value;
-  const ea = document.getElementById('end-ampm').value;
-  document.getElementById('eat-start-val').value = `${sh}:${sm} ${sa}`;
-  document.getElementById('eat-end-val').value = `${eh}:${em} ${ea}`;
-}
-updateTimeDisplay();
-
-// ---- GENERATE RESULT ----
 function generateResult() {
-  if(!validate()) {
-    document.querySelector('.has-error')?.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
-  const wt = parseFloat(document.getElementById('inp-weight').value);
-  const ht = parseFloat(document.getElementById('inp-height').value);
-  const age = parseFloat(document.getElementById('inp-age').value);
-  const gender = document.getElementById('inp-gender').value;
-  const activity = document.getElementById('inp-activity').value;
-
-  const bmi = calcBMI(wt,ht);
-  const fat = calcBodyFat(gender, parseFloat(bmi), age);
-  const cal = calcCalories(gender, wt, ht, age, activity);
-
-  document.getElementById('r-bmi').textContent = bmi;
-  document.getElementById('r-bmi-cat').textContent = bmiCategory(parseFloat(bmi));
-  document.getElementById('r-fat').textContent = fat+'%';
-  document.getElementById('r-fat-cat').textContent = parseFloat(fat)<25?'Healthy range':'Above average';
-  document.getElementById('r-cal').textContent = cal;
-  document.getElementById('bmi-marker').style.left = bmiToPercent(parseFloat(bmi));
-
-  const sections = ['results-section','health-section','prefs-section','symptoms-section'];
-  sections.forEach((id,i)=>{
-    setTimeout(()=>{
-      const el = document.getElementById(id);
-      el.style.display='block';
-      setTimeout(()=>el.classList.add('revealed'),20);
-    }, i*180);
-  });
+  const ss=document.getElementById('success-section');
+  if(ss){ ss.classList.remove('revealed'); ss.style.display='none'; }
+  const btn=document.getElementById('submitBtn');
+  if(btn){ btn.disabled=false; btn.textContent="Submit My Plan Request"; btn.style.opacity="1"; btn.style.cursor="pointer"; }
+  if(!validate()){ document.querySelector('.has-error')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  const wt=parseFloat(document.getElementById('inp-weight').value);
+  const ht=parseFloat(document.getElementById('inp-height').value);
+  const age=parseFloat(document.getElementById('inp-age').value);
+  const gender=document.getElementById('inp-gender').value;
+  const activity=document.getElementById('inp-activity').value;
+  const bmi=calcBMI(wt,ht); const bmiNum=parseFloat(bmi);
+  const cat=bmiCategory(bmiNum); const color=bmiColor(bmiNum);
+  const fat=calcBodyFat(gender,bmiNum,age); const cal=calcCalories(gender,wt,ht,age,activity);
+  const bmiEl=document.getElementById('r-bmi'); bmiEl.textContent=bmi; bmiEl.style.color=color;
+  document.getElementById('r-bmi-cat').textContent=cat; document.getElementById('r-bmi-cat').style.color=color;
+  const marker=document.getElementById('bmi-marker'); marker.style.left=bmiToBarPct(bmiNum); marker.style.borderColor=color;
+  document.getElementById('bmi-cat-label').textContent=cat; document.getElementById('bmi-cat-label').style.color=color;
+  document.getElementById('r-fat').textContent=fat+'%';
+  document.getElementById('r-fat-cat').textContent=parseFloat(fat)<25?'Healthy range':'Above average';
+  document.getElementById('r-cal').textContent=cal;
+//   ['results-section','health-section','prefs-section','symptoms-section'].forEach((id,i)=>{
+//     setTimeout(()=>{ const el=document.getElementById(id); el.style.display='block'; setTimeout(()=>el.classList.add('revealed'),20); },i*180);
+//   });
   setProgress(2);
-  setTimeout(()=>{
-    document.getElementById('results-section').scrollIntoView({behavior:'smooth',block:'start'});
-  },400);
+  setTimeout(()=>document.getElementById('results-section').scrollIntoView({behavior:'smooth',block:'start'}),400);
 }
 
-// ---- ACCORDION ----
-function toggleAccordion(header) {
-  header.classList.toggle('open');
-  const body = header.nextElementSibling;
-  body.classList.toggle('open');
-}
+function toggleAccordion(h){ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+function toggleChip(el){ el.classList.toggle('active'); }
+function ynToggle(btn,type){ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; }
+function toggleHealthDD(){ const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow'); l.classList.toggle('open'); a.textContent=l.classList.contains('open')?'▴':'▾'; }
+function toggleOtherInput(cb){ const inp=document.getElementById('other-condition-input'); inp.style.display=cb.checked?'block':'none'; if(!cb.checked){ inp.value=''; selectedConditions.delete('Other'); selectedConditions.delete(inp.dataset.val||''); renderTags(); } }
+function updateOtherCondition(inp){ const prev=inp.dataset.val; if(prev) selectedConditions.delete(prev); if(inp.value.trim()){ const v=inp.value.trim(); inp.dataset.val=v; selectedConditions.add(v); } renderTags(); }
+const selectedConditions=new Set();
+function handleCondition(cb){ if(cb.value==='Other') return; cb.checked?selectedConditions.add(cb.value):selectedConditions.delete(cb.value); renderTags(); }
+function renderTags(){ const c=document.getElementById('conditions-tags'); c.innerHTML=''; selectedConditions.forEach(v=>{ const t=document.createElement('div'); t.className='tag'; t.innerHTML=`${v}<span class="tag-x" onclick="removeCondition('${v.replace(/'/g,"\\'")}')">x</span>`; c.appendChild(t); }); }
+function removeCondition(v){ selectedConditions.delete(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=false; renderTags(); }
 
-// ---- CHIP TOGGLE ----
-function toggleChip(el) { el.classList.toggle('active'); }
-
-// ---- YES/NO ----
-function ynToggle(btn, type) {
-  const parent = btn.parentElement;
-  parent.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const drinkOpts = document.getElementById('drink-opts');
-  if(drinkOpts) drinkOpts.style.display = type==='yes'?'block':'none';
-}
-
-
-// ---- HEALTH CONDITIONS DROPDOWN ----
-function toggleHealthDD() {
-  const list = document.getElementById('health-dd-list');
-  const arrow = document.getElementById('health-dd-arrow');
-  list.classList.toggle('open');
-  arrow.textContent = list.classList.contains('open') ? '▴' : '▾';
-}
-
-// ---- OTHER CONDITION INPUT ----
-function toggleOtherInput(cb) {
-  const inp = document.getElementById('other-condition-input');
-  inp.style.display = cb.checked ? 'block' : 'none';
-  if(!cb.checked) {
-    inp.value = '';
-    selectedConditions.delete('Other');
-    selectedConditions.delete(inp.dataset.val || '');
-    renderTags();
-  }
-}
-function updateOtherCondition(inp) {
-  const prev = inp.dataset.val;
-  if(prev) selectedConditions.delete(prev);
-  if(inp.value.trim()) {
-    const val = inp.value.trim();
-    inp.dataset.val = val;
-    selectedConditions.add(val);
-  }
-  renderTags();
-}
-
-// ---- HEALTH CONDITIONS ----
-const selectedConditions = new Set();
-function handleCondition(cb) {
-  if(cb.value === 'Other') return; // handled by updateOtherCondition
-  if(cb.checked) selectedConditions.add(cb.value);
-  else selectedConditions.delete(cb.value);
-  renderTags();
-}
-function renderTags() {
-  const container = document.getElementById('conditions-tags');
-  container.innerHTML = '';
-  selectedConditions.forEach(c=>{
-    const tag = document.createElement('div');
-    tag.className='tag';
-    tag.innerHTML=`${c}<span class="tag-x" onclick="removeCondition('${c.replace(/'/g,"\\'")}')">×</span>`;
-    container.appendChild(tag);
-  });
-}
-function removeCondition(val) {
-  selectedConditions.delete(val);
-  const cb = document.querySelector(`#health-dd-list input[value="${val}"]`);
-  if(cb) cb.checked=false;
-  renderTags();
-}
-
-// ---- SUBMIT ----
-// async function submitForm() {
-//   // Collect data
-//   const symptoms = [...document.querySelectorAll('#symptoms-group .chip.active')].map(c=>c.textContent.trim());
-//   const mealTypes = [...document.querySelectorAll('#meal-types .chip.active')].map(c=>c.textContent.trim());
-
-//   const formData = {
-//     timestamp: new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}),
-//     name: document.getElementById('inp-name').value,
-//     age: document.getElementById('inp-age').value,
-//     gender: document.getElementById('inp-gender').value,
-//     height_cm: document.getElementById('inp-height').value,
-//     weight_kg: document.getElementById('inp-weight').value,
-//     activity: document.getElementById('inp-activity').options[document.getElementById('inp-activity').selectedIndex]?.text || '',
-//     waist_cm: document.getElementById('inp-waist').value,
-//     hip_cm: document.getElementById('inp-hip').value,
-//     neck_cm: document.getElementById('inp-neck').value,
-//     phone: document.getElementById('inp-phone').value,
-//     bmi: document.getElementById('r-bmi').textContent,
-//     bmi_category: document.getElementById('r-bmi-cat').textContent,
-//     body_fat: document.getElementById('r-fat').textContent,
-//     daily_calories: document.getElementById('r-cal').textContent,
-//     health_conditions: [...selectedConditions].join(', '),
-//     allergies: document.getElementById('inp-allergies').value,
-//     meals_per_day: document.getElementById('inp-meals').value,
-//     meal_types: mealTypes.join(', '),
-//     eating_window: `${document.getElementById('eat-start-val').value} to ${document.getElementById('eat-end-val').value}`,
-//     symptoms: symptoms.join(', '),
-//     comments: document.getElementById('inp-comments').value,
-//     whatsapp_consent: document.getElementById('consent-wa').checked ? 'Yes' : 'No'
-//   };
-
-  
-//   await sendToSheet(formData);
-
-//   document.getElementById('symptoms-section').classList.remove('revealed');
-//   setTimeout(()=>{ document.getElementById('symptoms-section').style.display='none'; },300);
-//   const ss = document.getElementById('success-section');
-//   ss.style.display='block';
-//   setTimeout(()=>ss.classList.add('revealed'),20);
-//   setProgress(4);
-//   ss.scrollIntoView({behavior:'smooth'});
-// }
-
-
-async function submitForm() {
-
-  // 🔹 COLLECT BASIC DATA
-  const symptoms = [...document.querySelectorAll('#symptoms-group .chip.active')]
-    .map(c => c.textContent.trim());
-
-  const mealTypes = [...document.querySelectorAll('#meal-types .chip.active')]
-    .map(c => c.textContent.trim());
-
-  // 🔹 COLLECT FOOD PREFERENCES
-  const drinks = [...document.querySelectorAll('#drink-opts .sub-chip.active')]
-    .map(c => c.textContent.trim());
-
- const nutsSeeds = [...document.querySelectorAll('#nuts-section .sub-chip.active')]
-  .map(c => c.textContent.trim());
-
-const fruits = [...document.querySelectorAll('#fruits-section .sub-chip.active')]
-  .map(c => c.textContent.trim());
-
-const vegetables = [...document.querySelectorAll('#veggies-section .sub-chip.active')]
-  .map(c => c.textContent.trim());
-
-  
-
-  // 🔹 FORM DATA
-  const formData = {
-    timestamp: new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}),
-
-    name: document.getElementById('inp-name').value,
-    age: document.getElementById('inp-age').value,
-    gender: document.getElementById('inp-gender').value,
-
-    height_cm: document.getElementById('inp-height').value,
-    weight_kg: document.getElementById('inp-weight').value,
-    activity: document.getElementById('inp-activity').options[
-      document.getElementById('inp-activity').selectedIndex
-    ]?.text || '',
-
-    waist_cm: document.getElementById('inp-waist').value,
-    hip_cm: document.getElementById('inp-hip').value,
-    neck_cm: document.getElementById('inp-neck').value,
-
-    phone: document.getElementById('inp-phone').value,
-
-    bmi: document.getElementById('r-bmi').textContent,
-    bmi_category: document.getElementById('r-bmi-cat').textContent,
-    body_fat: document.getElementById('r-fat').textContent,
-    daily_calories: document.getElementById('r-cal').textContent,
-
-    health_conditions: [...selectedConditions].join(', '),
-    allergies: document.getElementById('inp-allergies').value,
-meals_per_day: document.getElementById('inp-meals').value,
-diet_preference: document.getElementById('inp-diet').value,
-meal_types: mealTypes.join(', '),
-    
-
-    eating_window: `${document.getElementById('eat-start-val').value} to ${document.getElementById('eat-end-val').value}`,
-
-    // ✅ FOOD DATA (MAIN FIX)
-    morning_drinks: drinks.join(', '),
-    nuts_seeds: nutsSeeds.join(', '),
-    fruits: fruits.join(', '),
-    vegetables: vegetables.join(', '),
-
-    symptoms: symptoms.join(', '),
-    comments: document.getElementById('inp-comments').value,
-    whatsapp_consent: document.getElementById('consent-wa').checked ? 'Yes' : 'No'
+async function submitForm(){
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Submitting...'; btn.style.opacity='0.7'; btn.style.cursor='not-allowed';
+  const g=id=>document.getElementById(id);
+  const chips=sel=>[...document.querySelectorAll(sel+'.active')].map(c=>c.textContent.trim());
+  const formData={
+    timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
+    name:g('inp-name').value, age:g('inp-age').value, gender:g('inp-gender').value,
+    height_cm:g('inp-height').value, weight_kg:g('inp-weight').value,
+    activity:g('inp-activity').options[g('inp-activity').selectedIndex]?.text||'',
+    waist_cm:g('inp-waist').value, hip_cm:g('inp-hip').value, neck_cm:g('inp-neck').value,
+    phone:g('inp-phone').value, email:g('inp-email').value,
+    bmi:g('r-bmi').textContent, bmi_category:g('r-bmi-cat').textContent,
+    body_fat:g('r-fat').textContent, daily_calories:g('r-cal').textContent,
+    health_conditions:[...selectedConditions].join(', '),
+    allergies:g('inp-allergies').value,
+    meals_per_day:g('inp-meals').value, diet_preference:g('inp-diet').value,
+    meal_types:chips('#meal-types .chip').join(', '),
+    eating_window:g('eat-window-val').value,
+    morning_drinks:chips('#drink-opts .sub-chip').join(', '),
+    nuts_seeds:chips('#nuts-section .sub-chip').join(', '),
+    fruits:chips('#fruits-section .sub-chip').join(', '),
+    vegetables:chips('#veggies-section .sub-chip').join(', '),
+    symptoms:chips('#symptoms-group .chip').join(', '),
+    comments:g('inp-comments').value,
+    whatsapp_consent:g('consent-wa').checked?'Yes':'No'
   };
-
   await sendToSheet(formData);
-
-  // UI SUCCESS
-  document.getElementById('symptoms-section').classList.remove('revealed');
-  setTimeout(()=>{ document.getElementById('symptoms-section').style.display='none'; },300);
-
-  const ss = document.getElementById('success-section');
-  ss.style.display='block';
-  setTimeout(()=>ss.classList.add('revealed'),20);
-
-  setProgress(4);
-  ss.scrollIntoView({behavior:'smooth'});
+  g('symptoms-section').classList.remove('revealed');
+  setTimeout(()=>{ g('symptoms-section').style.display='none'; },300);
+  const ss=g('success-section');
+  ss.style.display='block'; setTimeout(()=>ss.classList.add('revealed'),20);
+  setProgress(4); ss.scrollIntoView({behavior:'smooth'});
+  clearForm();
+  btn.disabled=false; btn.textContent='Submit My Plan Request'; btn.style.opacity='1'; btn.style.cursor='pointer';
 }
 
-// ---- CLEAR ----
-function clearForm() {
-  if(!confirm('Clear all form data?')) return;
-  document.querySelectorAll('input:not([type="checkbox"]),select,textarea').forEach(el=>{ el.value=''; });
-  document.querySelectorAll('input[type="checkbox"]').forEach(el=>{ el.checked=false; });
-  document.querySelectorAll('.chip.active,.sub-chip.active').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.hidden-section.revealed').forEach(s=>{
-    s.classList.remove('revealed');
-    setTimeout(()=>s.style.display='none',400);
-  });
-  selectedConditions.clear(); renderTags();
-  document.getElementById('health-dd-list').classList.remove('open');
-  document.getElementById('other-condition-input').style.display='none';
+function clearForm(){
+  document.querySelectorAll('input,textarea').forEach(el=>{ if(el.type!=='checkbox') el.value=''; else el.checked=false; });
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('.chip,.sub-chip,.time-chip').forEach(el=>el.classList.remove('active'));
+  document.getElementById('eat-window-val').value='';
+  selectedConditions.clear();
+  document.getElementById('conditions-tags').innerHTML='';
+  ['results-section','health-section','prefs-section','symptoms-section'].forEach(id=>{ const el=document.getElementById(id); el.classList.remove('revealed'); el.style.display='none'; });
   setProgress(1);
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+document.getElementById('inp-gender').addEventListener('change', function () {
+  const femaleRow = document.getElementById('female-extra-row');
+
+  if (this.value === 'Female') {
+    femaleRow.style.display = 'grid'; // show row
+  } else {
+    femaleRow.style.display = 'none'; // hide row
+    document.getElementById('inp-hip').value = '';
+    document.getElementById('inp-preg').value = '';
+  }
+});
 </script>
 </body>
 </html>
