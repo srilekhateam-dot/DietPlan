@@ -24,52 +24,78 @@
   html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
 
-  .landing-overview { background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 70%); border-bottom: 1px solid var(--border); padding: 52px 24px 36px; }
-  .landing-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-  .landing-badge { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
-  .landing-title { font-family: 'Fraunces', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 14px; }
-  .landing-title em { color: var(--teal); font-style: italic; }
-  .landing-desc { color: #374151; font-size: 14.5px; line-height: 1.75; margin-bottom: 20px; }
-  .landing-nutrients { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  .ln-chip { padding: 6px 14px; border-radius: 50px; background: var(--white); border: 1.5px solid var(--border); font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none; transition: all 0.2s; }
-  .ln-chip:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .landing-readmore { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1.5px solid var(--teal); padding-bottom: 2px; }
-  .landing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .ln-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 18px 14px; text-align: center; transition: all 0.2s; }
-  .ln-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,158,143,0.1); }
-  .ln-card-icon { font-size: 1.8rem; margin-bottom: 6px; }
-  .ln-card-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 3px; }
-  .ln-card-sub { font-size: 11.5px; color: var(--muted); }
-  .landing-cta-row { text-align: center; margin-top: 32px; }
-  .btn-get-started { display: inline-block; background: var(--teal); color: #fff; text-decoration: none; padding: 13px 36px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; transition: background 0.2s, transform 0.15s; }
-  .btn-get-started:hover { background: var(--teal-dark); transform: translateY(-1px); }
-
-  nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
-  .nav-brand { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--teal); font-weight: 600; letter-spacing: -0.5px; text-decoration: none; }
+  /* ─── NAVBAR ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 56px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .nav-brand { font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--teal); font-weight: 600; letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
   .nav-brand span { color: var(--text); font-weight: 300; font-style: italic; }
-  .nav-links { display: flex; gap: 6px; }
-  .nav-links a { text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
+
+  /* hamburger */
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.25s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 12px; border-radius: 20px; transition: all 0.2s; white-space: nowrap; }
   .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
 
-  .hero { text-align: center; padding: 40px 24px 32px; background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%); border-bottom: 1px solid var(--border); }
-  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
-  .hero h1 em { color: var(--teal); font-style: italic; }
-  .hero p { color: var(--muted); max-width: 460px; margin: 0 auto; font-size: 14.5px; }
+  /* mobile nav drawer */
+  @media (max-width: 640px) {
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      position: fixed; top: 56px; left: 0; right: 0;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      flex-direction: column; gap: 0; padding: 8px 12px 16px;
+      display: none; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; border-radius: var(--radius-sm); font-size: 15px; }
+  }
 
-  .progress-wrap { max-width: 1120px; margin: 0 auto 10px; display: flex; gap: 8px; align-items: center; }
+  /* ─── LANDING ─── */
+  .landing-overview { background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 70%); border-bottom: 1px solid var(--border); padding: 40px 20px 32px; }
+  .landing-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .landing-badge { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+  .landing-title { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 14px; }
+  .landing-title em { color: var(--teal); font-style: italic; }
+  .landing-desc { color: #374151; font-size: 14px; line-height: 1.75; margin-bottom: 20px; }
+  .landing-readmore { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1.5px solid var(--teal); padding-bottom: 2px; }
+  .landing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .ln-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px 10px; text-align: center; transition: all 0.2s; text-decoration: none; display: block; }
+  .ln-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,158,143,0.1); }
+  .ln-card-icon { font-size: 1.6rem; margin-bottom: 5px; }
+  .ln-card-name { font-weight: 700; font-size: 12px; color: var(--text); margin-bottom: 2px; }
+  .ln-card-sub { font-size: 11px; color: var(--muted); }
+  .landing-cta-row { text-align: center; margin-top: 28px; }
+  .btn-get-started { display: inline-block; background: var(--teal); color: #fff; text-decoration: none; padding: 13px 32px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; transition: background 0.2s, transform 0.15s; }
+  .btn-get-started:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  .hero { text-align: center; padding: 36px 20px 28px; background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%); border-bottom: 1px solid var(--border); }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
+  .hero h1 em { color: var(--teal); font-style: italic; }
+  .hero p { color: var(--muted); max-width: 460px; margin: 0 auto; font-size: 14px; }
+
+  .progress-area { max-width: 1120px; margin: 0 auto; padding: 18px 20px 0; }
+  .progress-wrap { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
   .progress-step { flex: 1; height: 4px; border-radius: 4px; background: var(--border); transition: background 0.5s; }
   .progress-step.done { background: var(--teal); }
-  .progress-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-align: center; margin-bottom: 20px; text-transform: uppercase; max-width: 1120px; margin-left: auto; margin-right: auto; }
-  .progress-area { max-width: 1120px; margin: 0 auto; padding: 20px 24px 0; }
+  .progress-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-align: center; margin-bottom: 18px; text-transform: uppercase; }
 
-  .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 10px 100px; display: block; }
-  .form-column { min-width: 0; }
+  .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; }
 
-  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 32px; border: 1px solid var(--border); width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; margin-bottom: 28px; }
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 28px 24px; border: 1px solid var(--border); width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; margin-bottom: 24px; }
   .step-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
-  .section-title { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 24px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 22px; }
 
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group.full { grid-column: 1 / -1; }
   .form-group label { font-size: 12.5px; font-weight: 600; color: var(--text); }
@@ -81,17 +107,17 @@
   .phone-input-wrap:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white); }
   .phone-prefix { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: #f0f2f4; border-right: 1.5px solid var(--border); font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; user-select: none; }
   .phone-input-wrap input { border: none !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; flex: 1; }
-  .contact-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 5px; padding: 5px 10px; background: #f0faf9; border-radius: 6px; border: 1px solid #c8ede9; width: 100%; grid-column: 1 / -1; }
-  .contact-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .contact-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 4px; padding: 5px 10px; background: #f0faf9; border-radius: 6px; border: 1px solid #c8ede9; width: 100%; grid-column: 1 / -1; }
+  .contact-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-  .btn-primary { background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; display: block; width: 100%; margin-top: 24px; }
+  .btn-primary { background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; display: block; width: 100%; margin-top: 22px; }
   .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
   .btn-primary:disabled { background: var(--muted); transform: none; cursor: not-allowed; }
   .btn-secondary { background: var(--bg); color: var(--muted); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 10px; }
   .btn-secondary:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
 
-  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 6px; }
-  .metric-card { background: var(--bg); border-radius: var(--radius-sm); padding: 20px 16px; text-align: center; border: 1px solid var(--border); }
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 6px; }
+  .metric-card { background: var(--bg); border-radius: var(--radius-sm); padding: 18px 14px; text-align: center; border: 1px solid var(--border); }
   .metric-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .metric-value { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; }
   .metric-sub { font-size: 12px; color: var(--muted); }
@@ -99,31 +125,31 @@
   .bmi-bar-wrap { margin-top: 14px; }
   .bmi-bar-track { position: relative; height: 10px; border-radius: 6px; margin-bottom: 6px; overflow: visible; background: linear-gradient(to right, #5bc8f5 0% 23%, #60d394 23% 50%, #f4a742 50% 75%, #e74c3c 75% 100%); }
   .bmi-marker-pin { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: var(--white); border: 3px solid #1c2230; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: left 0.8s cubic-bezier(.4,0,.2,1), border-color 0.4s; z-index: 2; }
-  .bmi-zones { display: flex; font-size: 9.5px; margin-top: 2px; }
+  .bmi-zones { display: flex; font-size: 9px; margin-top: 2px; }
   .bmi-zone { flex: 1; text-align: center; font-weight: 600; }
   .bmi-zone:first-child { text-align: left; }
   .bmi-zone:last-child { text-align: right; }
   .bmi-cat-label { margin-top: 6px; font-size: 12px; font-weight: 700; text-align: center; }
 
-  .chip-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .chip { padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { padding: 8px 16px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
   .chip:hover { border-color: var(--teal); color: var(--teal); }
   .chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
 
-  .time-chip-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .time-chip { padding: 10px 20px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; display: flex; align-items: center; gap: 7px; }
+  .time-chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .time-chip { padding: 10px 16px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; display: flex; align-items: center; gap: 6px; }
   .time-chip:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
   .time-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
   .tc-hrs { font-size: 11px; opacity: 0.7; }
   .time-chip-hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
 
-  .accordion-item { border: 1.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden; }
-  .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 14.5px; background: var(--bg); transition: background 0.2s; user-select: none; }
+  .accordion-item { border: 1.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 10px; overflow: hidden; }
+  .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; font-weight: 600; font-size: 14px; background: var(--bg); transition: background 0.2s; user-select: none; }
   .accordion-header:hover { background: var(--teal-light); }
   .accordion-header .chevron { transition: transform 0.3s; font-size: 12px; color: var(--muted); }
   .accordion-header.open .chevron { transform: rotate(180deg); }
-  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 20px; background: var(--white); }
-  .accordion-body.open { max-height: 500px; padding: 18px 20px; }
+  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 18px; background: var(--white); }
+  .accordion-body.open { max-height: 500px; padding: 16px 18px; }
 
   .yn-toggle { display: flex; gap: 10px; margin: 10px 0 14px; }
   .yn-btn { padding: 7px 22px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
@@ -148,7 +174,7 @@
   .form-group.has-error input, .form-group.has-error select { border-color: #e74c3c; }
   .form-group.has-error .error-msg { display: block; }
 
-  .submit-row { display: flex; gap: 14px; margin-top: 24px; }
+  .submit-row { display: flex; gap: 12px; margin-top: 22px; }
   .submit-row .btn-primary, .submit-row .btn-secondary { margin: 0; }
 
   .read-more-link { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 13.5px; text-decoration: none; margin-top: 10px; padding: 6px 0; border-bottom: 1.5px solid transparent; transition: border-color 0.2s; }
@@ -160,63 +186,109 @@
   .consent-box label strong { color: var(--teal-dark); }
   .whatsapp-icon { color: #25D366; font-weight: 700; }
 
-  .section-divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .section-divider { height: 1px; background: var(--border); margin: 22px 0; }
   .sub-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
-  .sub-chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
-  .sub-chip { padding: 6px 14px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
+  .sub-chip-group { display: flex; flex-wrap: wrap; gap: 7px; }
+  .sub-chip { padding: 6px 13px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
   .sub-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
   .drink-options { margin-top: 10px; }
   .meals-select { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; width: 100%; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
   .meals-select:focus { border-color: var(--teal); }
 
-  /* Hidden sections */
   .hidden-section { display: none; opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
   .hidden-section.revealed { display: block; opacity: 1; transform: none; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   .card { animation: fadeUp 0.4s ease both; }
 
-  /* Modal */
-  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 999; }
-  .modal-box { background: #fff; width: 90%; max-width: 350px; border-radius: 16px; padding: 20px; animation: fadeUp 0.3s ease; }
-  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .close-btn { cursor: pointer; font-size: 18px; }
+  /* ─── MODALS (mobile-first) ─── */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.45); display: none;
+    align-items: flex-end; justify-content: center;
+    z-index: 999;
+    padding: 0;
+  }
+  /* On desktop center it */
+  @media (min-width: 641px) {
+    .modal-overlay { align-items: center; padding: 20px; }
+    .modal-box { border-radius: 16px; max-height: 90vh; }
+  }
+  .modal-box {
+    background: var(--white);
+    width: 100%; max-width: 420px;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px 32px;
+    animation: slideUp 0.3s ease;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* drag handle */
+  .modal-box::before {
+    content: '';
+    display: block;
+    width: 40px; height: 4px;
+    background: var(--border); border-radius: 4px;
+    margin: 0 auto 16px;
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-header h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; color: var(--text); }
+  .close-btn { cursor: pointer; font-size: 20px; color: var(--muted); line-height: 1; padding: 4px; }
 
   .hcb-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-  .hcb-tab { padding: 6px 0; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; flex: 1; text-align: center; }
+  .hcb-tab { padding: 8px 0; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; flex: 1; text-align: center; }
   .hcb-tab.active { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .hcb-field-row { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 14px; }
+  .hcb-field-row { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 14px; }
   .hcb-input-wrap { display: flex; flex-direction: column; gap: 4px; flex: 1; }
   .hcb-input-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  .hcb-input { width: 100% !important; border: 1.5px solid var(--border) !important; border-radius: 8px !important; padding: 10px 8px !important; font-size: 15px !important; background: var(--bg) !important; text-align: center; box-shadow: none !important; font-family: 'DM Sans', sans-serif; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .hcb-input {
+    width: 100% !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    padding: 12px 8px !important;
+    font-size: 18px !important;
+    background: var(--bg) !important;
+    text-align: center;
+    box-shadow: none !important;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
   .hcb-input:focus { border-color: var(--teal) !important; box-shadow: 0 0 0 3px rgba(26,158,143,0.15) !important; background: var(--white) !important; }
-  .hcb-sep { font-size: 18px; color: var(--border); padding-bottom: 8px; flex-shrink: 0; }
-  .hcb-result-box { background: var(--teal-light); border: 1.5px solid #c8ede9; border-radius: var(--radius-sm); padding: 16px; text-align: center; margin-bottom: 14px; }
+  .hcb-sep { font-size: 20px; color: var(--border); padding-bottom: 8px; flex-shrink: 0; }
+  .hcb-result-box { background: var(--teal-light); border: 1.5px solid #c8ede9; border-radius: var(--radius-sm); padding: 14px; text-align: center; margin-bottom: 14px; }
   .hcb-result-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal-dark); margin-bottom: 8px; }
-  .hcb-result-val { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 600; color: var(--teal); line-height: 1; }
+  .hcb-result-val { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 600; color: var(--teal); line-height: 1; }
   .hcb-result-unit { font-size: 12px; color: var(--teal-dark); font-weight: 600; margin-top: 3px; }
-  .hcb-use-btn { width: 100%; background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 11px 16px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'DM Sans', sans-serif; }
-  .hcb-use-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
-  .hcb-input::placeholder { color: #c6cbd2; opacity: 2; }
+  .hcb-use-btn { width: 100%; background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+  .hcb-use-btn:hover { background: var(--teal-dark); }
+  .hcb-input::placeholder { color: #c6cbd2; }
 
-  /* Converter hint badge under waist/hip/neck inputs */
   .converter-hint { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 3px; cursor: pointer; opacity: 0.8; }
   .converter-hint:hover { opacity: 1; }
 
-  #female-extra-row .form-group input,
-  #female-extra-row .form-group select { width: 100%; }
-
-  @media (max-width: 820px) {
-    .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
-    nav { padding: 0 16px; }
-    .card { margin: 0 auto 20px; max-width: 100%; width: 100%; }
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .landing-inner { grid-template-columns: 1fr; gap: 20px; }
+    .landing-cards { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .ln-card { padding: 10px 6px; }
+    .ln-card-icon { font-size: 1.3rem; }
+    .ln-card-name { font-size: 11px; }
+    .ln-card-sub { font-size: 10px; }
     .form-grid { grid-template-columns: 1fr; }
     .contact-row { grid-template-columns: 1fr; }
     .results-grid { grid-template-columns: 1fr; }
     .submit-row { flex-direction: column; }
-    .landing-inner { grid-template-columns: 1fr; gap: 24px; }
-    .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .ln-card { padding: 12px 8px; }
+    .card { padding: 20px 16px; }
+    #female-extra-row > div { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 400px) {
+    .landing-cards { grid-template-columns: repeat(2, 1fr); }
+    .time-chip { font-size: 12px; padding: 9px 12px; }
   }
 </style>
 </head>
@@ -224,12 +296,15 @@
 
 <nav id="topnav">
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div class="nav-links">
-    <a href="#nutrition-overview" class="active">Nutrition</a>
-    <a href="#form-section">Form</a>
-    <a href="education.html">Education</a>
-    <a href="comments.html">Comments</a>
-     <a href="profile.html">Profiles</a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#nutrition-overview" class="active" onclick="closeNav()">Nutrition</a>
+    <a href="#form-section" onclick="closeNav()">Form</a>
+    <a href="education.html" onclick="closeNav()">Education</a>
+    <a href="comments.html" onclick="closeNav()">Comments</a>
+    <a href="profile.html" onclick="closeNav()">Profiles</a>
   </div>
 </nav>
 
@@ -238,55 +313,41 @@
     <div class="landing-text">
       <div class="landing-badge">Nutrition Education</div>
       <h1 class="landing-title">What is <em>Nutrition</em>?</h1>
-      <p class="landing-desc">Nutrition is the process of eating the right foods that your body needs to stay healthy, grow, and have energy. It includes nutrients like carbohydrates, proteins, fats, vitamins, minerals, and water, which help your body function properly. A balanced diet with fruits, vegetables, grains, and proteins keeps your body strong, improves immunity, and prevents diseases.</p>
-      <!-- <div class="landing-nutrients">
-        <a href="education.html#carbohydrates" class="ln-chip">Carbohydrates</a>
-        <a href="education.html#proteins" class="ln-chip">Proteins</a>
-        <a href="education.html#fats" class="ln-chip">Fats</a>
-        <a href="education.html#vitamins" class="ln-chip">Vitamins</a>
-        <a href="education.html#vitamins" class="ln-chip">Minerals</a>
-      </div> -->
+      <p class="landing-desc">Nutrition is the process of eating the right foods that your body needs to stay healthy, grow, and have energy. It includes nutrients like carbohydrates, proteins, fats, vitamins, minerals, and water, which help your body function properly. A balanced diet keeps your body strong, improves immunity, and prevents diseases.</p>
       <a href="education.html" class="landing-readmore">Read full Nutrition Guide →</a>
     </div>
     <div class="landing-cards">
-
-  <a href="education.html#carbohydrates" class="ln-card">
-    <div class="ln-card-icon">🌾</div>
-    <div class="ln-card-name">Carbohydrates</div>
-    <div class="ln-card-sub">Primary energy source</div>
-  </a>
-
-  <a href="education.html#proteins" class="ln-card">
-    <div class="ln-card-icon">🥩</div>
-    <div class="ln-card-name">Proteins</div>
-    <div class="ln-card-sub">Build & repair tissues</div>
-  </a>
-
-  <a href="education.html#fats" class="ln-card">
-    <div class="ln-card-icon">🥑</div>
-    <div class="ln-card-name">Fats</div>
-    <div class="ln-card-sub">Stored energy & hormones</div>
-  </a>
-
-  <a href="education.html#vitamins and minerals" class="ln-card">
-    <div class="ln-card-icon">🍊</div>
-    <div class="ln-card-name">Vitamins</div>
-    <div class="ln-card-sub">Regulate body processes</div>
-  </a>
-
-  <a href="education.html#vitamins and minerals" class="ln-card">
-    <div class="ln-card-icon">⚡</div>
-    <div class="ln-card-name">Minerals</div>
-    <div class="ln-card-sub">Bone & nerve support</div>
-  </a>
-
-  <a href="education.html#water" class="ln-card">
-    <div class="ln-card-icon">💧</div>
-    <div class="ln-card-name">Water</div>
-    <div class="ln-card-sub">Hydration & digestion</div>
-  </a>
-
-</div>
+      <a href="education.html#carbohydrates" class="ln-card">
+        <div class="ln-card-icon">🌾</div>
+        <div class="ln-card-name">Carbohydrates</div>
+        <div class="ln-card-sub">Primary energy</div>
+      </a>
+      <a href="education.html#proteins" class="ln-card">
+        <div class="ln-card-icon">🥩</div>
+        <div class="ln-card-name">Proteins</div>
+        <div class="ln-card-sub">Build & repair</div>
+      </a>
+      <a href="education.html#fats" class="ln-card">
+        <div class="ln-card-icon">🥑</div>
+        <div class="ln-card-name">Fats</div>
+        <div class="ln-card-sub">Stored energy</div>
+      </a>
+      <a href="education.html#vitamins and minerals" class="ln-card">
+        <div class="ln-card-icon">🍊</div>
+        <div class="ln-card-name">Vitamins</div>
+        <div class="ln-card-sub">Body processes</div>
+      </a>
+      <a href="education.html#vitamins and minerals" class="ln-card">
+        <div class="ln-card-icon">⚡</div>
+        <div class="ln-card-name">Minerals</div>
+        <div class="ln-card-sub">Bone & nerve</div>
+      </a>
+      <a href="education.html#water" class="ln-card">
+        <div class="ln-card-icon">💧</div>
+        <div class="ln-card-name">Water</div>
+        <div class="ln-card-sub">Hydration</div>
+      </a>
+    </div>
   </div>
   <div class="landing-cta-row">
     <a href="#form-section" class="btn-get-started" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'});return false;">Get Started — Build My Diet Plan</a>
@@ -323,7 +384,7 @@
         </div>
         <div class="form-group" id="fg-age">
           <label>Age</label>
-          <input type="number" id="inp-age" placeholder="30" min="10" max="100"/>
+          <input type="number" id="inp-age" placeholder="30" min="10" max="100" inputmode="numeric"/>
           <span class="error-msg">Please enter a valid age</span>
         </div>
         <div class="form-group" id="fg-gender">
@@ -336,12 +397,12 @@
         </div>
         <div class="form-group" id="fg-height">
           <label>Height (cm)</label>
-          <input type="number" id="inp-height" placeholder="170" min="100" max="250" onclick="openHeightModal()"/>
+          <input type="number" id="inp-height" placeholder="170" min="100" max="250" inputmode="numeric" onclick="openHeightModal()"/>
           <span class="error-msg">Please enter height (100–250 cm)</span>
         </div>
         <div class="form-group" id="fg-weight">
           <label>Weight (kg)</label>
-          <input type="number" id="inp-weight" placeholder="70" min="20" max="300"/>
+          <input type="number" id="inp-weight" placeholder="70" min="20" max="300" inputmode="numeric"/>
           <span class="error-msg">Please enter weight</span>
         </div>
         <div class="form-group" id="fg-activity">
@@ -359,21 +420,21 @@
 
         <div class="form-group" id="fg-waist">
           <label>Waist (cm)</label>
-          <input type="number" id="inp-waist" placeholder="80" onclick="openMeasureModal('waist')"/>
-          <span class="converter-hint" onclick="openMeasureModal('waist')"></span>
+          <input type="number" id="inp-waist" placeholder="80" inputmode="numeric" onclick="openMeasureModal('waist')"/>
+          <span class="converter-hint" onclick="openMeasureModal('waist')">📏 Convert from inches</span>
         </div>
         <div class="form-group" id="fg-neck">
           <label>Neck (cm)</label>
-          <input type="number" id="inp-neck" placeholder="38"/>
-          <span class="converter-hint" onclick="openMeasureModal('neck')"></span>
+          <input type="number" id="inp-neck" placeholder="38" inputmode="numeric"/>
+          <span class="converter-hint" onclick="openMeasureModal('neck')">📏 Convert from inches</span>
         </div>
 
         <div id="female-extra-row" class="form-group full" style="display:none;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%;">
             <div class="form-group">
               <label>Hip (cm)</label>
-              <input type="number" id="inp-hip" placeholder="95" onclick="openMeasureModal('hip')"/>
-              <span class="converter-hint" onclick="openMeasureModal('hip')"></span>
+              <input type="number" id="inp-hip" placeholder="95" inputmode="numeric" onclick="openMeasureModal('hip')"/>
+              <span class="converter-hint" onclick="openMeasureModal('hip')">📏 Convert from inches</span>
             </div>
             <div class="form-group">
               <label>Pregnant/Lactating</label>
@@ -389,24 +450,24 @@
 
         <div class="contact-row">
           <div class="form-group">
-            <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+            <label>Phone <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
             <div class="phone-input-wrap">
               <div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div>
-              <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10"/>
+              <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10" inputmode="tel"/>
             </div>
           </div>
           <div class="form-group">
-            <label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
-            <input type="email" id="inp-email" placeholder="you@example.com"/>
+            <label>Email <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+            <input type="email" id="inp-email" placeholder="you@example.com" inputmode="email"/>
           </div>
         </div>
 
         <div class="contact-hint">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;flex-shrink:0;">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          Your phone number and email are private — we will never share or disclose them to any third party.
+          Your details are private — never shared with third parties.
         </div>
       </div>
       <button class="btn-primary" onclick="generateResult()">Generate Result →</button>
@@ -530,7 +591,7 @@
       </div>
       <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
-      <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
+      <div class="section-title" style="margin-bottom:16px;">Food Preferences</div>
       <div class="accordion-item" id="drinks-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Morning Drinks</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
@@ -632,7 +693,7 @@
       <div class="consent-box" onclick="document.getElementById('consent-wa').click(); event.stopPropagation();">
         <input type="checkbox" id="consent-wa" onclick="event.stopPropagation()"/>
         <label for="consent-wa">
-          I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan and follow-up guidance. <strong>We will only reach out regarding your nutrition plan and will never send spam or share your details.</strong>
+          I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan. <strong>We will only reach out regarding your nutrition plan — no spam, ever.</strong>
         </label>
       </div>
       <div class="submit-row">
@@ -642,13 +703,13 @@
     </div>
 
     <!-- SUCCESS -->
-    <div class="card hidden-section wide-card" id="success-section" style="text-align:center;padding:48px 32px;">
+    <div class="card hidden-section wide-card" id="success-section" style="text-align:center;padding:48px 24px;">
       <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
       <div class="section-title" style="margin-bottom:8px;">Plan Request Submitted!</div>
       <p style="color:var(--muted);margin-bottom:24px;">Your personalized diet plan is being prepared. We'll reach out to you shortly based on your inputs.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="education.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 28px;">Explore Nutrition Education →</a>
-        <a href="profile.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 28px;background:#374151;">View My Profile →</a>
+        <a href="education.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 24px;">Explore Nutrition →</a>
+        <a href="profile.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 24px;background:#374151;">View My Profile →</a>
       </div>
     </div>
 
@@ -663,19 +724,19 @@
       <span class="close-btn" onclick="closeHeightModal()">✕</span>
     </div>
     <div class="hcb-tabs">
-      <div class="hcb-tab active" onclick="switchHcbTab(this,'ft-in')">ft & in</div>
-      <div class="hcb-tab" onclick="switchHcbTab(this,'in')">inches</div>
+      <div class="hcb-tab active" onclick="switchHcbTab(this,'ft-in')">ft & inches</div>
+      <div class="hcb-tab" onclick="switchHcbTab(this,'in')">inches only</div>
     </div>
     <div id="hcb-panel-ft-in">
       <div class="hcb-field-row">
         <div class="hcb-input-wrap">
           <span class="hcb-input-label">Feet</span>
-          <input class="hcb-input" type="number" id="modal-ft" placeholder="5" oninput="convertModalFtIn()"/>
+          <input class="hcb-input" type="number" id="modal-ft" placeholder="5" inputmode="numeric" oninput="convertModalFtIn()"/>
         </div>
         <div class="hcb-sep">·</div>
         <div class="hcb-input-wrap">
           <span class="hcb-input-label">Inches</span>
-          <input class="hcb-input" type="number" id="modal-in" placeholder="7" oninput="convertModalFtIn()"/>
+          <input class="hcb-input" type="number" id="modal-in" placeholder="7" inputmode="numeric" oninput="convertModalFtIn()"/>
         </div>
       </div>
       <div class="hcb-result-box">
@@ -689,7 +750,7 @@
       <div class="hcb-field-row">
         <div class="hcb-input-wrap">
           <span class="hcb-input-label">Inches</span>
-          <input class="hcb-input" type="number" id="hcb-inch-only" placeholder="67" oninput="convertInchOnly()"/>
+          <input class="hcb-input" type="number" id="hcb-inch-only" placeholder="67" inputmode="numeric" oninput="convertInchOnly()"/>
         </div>
       </div>
       <div class="hcb-result-box">
@@ -702,18 +763,18 @@
   </div>
 </div>
 
-<!-- ─── Measurement Converter Modal (Waist / Hip / Neck) ─── -->
+<!-- ─── Measurement Converter Modal ─── -->
 <div id="measureModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header">
       <h3 id="measure-modal-title">Waist Converter</h3>
       <span class="close-btn" onclick="closeMeasureModal()">✕</span>
     </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;">Enter your measurement in inches and we'll convert it to centimetres for you.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:18px;">Enter your measurement in inches — we'll convert it to cm.</p>
     <div class="hcb-field-row">
       <div class="hcb-input-wrap">
         <span class="hcb-input-label">Inches</span>
-        <input class="hcb-input" type="number" id="measure-inch-input" placeholder="32" step="0.1" oninput="convertMeasureInch()"/>
+        <input class="hcb-input" type="number" id="measure-inch-input" placeholder="32" step="0.1" inputmode="decimal" oninput="convertMeasureInch()"/>
       </div>
       <div class="hcb-sep" style="font-size:22px;color:var(--muted);padding-bottom:8px;">→</div>
       <div class="hcb-input-wrap">
@@ -731,38 +792,33 @@
 </div>
 
 <script>
-// ─── CONFIG ────────────────────────────────────────────────
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
 
-// ─── PROFILE localStorage HELPERS ─────────────────────────
-function getProfiles() {
-  try { return JSON.parse(localStorage.getItem('nutriplan_profiles') || '[]'); }
-  catch { return []; }
-}
-function saveProfile(id, name) {
-  const profiles = getProfiles();
-  if (!profiles.find(p => p.id === id)) {
-    profiles.push({ id, name });
-    localStorage.setItem('nutriplan_profiles', JSON.stringify(profiles));
-  }
-}
-function generateUserId() {
-  return 'user_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-}
+function getProfiles() { try { return JSON.parse(localStorage.getItem('nutriplan_profiles') || '[]'); } catch { return []; } }
+function saveProfile(id, name) { const p = getProfiles(); if (!p.find(x => x.id === id)) { p.push({ id, name }); localStorage.setItem('nutriplan_profiles', JSON.stringify(p)); } }
+function generateUserId() { return 'user_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 
-// ─── SHEET ─────────────────────────────────────────────────
 async function sendToSheet(data) {
-  try {
-    await fetch(SHEET_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-  } catch(e) { console.warn("Sheet error:", e); }
+  try { await fetch(SHEET_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }); }
+  catch(e) { console.warn("Sheet error:", e); }
 }
 
-// ─── PROGRESS ──────────────────────────────────────────────
+/* ─ NAV ─ */
+function toggleNav() {
+  const h = document.getElementById('hamburger');
+  const n = document.getElementById('nav-links');
+  h.classList.toggle('open');
+  n.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('nav-links').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav')) closeNav();
+});
+
+/* ─ PROGRESS ─ */
 function setProgress(step) {
   const labels = ['Step 1 of 4 — Your Body Metrics','Step 2 of 4 — Health Info','Step 3 of 4 — Preferences','Step 4 of 4 — Symptoms & Submit'];
   document.getElementById('progress-label').textContent = labels[step-1];
@@ -770,7 +826,7 @@ function setProgress(step) {
 }
 setProgress(1);
 
-// ─── HEIGHT MODAL ──────────────────────────────────────────
+/* ─ HEIGHT MODAL ─ */
 function switchHcbTab(tab, panel) {
   document.querySelectorAll('.hcb-tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
@@ -792,29 +848,20 @@ function openHeightModal() { document.getElementById('heightModal').style.displa
 function closeHeightModal() { document.getElementById('heightModal').style.display = 'none'; }
 function applyHeight() {
   const val = document.getElementById('modal-result').textContent;
-  if(val && val !== '—') {
-    document.getElementById('inp-height').value = val;
-    closeHeightModal();
-  }
+  if(val && val !== '—') { document.getElementById('inp-height').value = val; closeHeightModal(); }
 }
 function useHcbValue(resultId) {
   const val = document.getElementById(resultId).textContent;
-  if(val && val !== '—') {
-    document.getElementById('inp-height').value = val;
-    document.getElementById('fg-height').classList.remove('has-error');
-    closeHeightModal();
-  }
+  if(val && val !== '—') { document.getElementById('inp-height').value = val; document.getElementById('fg-height').classList.remove('has-error'); closeHeightModal(); }
 }
 
-// ─── MEASURE MODAL (Waist / Hip / Neck) ───────────────────
-let _measureTarget = null; // which field to fill: 'waist' | 'hip' | 'neck'
-
+/* ─ MEASURE MODAL ─ */
+let _measureTarget = null;
 const measureConfig = {
-  waist: { title: 'Waist Converter',    inputId: 'inp-waist', placeholder: '32' },
-  hip:   { title: 'Hip Converter',      inputId: 'inp-hip',   placeholder: '38' },
-  neck:  { title: 'Neck Converter',     inputId: 'inp-neck',  placeholder: '15' },
+  waist: { title: 'Waist Converter', inputId: 'inp-waist', placeholder: '32' },
+  hip:   { title: 'Hip Converter',   inputId: 'inp-hip',   placeholder: '38' },
+  neck:  { title: 'Neck Converter',  inputId: 'inp-neck',  placeholder: '15' },
 };
-
 function openMeasureModal(target) {
   _measureTarget = target;
   const cfg = measureConfig[target];
@@ -826,16 +873,11 @@ function openMeasureModal(target) {
   document.getElementById('measureModal').style.display = 'flex';
   setTimeout(() => document.getElementById('measure-inch-input').focus(), 80);
 }
-
-function closeMeasureModal() {
-  document.getElementById('measureModal').style.display = 'none';
-  _measureTarget = null;
-}
-
+function closeMeasureModal() { document.getElementById('measureModal').style.display = 'none'; _measureTarget = null; }
 function convertMeasureInch() {
   const inch = parseFloat(document.getElementById('measure-inch-input').value);
   if (!isNaN(inch) && inch > 0) {
-    const cm = Math.round(inch * 2.54 * 10) / 10; // 1 decimal
+    const cm = Math.round(inch * 2.54 * 10) / 10;
     document.getElementById('measure-cm-preview').value = cm;
     document.getElementById('measure-modal-result').textContent = cm;
   } else {
@@ -843,24 +885,17 @@ function convertMeasureInch() {
     document.getElementById('measure-modal-result').textContent = '—';
   }
 }
-
 function applyMeasure() {
   const val = document.getElementById('measure-modal-result').textContent;
   if (!_measureTarget || val === '—') return;
-  const cfg = measureConfig[_measureTarget];
-  document.getElementById(cfg.inputId).value = val;
+  document.getElementById(measureConfig[_measureTarget].inputId).value = val;
   closeMeasureModal();
 }
 
-// Close modals on overlay click
-document.getElementById('measureModal').addEventListener('click', function(e) {
-  if (e.target === this) closeMeasureModal();
-});
-document.getElementById('heightModal').addEventListener('click', function(e) {
-  if (e.target === this) closeHeightModal();
-});
+document.getElementById('measureModal').addEventListener('click', function(e) { if (e.target === this) closeMeasureModal(); });
+document.getElementById('heightModal').addEventListener('click',  function(e) { if (e.target === this) closeHeightModal(); });
 
-// ─── FORM UTILS ────────────────────────────────────────────
+/* ─ FORM UTILS ─ */
 function selectTimeChip(el) {
   document.querySelectorAll('#time-window-chips .time-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -888,7 +923,6 @@ function validate() {
   return ok;
 }
 
-// ─── CALCULATIONS ──────────────────────────────────────────
 function calcBMI(wt,ht) { return (wt/((ht/100)**2)).toFixed(1); }
 function bmiCategory(b) { if(b<18.5) return 'Underweight'; if(b<25) return 'Normal weight'; if(b<30) return 'Overweight'; return 'Obese'; }
 function bmiColor(b) { if(b<18.5) return '#5bc8f5'; if(b<25) return '#60d394'; if(b<30) return '#f4a742'; return '#e74c3c'; }
@@ -896,13 +930,11 @@ function bmiToBarPct(bmi) { const MIN=15,RANGE=25; const c=Math.min(40,Math.max(
 function calcBodyFat(gender,bmi,age) { const sex=gender==='Female'?1:0; return Math.max(5,(1.20*bmi+0.23*age-10.8*sex-5.4)).toFixed(1); }
 function calcCalories(gender,wt,ht,age,activity) { let bmr=gender==='Female'?655+9.6*wt+1.8*ht-4.7*age:66+13.7*wt+5*ht-6.8*age; return Math.round(bmr*(parseFloat(activity)||1.2)); }
 
-// ─── GENERATE RESULT ───────────────────────────────────────
 function generateResult() {
   const ss = document.getElementById('success-section');
   if(ss){ ss.classList.remove('revealed'); ss.style.display='none'; }
   const btn = document.getElementById('submitBtn');
   if(btn){ btn.disabled=false; btn.textContent="Submit My Plan Request"; btn.style.opacity="1"; }
-
   if(!validate()){ document.querySelector('.has-error')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
 
   const wt=parseFloat(document.getElementById('inp-weight').value);
@@ -935,7 +967,6 @@ function generateResult() {
   setTimeout(()=>document.getElementById('results-section').scrollIntoView({behavior:'smooth',block:'start'}),400);
 }
 
-// ─── ACCORDION / CHIPS ─────────────────────────────────────
 function toggleAccordion(h){ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
 function toggleChip(el){ el.classList.toggle('active'); }
 function ynToggle(btn,type){ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; }
@@ -948,75 +979,51 @@ function handleCondition(cb){ if(cb.value==='Other') return; cb.checked?selected
 function renderTags(){ const c=document.getElementById('conditions-tags'); c.innerHTML=''; selectedConditions.forEach(v=>{ const t=document.createElement('div'); t.className='tag'; t.innerHTML=`${v}<span class="tag-x" onclick="removeCondition('${v.replace(/'/g,"\\'")}')">x</span>`; c.appendChild(t); }); }
 function removeCondition(v){ selectedConditions.delete(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=false; renderTags(); }
 
-// ─── GENDER TOGGLE ─────────────────────────────────────────
 document.getElementById('inp-gender').addEventListener('change', function () {
   const femaleRow = document.getElementById('female-extra-row');
   femaleRow.style.display = this.value === 'Female' ? 'grid' : 'none';
   if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; document.getElementById('inp-preg').value=''; }
 });
 
-// ─── SUBMIT FORM ───────────────────────────────────────────
 async function submitForm() {
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Submitting…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed';
-
   const g = id => document.getElementById(id);
   const chips = sel => [...document.querySelectorAll(sel+'.active')].map(c=>c.textContent.trim());
-
   const userId = generateUserId();
   const userName = g('inp-name').value.trim();
-
   const formData = {
-    userId,
-    timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
-    name: userName,
-    age: g('inp-age').value,
-    gender: g('inp-gender').value,
-    height_cm: g('inp-height').value,
-    weight_kg: g('inp-weight').value,
+    userId, timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
+    name: userName, age: g('inp-age').value, gender: g('inp-gender').value,
+    height_cm: g('inp-height').value, weight_kg: g('inp-weight').value,
     activity: g('inp-activity').options[g('inp-activity').selectedIndex]?.text||'',
-    waist_cm: g('inp-waist').value,
-    hip_cm: g('inp-hip').value,
-    neck_cm: g('inp-neck').value,
-    pregnant_lactating: g('inp-preg').value,
-    phone: g('inp-phone').value,
-    email: g('inp-email').value,
-    bmi: g('r-bmi').textContent,
-    bmi_category: g('r-bmi-cat').textContent,
-    body_fat: g('r-fat').textContent,
-    daily_calories: g('r-cal').textContent,
-    health_conditions: [...selectedConditions].join(', '),
-    allergies: g('inp-allergies').value,
-    meals_per_day: g('inp-meals').value,
-    diet_preference: g('inp-diet').value,
-    meal_types: chips('#meal-types .chip').join(', '),
-    eating_window: g('eat-window-val').value,
+    waist_cm: g('inp-waist').value, hip_cm: g('inp-hip').value, neck_cm: g('inp-neck').value,
+    pregnant_lactating: g('inp-preg').value, phone: g('inp-phone').value, email: g('inp-email').value,
+    bmi: g('r-bmi').textContent, bmi_category: g('r-bmi-cat').textContent,
+    body_fat: g('r-fat').textContent, daily_calories: g('r-cal').textContent,
+    health_conditions: [...selectedConditions].join(', '), allergies: g('inp-allergies').value,
+    meals_per_day: g('inp-meals').value, diet_preference: g('inp-diet').value,
+    meal_types: chips('#meal-types .chip').join(', '), eating_window: g('eat-window-val').value,
     morning_drinks: chips('#drink-opts .sub-chip').join(', '),
     nuts_seeds: chips('#nuts-section .sub-chip').join(', '),
     fruits: chips('#fruits-section .sub-chip').join(', '),
     vegetables: chips('#veggies-section .sub-chip').join(', '),
     symptoms: chips('#symptoms-group .chip').join(', '),
-    comments: g('inp-comments').value,
-    whatsapp_consent: g('consent-wa').checked ? 'Yes' : 'No'
+    comments: g('inp-comments').value, whatsapp_consent: g('consent-wa').checked ? 'Yes' : 'No'
   };
-
   await sendToSheet(formData);
   saveProfile(userId, userName);
-
   g('symptoms-section').classList.remove('revealed');
   setTimeout(()=>{ g('symptoms-section').style.display='none'; }, 300);
-
   const ss = g('success-section');
   ss.style.display = 'block';
   setTimeout(()=>ss.classList.add('revealed'), 20);
   setProgress(4);
   ss.scrollIntoView({behavior:'smooth'});
-
   clearForm();
   btn.disabled=false; btn.textContent='Submit My Plan Request'; btn.style.opacity='1'; btn.style.cursor='pointer';
 }
 
-// ─── CLEAR FORM ────────────────────────────────────────────
 function clearForm() {
   document.querySelectorAll('input,textarea').forEach(el=>{ if(el.type!=='checkbox') el.value=''; else el.checked=false; });
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
