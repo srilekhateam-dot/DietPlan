@@ -110,6 +110,34 @@
   .tag.amber{background:#fffbeb;color:#92400e;}
   .err-panel{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--radius-sm);padding:14px 18px;color:#dc2626;font-size:14px;text-align:center;}
 
+  /* Nav profile avatar & dropdown */
+  .nav-profile-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Fraunces',serif;font-size:0.95rem;font-weight:600;cursor:pointer;border:none;flex-shrink:0;position:relative;transition:background 0.2s;}
+  .nav-profile-btn:hover{background:var(--teal-dark);}
+  .nav-profile-btn.show{display:flex;}
+  .nav-profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:200px;z-index:200;display:none;overflow:hidden;}
+  .nav-profile-dropdown.open{display:block;}
+  .nav-pd-email{padding:12px 16px 8px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .nav-pd-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:13.5px;font-weight:500;color:var(--text);text-decoration:none;cursor:pointer;transition:background 0.15s;border:none;background:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif;}
+  .nav-pd-item:hover{background:var(--teal-light);color:var(--teal);}
+  .nav-pd-item.danger:hover{background:#fef2f2;color:#dc2626;}
+  .nav-signin-btn{display:none;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;text-decoration:none;}
+  .nav-signin-btn:hover{background:var(--teal-dark);}
+  .nav-signin-btn.show{display:flex;}
+
+  /* Delete confirmation popup */
+  .del-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1200;}
+  .del-popup-overlay.open{display:flex;}
+  .del-popup{background:#fff;border-radius:16px;padding:28px 26px;max-width:360px;width:90%;box-shadow:0 16px 40px rgba(0,0,0,0.18);animation:fadeUp 0.25s ease;}
+  .del-popup-icon{font-size:2.2rem;text-align:center;margin-bottom:10px;}
+  .del-popup-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:6px;}
+  .del-popup-msg{font-size:13px;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:22px;}
+  .del-popup-btns{display:flex;gap:10px;}
+  .del-popup-btns button{flex:1;padding:11px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;}
+  .del-cancel{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)!important;}
+  .del-cancel:hover{border-color:var(--teal)!important;color:var(--teal);background:var(--teal-light);}
+  .del-confirm{background:#dc2626;color:#fff;}
+  .del-confirm:hover{background:#b91c1c;}
+
   /* Password show/hide toggle */
   .pw-wrap{position:relative;}
   .pw-wrap input{padding-right:40px !important;width:100%;}
@@ -134,12 +162,26 @@
 
 <nav>
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div class="nav-links">
-    <a href="index.html">Form</a>
-    <a href="education.html">Education</a>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="nav-links">
+      <a href="index.html">Form</a>
+      <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
-    <a href="profile.html" class="active">Profiles</a>
-  
+
+    </div>
+
+    <!-- NOT signed in: simple Sign In button -->
+    <a href="#" class="nav-signin-btn show" id="nav-signin-btn" onclick="event.preventDefault();scrollToAuth()">Sign In</a>
+
+    <!-- Signed in: avatar + dropdown -->
+    <div style="position:relative;" id="nav-profile-wrap">
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account">?</button>
+      <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+        <div class="nav-pd-email" id="nav-pd-email"></div>
+        <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
+        <button class="nav-pd-item danger" onclick="doSignOut()">🚪 Sign Out</button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -248,6 +290,19 @@
     <div class="fp-err" id="fp-err"></div>
     <div class="fp-suc" id="fp-suc"></div>
     <button class="btn btn-p" onclick="doResetPassword()">Send Reset Link</button>
+  </div>
+</div>
+
+<!-- ─── Delete Confirmation Popup ─── -->
+<div class="del-popup-overlay" id="del-popup-overlay">
+  <div class="del-popup">
+    <div class="del-popup-icon">🗑️</div>
+    <div class="del-popup-title">Remove Profile?</div>
+    <div class="del-popup-msg" id="del-popup-msg">Are you sure you want to remove this profile? Your data in Google Sheets is kept.</div>
+    <div class="del-popup-btns">
+      <button class="del-cancel" onclick="closeDelPopup()">Cancel</button>
+      <button class="del-confirm" id="del-confirm-btn">Yes, Remove</button>
+    </div>
   </div>
 </div>
 
@@ -375,6 +430,7 @@ window.doCreateAccount = async () => {
 
 // ─── SIGN OUT ─────────────────────────────────────────────
 window.doSignOut = async () => {
+  document.getElementById('nav-profile-dropdown').classList.remove('open');
   await fbSignOut(auth);
   usingLocal = false;
   document.getElementById('acct-bar').classList.remove('show');
@@ -525,21 +581,69 @@ window.selectProfile = async (userId, chipEl, isLocal) => {
   }
 };
 
+// ─── NAV AUTH STATE ───────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  const profileBtn = document.getElementById('nav-profile-btn');
+  const signinBtn  = document.getElementById('nav-signin-btn');
+  const emailEl    = document.getElementById('nav-pd-email');
+  if (user) {
+    const initials = (user.email||'?').slice(0,2).toUpperCase();
+    profileBtn.textContent = initials;
+    profileBtn.classList.add('show');
+    if (emailEl) emailEl.textContent = user.email;
+    signinBtn.style.display = 'none';
+  } else {
+    profileBtn.classList.remove('show');
+    signinBtn.style.display = '';
+    document.getElementById('nav-profile-dropdown').classList.remove('open');
+  }
+});
+
+window.toggleNavDropdown = function() {
+  document.getElementById('nav-profile-dropdown').classList.toggle('open');
+};
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('nav-profile-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('nav-profile-dropdown').classList.remove('open');
+  }
+});
+window.scrollToAuth = function() {
+  document.getElementById('auth-card').scrollIntoView({behavior:'smooth'});
+  return false;
+};
+
+// ─── DELETE POPUP ─────────────────────────────────────────
+let _pendingDelete = null;
+window.closeDelPopup = function() {
+  document.getElementById('del-popup-overlay').classList.remove('open');
+  _pendingDelete = null;
+};
+document.getElementById('del-popup-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDelPopup();
+});
+
 // ─── CONFIRM DELETE ───────────────────────────────────────
 window.confirmDelete = async (userId, name, isLocal) => {
-  if (!confirm(`Remove "${name}" from ${isLocal?'this browser':'your account'}?\n\nYour data in Google Sheets is kept.`)) return;
-  if (isLocal) {
-    try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
-    showLocalProfiles();
-  } else {
-    const user = auth.currentUser;
-    if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
-  }
-  if (activeId===userId) {
-    activeId=null;
-    const dp=document.getElementById('detail-panel');
-    dp.classList.remove('visible'); dp.innerHTML='';
-  }
+  _pendingDelete = { userId, name, isLocal };
+  document.getElementById('del-popup-msg').textContent =
+    `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data in Google Sheets is kept.`;
+  document.getElementById('del-popup-overlay').classList.add('open');
+  document.getElementById('del-confirm-btn').onclick = async () => {
+    closeDelPopup();
+    if (isLocal) {
+      try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
+      showLocalProfiles();
+    } else {
+      const user = auth.currentUser;
+      if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
+    }
+    if (activeId===userId) {
+      activeId=null;
+      const dp=document.getElementById('detail-panel');
+      dp.classList.remove('visible'); dp.innerHTML='';
+    }
+  };
 };
 
 // ─── RENDER DETAIL ────────────────────────────────────────
