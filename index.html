@@ -206,11 +206,20 @@
   #female-extra-row .form-group input,
   #female-extra-row .form-group select { width: 100%; }
 
-  /* Login status bar in nav */
-  .nav-login-bar { display:none; align-items:center; gap:8px; background:var(--teal-light); border:1.5px solid #c8ede9; border-radius:20px; padding:5px 14px 5px 10px; font-size:12.5px; font-weight:600; color:var(--teal-dark); cursor:default; }
-  .nav-login-bar.show { display:flex; }
-  .nav-login-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; }
-  .nav-signout-btn { background:none; border:none; color:var(--teal); font-size:12px; font-weight:700; cursor:pointer; margin-left:4px; padding:0; text-decoration:underline; }
+  /* Nav profile avatar & dropdown */
+  .nav-profile-btn { display:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--teal); color:#fff; font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; cursor:pointer; border:none; flex-shrink:0; position:relative; transition:background 0.2s; }
+  .nav-profile-btn:hover { background:var(--teal-dark); }
+  .nav-profile-btn.show { display:flex; }
+  .nav-profile-dropdown { position:absolute; top:calc(100% + 10px); right:0; background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-sm); box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:200px; z-index:200; display:none; overflow:hidden; }
+  .nav-profile-dropdown.open { display:block; }
+  .nav-pd-email { padding:12px 16px 8px; font-size:12px; color:var(--muted); border-bottom:1px solid var(--border); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .nav-pd-item { display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:13.5px; font-weight:500; color:var(--text); text-decoration:none; cursor:pointer; transition:background 0.15s; border:none; background:none; width:100%; text-align:left; font-family:'DM Sans',sans-serif; }
+  .nav-pd-item:hover { background:var(--teal-light); color:var(--teal); }
+  .nav-pd-item.danger:hover { background:#fef2f2; color:#dc2626; }
+  /* Nav sign-in button (when not logged in) */
+  .nav-signin-btn { display:none; align-items:center; gap:6px; background:var(--teal); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; text-decoration:none; }
+  .nav-signin-btn:hover { background:var(--teal-dark); }
+  .nav-signin-btn.show { display:flex; }
 
   /* Password input with eye toggle */
   .pw-wrap { position:relative; }
@@ -264,17 +273,23 @@
 <nav id="topnav">
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
   <div style="display:flex;align-items:center;gap:10px;">
-    <div class="nav-login-bar" id="nav-login-bar">
-      <div class="nav-login-dot"></div>
-      <span id="nav-login-phone"></span>
-      <button class="nav-signout-btn" onclick="navSignOut()">Sign out</button>
-    </div>
     <div class="nav-links">
       <a href="#nutrition-overview" class="active">Nutrition</a>
       <a href="#form-section">Form</a>
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
-      <a href="profile.html">Profiles</a>
+      
+    </div>
+    <!-- Shown when NOT signed in -->
+    <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
+    <!-- Shown when signed in -->
+    <div style="position:relative;" id="nav-profile-wrap">
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
+      <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+        <div class="nav-pd-email" id="nav-pd-email"></div>
+        <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
+        <button class="nav-pd-item danger" onclick="navSignOut()">🚪 Sign Out</button>
+      </div>
     </div>
   </div>
 </nav>
@@ -361,6 +376,37 @@
     <div class="card">
       <div class="step-label">Step 1</div>
       <div class="section-title">Tell Us About Yourself</div>
+
+      <!-- Who is this for? -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--teal-dark);margin-bottom:12px;">Who is this diet plan for?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <button id="plan-for-self" onclick="setPlanFor('self')" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--teal);background:var(--teal);color:#fff;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;">
+            <span style="font-size:1.6rem;">👤</span>
+            <span style="font-weight:700;font-size:14px;">For Myself</span>
+            <span style="font-size:11.5px;opacity:0.85;">Fill in my own details</span>
+          </button>
+          <button id="plan-for-other" onclick="setPlanFor('other')" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;">
+            <span style="font-size:1.6rem;">👥</span>
+            <span style="font-weight:700;font-size:14px;">For Someone Else</span>
+            <span style="font-size:11.5px;">Family member, friend…</span>
+          </button>
+        </div>
+        <div id="plan-for-other-fields" style="display:none;margin-top:16px;padding:16px;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--teal-dark);margin-bottom:10px;">Tell us about them</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="form-group">
+              <label>Their Name</label>
+              <input type="text" id="plan-other-name" placeholder="e.g. Mom, Brother…"/>
+            </div>
+            <div class="form-group">
+              <label>Relation</label>
+              <input type="text" id="plan-other-relation" placeholder="e.g. Mother, Son, Friend…"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="form-grid">
         <div class="form-group" id="fg-name">
           <label>Name</label>
@@ -922,24 +968,41 @@ const db = getFirestore(app);
 
 // ─── AUTH STATE → update nav bar ───────────────────────────
 onAuthStateChanged(auth, user => {
-  const bar = document.getElementById('nav-login-bar');
-  const phoneEl = document.getElementById('nav-login-phone');
+  const profileBtn = document.getElementById('nav-profile-btn');
+  const signinBtn  = document.getElementById('nav-signin-btn');
+  const emailEl    = document.getElementById('nav-pd-email');
   if (user) {
-    const phone = user.email;
-    phoneEl.textContent = 'Logged in: ' + phone;
-    bar.classList.add('show');
+    const initials = (user.email||'?').slice(0,2).toUpperCase();
+    profileBtn.textContent = initials;
+    profileBtn.classList.add('show');
+    if (emailEl) emailEl.textContent = user.email;
+    if (signinBtn) signinBtn.classList.remove('show');
   } else {
-    bar.classList.remove('show');
-    phoneEl.textContent = '';
+    profileBtn.classList.remove('show');
+    if (signinBtn) signinBtn.classList.add('show');
+    document.getElementById('nav-profile-dropdown').classList.remove('open');
   }
 });
 
 // Sign out from nav
 window.navSignOut = async function() {
+  document.getElementById('nav-profile-dropdown').classList.remove('open');
   await fbSignOut(auth);
   localStorage.removeItem('nutriplan_uid');
   localStorage.removeItem('nutriplan_phone');
 };
+
+// Toggle nav profile dropdown
+window.toggleNavDropdown = function() {
+  document.getElementById('nav-profile-dropdown').classList.toggle('open');
+};
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('nav-profile-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('nav-profile-dropdown').classList.remove('open');
+  }
+});
 
 // ─── SHOW PASSWORD TOGGLE ──────────────────────────────────
 window.togglePw = function(inputId, btn) {
@@ -1510,6 +1573,22 @@ function clearForm() {
 window.toggleAccordion = h=>{ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); };
 window.toggleChip = el=>el.classList.toggle('active');
 window.ynToggle = (btn,type)=>{ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; };
+
+// ─── PLAN FOR SELF / OTHER ─────────────────────────────────
+window.setPlanFor = function(type) {
+  const selfBtn  = document.getElementById('plan-for-self');
+  const otherBtn = document.getElementById('plan-for-other');
+  const fields   = document.getElementById('plan-for-other-fields');
+  if (type === 'self') {
+    selfBtn.style.cssText  += ';border-color:var(--teal);background:var(--teal);color:#fff;';
+    otherBtn.style.cssText += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
+    fields.style.display = 'none';
+  } else {
+    otherBtn.style.cssText += ';border-color:var(--teal);background:var(--teal);color:#fff;';
+    selfBtn.style.cssText  += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
+    fields.style.display = 'block';
+  }
+};
 window.toggleHealthDD = ()=>{ const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow'); l.classList.toggle('open'); a.textContent=l.classList.contains('open')?'▴':'▾'; };
 window.toggleOtherInput = cb=>{ const inp=document.getElementById('other-condition-input'); inp.style.display=cb.checked?'block':'none'; if(!cb.checked){ inp.value=''; selectedConditions.delete('Other'); selectedConditions.delete(inp.dataset.val||''); renderTags(); } };
 window.updateOtherCondition = inp=>{ const prev=inp.dataset.val; if(prev) selectedConditions.delete(prev); if(inp.value.trim()){ const v=inp.value.trim(); inp.dataset.val=v; selectedConditions.add(v); } renderTags(); };
