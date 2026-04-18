@@ -325,7 +325,7 @@
     .req-highlight { grid-template-columns: 1fr 1fr; }
     .carb-visual { flex-direction: column; }
     nav { overflow: hidden; }
-    .nav-right { min-width: 0; flex: 1; display: flex; align-items: center; gap: 8px; justify-content: flex-end; overflow: visible; }
+    .nav-right { min-width: 0; flex: 1; overflow: hidden; }
     .nav-links {
       display: flex;
       overflow-x: auto;
@@ -342,11 +342,23 @@
     }
     .nav-profile-btn, .nav-signin-btn { flex-shrink: 0; }
   }
-
-  /* Prevent nav button flash while Firebase loads */
-  .nav-profile-btn, .nav-signin-btn { transition: opacity 0.2s; }
-  .nav-profile-btn:not(.show), .nav-signin-btn:not(.show) { display: none !important; }
 </style>
+
+<script>
+// ── Instant nav auth: read cached state before first paint ──
+(function(){
+  var cached = localStorage.getItem('np_auth'); // 'signed-in' or null
+  var style = document.createElement('style');
+  if (cached === 'signed-in') {
+    // Show avatar, hide sign-in immediately
+    style.textContent = '#nav-signin-btn{display:none!important}#nav-profile-btn{display:flex!important}';
+  } else {
+    // Show sign-in, hide avatar immediately
+    style.textContent = '#nav-profile-btn{display:none!important}#nav-signin-btn{display:flex!important}';
+  }
+  document.head.appendChild(style);
+})();
+</script>
 </head>
 <body>
 
@@ -803,30 +815,24 @@ const _app = initializeApp({
   appId:"1:851509980462:web:b18af741addba334ca1ebf"
 });
 const _auth = getAuth(_app);
-// Hide both initially; show correct one after Firebase resolves (prevents flash)
-(function(){
-  const sb = document.getElementById('nav-signin-btn');
-  const pb = document.getElementById('nav-profile-btn');
-  if (sb) sb.classList.remove('show');
-  if (pb) pb.classList.remove('show');
-})();
-
 onAuthStateChanged(_auth, user => {
   const signinBtn  = document.getElementById('nav-signin-btn');
   const profileBtn = document.getElementById('nav-profile-btn');
   const pdEmail    = document.getElementById('nav-pd-email');
   if (user) {
+    localStorage.setItem('np_auth', 'signed-in');
     signinBtn.classList.remove('show');
     profileBtn.classList.add('show');
     const initials = (user.displayName || user.email || '?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
     if (pdEmail) pdEmail.textContent = user.email || '';
   } else {
+    localStorage.removeItem('np_auth');
     signinBtn.classList.add('show');
     profileBtn.classList.remove('show');
   }
 });
-window.navSignOut = () => signOut(_auth).then(() => { location.href = 'index.html'; });
+window.navSignOut = () => { localStorage.removeItem('np_auth'); return signOut(_auth).then(() => { location.href = 'index.html'; }); };
 window.toggleNavDropdown = () => {
   document.getElementById('nav-profile-dropdown').classList.toggle('open');
 };
