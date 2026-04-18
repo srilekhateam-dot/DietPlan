@@ -240,16 +240,7 @@
 
   @media (max-width: 820px) {
     .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
-    nav { padding: 0 16px; }
-    .card { margin: 0 auto 20px; max-width: 100%; width: 100%; }
-    .form-grid { grid-template-columns: 1fr; }
-    .contact-row { grid-template-columns: 1fr; }
-    .results-grid { grid-template-columns: 1fr; }
-    .submit-row { flex-direction: column; }
-    .landing-inner { grid-template-columns: 1fr; gap: 24px; }
-    .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .ln-card { padding: 12px 8px; }
-    nav { overflow: hidden; }
+    nav { padding: 0 16px; overflow: hidden; }
     .nav-right { min-width: 0; flex: 1; overflow: hidden; }
     .nav-links {
       display: flex;
@@ -266,6 +257,14 @@
       padding: 6px 10px;
     }
     .nav-profile-btn, .nav-signin-btn { flex-shrink: 0; }
+    .card { margin: 0 auto 20px; max-width: 100%; width: 100%; }
+    .form-grid { grid-template-columns: 1fr; }
+    .contact-row { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .submit-row { flex-direction: column; }
+    .landing-inner { grid-template-columns: 1fr; gap: 24px; }
+    .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .ln-card { padding: 12px 8px; }
   }
 </style>
 </head>
@@ -281,7 +280,7 @@
       <a href="comments.html">Comments</a>
     </div>
     <!-- Shown when NOT signed in -->
-    <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
+    <a href="profile.html" class="nav-signin-btn show" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
     <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
