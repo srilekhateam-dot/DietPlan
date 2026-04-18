@@ -249,22 +249,23 @@
     .landing-inner { grid-template-columns: 1fr; gap: 24px; }
     .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .ln-card { padding: 12px 8px; }
+    nav { overflow: hidden; }
+    .nav-right { min-width: 0; flex: 1; overflow: hidden; }
     .nav-links {
-    display: flex;
-    overflow-x: auto;           /* ✅ enables side scroll */
-    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
-    scrollbar-width: none;      /* hide scrollbar (Firefox) */
-    gap: 6px;
-  }
-
-  .nav-links::-webkit-scrollbar {
-    display: none;              /* hide scrollbar (Chrome) */
-  }
-
-  .nav-links a {
-    flex: 0 0 auto;             /* ❗ prevents shrinking */
-    white-space: nowrap;        /* ❗ keeps text in one line */
-  }
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 4px;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-size: 12.5px;
+      padding: 6px 10px;
+    }
+    .nav-profile-btn, .nav-signin-btn { flex-shrink: 0; }
   }
 </style>
 </head>
@@ -272,18 +273,17 @@
 
 <nav id="topnav">
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div class="nav-right" style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;justify-content:flex-end;">
     <div class="nav-links">
       <a href="#nutrition-overview" class="active">Nutrition</a>
       <a href="#form-section">Form</a>
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
-      
     </div>
     <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
-    <div style="position:relative;" id="nav-profile-wrap">
+    <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
       <div class="nav-profile-dropdown" id="nav-profile-dropdown">
         <div class="nav-pd-email" id="nav-pd-email"></div>
