@@ -240,22 +240,11 @@
 
   @media (max-width: 820px) {
     .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
-    nav { padding: 0 16px; overflow: hidden; }
-    .nav-right { min-width: 0; flex: 1; overflow: hidden; }
-    .nav-links {
-      display: flex;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      gap: 4px;
-    }
+    nav { padding: 0 16px; }
+    .nav-right { min-width: 0; flex: 1; display: flex; align-items: center; gap: 8px; justify-content: flex-end; overflow: visible; }
+    .nav-links { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; flex: 1; }
     .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a {
-      flex: 0 0 auto;
-      white-space: nowrap;
-      font-size: 12.5px;
-      padding: 6px 10px;
-    }
+    .nav-links a { flex: 0 0 auto; white-space: nowrap; font-size: 12.5px; padding: 6px 10px; }
     .nav-profile-btn, .nav-signin-btn { flex-shrink: 0; }
     .card { margin: 0 auto 20px; max-width: 100%; width: 100%; }
     .form-grid { grid-template-columns: 1fr; }
@@ -265,7 +254,27 @@
     .landing-inner { grid-template-columns: 1fr; gap: 24px; }
     .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .ln-card { padding: 12px 8px; }
+    .nav-links {
+    display: flex;
+    overflow-x: auto;           /* ✅ enables side scroll */
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    scrollbar-width: none;      /* hide scrollbar (Firefox) */
+    gap: 6px;
   }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;              /* hide scrollbar (Chrome) */
+  }
+
+  .nav-links a {
+    flex: 0 0 auto;             /* ❗ prevents shrinking */
+    white-space: nowrap;        /* ❗ keeps text in one line */
+  }
+  }
+
+  /* Prevent nav button flash while Firebase loads */
+  .nav-profile-btn, .nav-signin-btn { transition: opacity 0.2s; }
+  .nav-profile-btn:not(.show), .nav-signin-btn:not(.show) { display: none !important; }
 </style>
 </head>
 <body>
@@ -278,9 +287,10 @@
       <a href="#form-section">Form</a>
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
+      
     </div>
     <!-- Shown when NOT signed in -->
-    <a href="profile.html" class="nav-signin-btn show" id="nav-signin-btn">Sign In</a>
+    <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
     <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
@@ -966,6 +976,14 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ─── AUTH STATE → update nav bar ───────────────────────────
+// Hide both initially; show correct one after Firebase resolves
+(function(){
+  const sb = document.getElementById('nav-signin-btn');
+  const pb = document.getElementById('nav-profile-btn');
+  if (sb) sb.classList.remove('show');
+  if (pb) pb.classList.remove('show');
+})();
+
 onAuthStateChanged(auth, user => {
   const profileBtn = document.getElementById('nav-profile-btn');
   const signinBtn  = document.getElementById('nav-signin-btn');
