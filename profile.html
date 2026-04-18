@@ -155,18 +155,30 @@
   .fp-suc{display:none;font-size:13px;color:#065f46;background:#ecfdf5;padding:10px 14px;border-radius:8px;margin-bottom:10px;font-weight:600;}
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-  @media(max-width:640px){nav{padding:0 16px;}.nav-right{min-width:0;flex:1;overflow:visible;display:flex;align-items:center;gap:8px;justify-content:flex-end;}.nav-links{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;min-width:0;flex:1;}.nav-links a{flex:0 0 auto;white-space:nowrap;font-size:12.5px;padding:6px 10px;}.nav-profile-btn,.nav-signin-btn{flex-shrink:0;}.d-grid{grid-template-columns:1fr 1fr;}.dk{min-width:120px;}.auth-tabs{gap:4px;}.auth-tab{font-size:11.5px;}}
-
-  /* Prevent nav button flash while Firebase loads */
-  .nav-profile-btn, .nav-signin-btn { transition: opacity 0.2s; }
-  .nav-profile-btn:not(.show), .nav-signin-btn:not(.show) { display: none !important; }
+  @media(max-width:640px){nav{padding:0 16px;}.d-grid{grid-template-columns:1fr 1fr;}.dk{min-width:120px;}.auth-tabs{gap:4px;}.auth-tab{font-size:11.5px;}}
 </style>
+
+<script>
+// ── Instant nav auth: read cached state before first paint ──
+(function(){
+  var cached = localStorage.getItem('np_auth'); // 'signed-in' or null
+  var style = document.createElement('style');
+  if (cached === 'signed-in') {
+    // Show avatar, hide sign-in immediately
+    style.textContent = '#nav-signin-btn{display:none!important}#nav-profile-btn{display:flex!important}';
+  } else {
+    // Show sign-in, hide avatar immediately
+    style.textContent = '#nav-profile-btn{display:none!important}#nav-signin-btn{display:flex!important}';
+  }
+  document.head.appendChild(style);
+})();
+</script>
 </head>
 <body>
 
 <nav>
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div class="nav-right" style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;justify-content:flex-end;">
+  <div style="display:flex;align-items:center;gap:8px;">
     <div class="nav-links">
       <a href="index.html">Form</a>
       <a href="education.html">Education</a>
@@ -175,10 +187,10 @@
     </div>
 
     <!-- NOT signed in: simple Sign In button -->
-    <a href="#" class="nav-signin-btn" id="nav-signin-btn" onclick="event.preventDefault();scrollToAuth()">Sign In</a>
+    <a href="#" class="nav-signin-btn show" id="nav-signin-btn" onclick="event.preventDefault();scrollToAuth()">Sign In</a>
 
     <!-- Signed in: avatar + dropdown -->
-    <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
+    <div style="position:relative;" id="nav-profile-wrap">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account">?</button>
       <div class="nav-profile-dropdown" id="nav-profile-dropdown">
         <div class="nav-pd-email" id="nav-pd-email"></div>
@@ -586,25 +598,19 @@ window.selectProfile = async (userId, chipEl, isLocal) => {
 };
 
 // ─── NAV AUTH STATE ───────────────────────────────────────
-// Hide both initially to prevent flash; show correct one after Firebase resolves
-(function(){
-  const sb = document.getElementById('nav-signin-btn');
-  const pb = document.getElementById('nav-profile-btn');
-  if (sb) sb.classList.remove('show');
-  if (pb) pb.classList.remove('show');
-})();
-
 onAuthStateChanged(auth, user => {
   const profileBtn = document.getElementById('nav-profile-btn');
   const signinBtn  = document.getElementById('nav-signin-btn');
   const emailEl    = document.getElementById('nav-pd-email');
   if (user) {
+    localStorage.setItem('np_auth', 'signed-in');
     const initials = (user.email||'?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
     profileBtn.classList.add('show');
     if (emailEl) emailEl.textContent = user.email;
     signinBtn.classList.remove('show');
   } else {
+    localStorage.removeItem('np_auth');
     profileBtn.classList.remove('show');
     signinBtn.classList.add('show');
     document.getElementById('nav-profile-dropdown').classList.remove('open');
