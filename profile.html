@@ -164,7 +164,7 @@
   <!-- Auth Card -->
   <div id="auth-card" class="auth-card">
     <div class="card-title">Sign In or Create Account</div>
-    <div class="card-sub">Your phone number is your username. Access all your saved profiles from any device.</div>
+    <div class="card-sub">Your email is your username. Access all your saved profiles from any device.</div>
     <div class="auth-tabs">
       <div class="auth-tab active" id="ptab-login" onclick="switchTab('login')">Sign In</div>
       <div class="auth-tab" id="ptab-create" onclick="switchTab('create')">Create Account</div>
@@ -173,10 +173,8 @@
     <!-- Sign In -->
     <div id="form-login">
       <div class="fg">
-        <label>Phone Number</label>
-        <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
-          <input type="tel" id="li-phone" placeholder="9876543210" maxlength="10" onkeydown="if(event.key==='Enter')doSignIn()"/>
-        </div>
+        <label>Email</label>
+        <input type="email" id="li-email" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doSignIn()"/>
       </div>
       <div class="fg">
         <label>Password</label>
@@ -193,10 +191,8 @@
     <!-- Create Account -->
     <div id="form-create" style="display:none;">
       <div class="fg">
-        <label>Phone Number (Username)</label>
-        <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
-          <input type="tel" id="cr-phone" placeholder="9876543210" maxlength="10"/>
-        </div>
+        <label>Email (Username)</label>
+        <input type="email" id="cr-email" placeholder="you@example.com" autocomplete="email"/>
       </div>
       <div class="fg">
         <label>Create Password</label>
@@ -238,42 +234,19 @@
 <div id="forgotModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header">
-      <h3>Change Password</h3>
+      <h3>Reset Password</h3>
       <span class="close-btn" onclick="closeForgotModal()">✕</span>
     </div>
     <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
-      🔑 Enter your phone number, your <strong>current password</strong>, and choose a new one.
+      📧 Enter your email and we'll send you a link to reset your password.
     </p>
     <div class="fg">
-      <label>Phone Number</label>
-      <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
-        <input type="tel" id="fp-phone" placeholder="9876543210" maxlength="10"/>
-      </div>
-    </div>
-    <div class="fg">
-      <label>Current Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-oldpass" placeholder="Your current password"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-oldpass',this)" tabindex="-1">👁</button>
-      </div>
-    </div>
-    <div class="fg">
-      <label>New Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-newpass" placeholder="Min 6 characters"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass',this)" tabindex="-1">👁</button>
-      </div>
-    </div>
-    <div class="fg" style="margin-bottom:14px;">
-      <label>Confirm New Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-newpass2" placeholder="Re-enter new password"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass2',this)" tabindex="-1">👁</button>
-      </div>
+      <label>Email</label>
+      <input type="email" id="fp-email" placeholder="you@example.com" autocomplete="off" onkeydown="if(event.key==='Enter')doResetPassword()"/>
     </div>
     <div class="fp-err" id="fp-err"></div>
     <div class="fp-suc" id="fp-suc"></div>
-    <button class="btn btn-p" onclick="doResetPassword()">Reset Password</button>
+    <button class="btn btn-p" onclick="doResetPassword()">Send Reset Link</button>
   </div>
 </div>
 
@@ -283,7 +256,7 @@
 // Get it at: console.firebase.google.com → Project Settings → Web app
 import { initializeApp }               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-         signOut as fbSignOut, onAuthStateChanged, updatePassword }
+         signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -327,7 +300,7 @@ window.togglePw = function(inputId, btn) {
 
 // ─── FORGOT PASSWORD MODAL ────────────────────────────────
 window.openForgotModal = function() {
-  ['fp-phone','fp-oldpass','fp-newpass','fp-newpass2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  const el = document.getElementById('fp-email'); if(el) el.value = '';
   document.getElementById('fp-err').style.display = 'none';
   document.getElementById('fp-suc').style.display = 'none';
   document.getElementById('forgotModal').style.display = 'flex';
@@ -340,33 +313,22 @@ document.getElementById('forgotModal').addEventListener('click', function(e) {
 });
 
 window.doResetPassword = async function() {
-  const phone    = document.getElementById('fp-phone').value.trim();
-  const oldPass  = document.getElementById('fp-oldpass').value;
-  const newPass  = document.getElementById('fp-newpass').value;
-  const newPass2 = document.getElementById('fp-newpass2').value;
-  const errEl    = document.getElementById('fp-err');
-  const sucEl    = document.getElementById('fp-suc');
+  const email = document.getElementById('fp-email').value.trim();
+  const errEl = document.getElementById('fp-err');
+  const sucEl = document.getElementById('fp-suc');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
-  if (!/^\d{10}$/.test(phone))   { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display = 'block'; return; }
-  if (!oldPass)                   { errEl.textContent = 'Enter your current password'; errEl.style.display = 'block'; return; }
-  if (newPass.length < 6)        { errEl.textContent = 'New password must be at least 6 characters'; errEl.style.display = 'block'; return; }
-  if (newPass !== newPass2)      { errEl.textContent = 'New passwords do not match'; errEl.style.display = 'block'; return; }
-  if (oldPass === newPass)       { errEl.textContent = 'New password must be different from current password'; errEl.style.display = 'block'; return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display = 'block'; return; }
 
-  const email = `91${phone}@nutriplan.app`;
   try {
-    const cred = await signInWithEmailAndPassword(auth, email, oldPass);
-    await updatePassword(cred.user, newPass);
-    sucEl.textContent = '✅ Password updated successfully! Use your new password next time you sign in.';
+    await sendPasswordResetEmail(auth, email);
+    sucEl.innerHTML = '✅ Reset link sent!<br><span style="font-weight:400;font-size:12px;">Check your inbox — <strong>and your spam/junk folder</strong> if you don\'t see it within a minute.</span>';
     sucEl.style.display = 'block';
-    setTimeout(() => closeForgotModal(), 2800);
+    setTimeout(() => closeForgotModal(), 4000);
   } catch(e) {
-    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      errEl.textContent = 'Current password is incorrect.';
-    } else if (e.code === 'auth/user-not-found') {
-      errEl.textContent = 'No account found with this phone number.';
+    if (e.code === 'auth/user-not-found') {
+      errEl.textContent = 'No account found with this email.';
     } else {
       errEl.textContent = e.message;
     }
@@ -376,36 +338,36 @@ window.doResetPassword = async function() {
 
 // ─── SIGN IN ──────────────────────────────────────────────
 window.doSignIn = async () => {
-  const phone = document.getElementById('li-phone').value.trim();
+  const email = document.getElementById('li-email').value.trim();
   const pass  = document.getElementById('li-pass').value;
   const err   = document.getElementById('li-err');
   err.style.display = 'none';
-  if (!/^\d{10}$/.test(phone)) { err.textContent='Enter a valid 10-digit phone number'; err.style.display='block'; return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Enter a valid email address'; err.style.display='block'; return; }
   if (!pass)                   { err.textContent='Enter your password'; err.style.display='block'; return; }
   try {
-    await signInWithEmailAndPassword(auth, `91${phone}@nutriplan.app`, pass);
+    await signInWithEmailAndPassword(auth, email, pass);
   } catch(e) {
     err.textContent = (e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')
-      ? 'Incorrect phone number or password.' : e.message;
+      ? 'Incorrect email or password.' : e.message;
     err.style.display = 'block';
   }
 };
 
 // ─── CREATE ACCOUNT ───────────────────────────────────────
 window.doCreateAccount = async () => {
-  const phone = document.getElementById('cr-phone').value.trim();
+  const email = document.getElementById('cr-email').value.trim();
   const pass  = document.getElementById('cr-pass').value;
   const pass2 = document.getElementById('cr-pass2').value;
   const err   = document.getElementById('cr-err');
   err.style.display = 'none';
-  if (!/^\d{10}$/.test(phone)) { err.textContent='Enter a valid 10-digit phone number'; err.style.display='block'; return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Enter a valid email address'; err.style.display='block'; return; }
   if (pass.length < 6)         { err.textContent='Password must be at least 6 characters'; err.style.display='block'; return; }
   if (pass !== pass2)          { err.textContent='Passwords do not match'; err.style.display='block'; return; }
   try {
-    await createUserWithEmailAndPassword(auth, `91${phone}@nutriplan.app`, pass);
+    await createUserWithEmailAndPassword(auth, email, pass);
   } catch(e) {
     err.textContent = e.code==='auth/email-already-in-use'
-      ? 'This phone number already has an account. Use Sign In.' : e.message;
+      ? 'This email already has an account. Use Sign In.' : e.message;
     err.style.display = 'block';
   }
 };
@@ -426,7 +388,7 @@ window.doSignOut = async () => {
 onAuthStateChanged(auth, async user => {
   if (user) {
     usingLocal = false;
-    const phone = user.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+    const phone = user.email;
     document.getElementById('bar-phone').textContent = phone;
     document.getElementById('acct-bar').classList.add('show');
     document.getElementById('auth-card').style.display = 'none';
