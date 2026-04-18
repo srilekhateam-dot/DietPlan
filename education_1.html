@@ -64,6 +64,12 @@
     color: var(--teal);
   }
 
+  /* Login pill in nav */
+  .nav-login-bar{display:none;align-items:center;gap:8px;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:20px;padding:5px 14px 5px 10px;font-size:12.5px;font-weight:600;color:var(--teal-dark);}
+  .nav-login-bar.show{display:flex;}
+  .nav-login-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+  .nav-signout-btn{background:none;border:none;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;margin-left:4px;padding:0;text-decoration:underline;}
+
   /* SIDEBAR + CONTENT LAYOUT */
   .edu-layout {
     display: grid;
@@ -318,11 +324,18 @@
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-brand">Nutri<span>Plan</span></a>
-  <div class="nav-links">
-    <a href="index.html">Form</a>
-    <a href="education.html" class="active">Education</a>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-login-bar" id="nav-login-bar">
+      <div class="nav-login-dot"></div>
+      <span id="nav-login-phone"></span>
+      <button class="nav-signout-btn" onclick="navSignOut()">Sign out</button>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Form</a>
+      <a href="education.html" class="active">Education</a>
       <a href="comments.html">Comments</a>
       <a href="profile.html">Profiles</a>
+    </div>
   </div>
 </nav>
 
@@ -740,6 +753,32 @@ window.addEventListener('load', () => {
     if(target) setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}), 300);
   }
 });
+</script>
+
+<!-- Auth state → nav login pill -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const _app = initializeApp({
+  apiKey:"AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
+  authDomain:"nutriplan-65582.firebaseapp.com",
+  projectId:"nutriplan-65582",
+  storageBucket:"nutriplan-65582.firebasestorage.app",
+  messagingSenderId:"851509980462",
+  appId:"1:851509980462:web:b18af741addba334ca1ebf"
+});
+const _auth = getAuth(_app);
+onAuthStateChanged(_auth, user => {
+  const bar = document.getElementById('nav-login-bar');
+  const ph  = document.getElementById('nav-login-phone');
+  if (user) {
+    ph.textContent = 'Logged in: ' + user.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+    bar.classList.add('show');
+  } else {
+    bar.classList.remove('show');
+  }
+});
+window.navSignOut = () => signOut(_auth);
 </script>
 </body>
 </html>
