@@ -206,6 +206,29 @@
   #female-extra-row .form-group input,
   #female-extra-row .form-group select { width: 100%; }
 
+  /* Login status bar in nav */
+  .nav-login-bar { display:none; align-items:center; gap:8px; background:var(--teal-light); border:1.5px solid #c8ede9; border-radius:20px; padding:5px 14px 5px 10px; font-size:12.5px; font-weight:600; color:var(--teal-dark); cursor:default; }
+  .nav-login-bar.show { display:flex; }
+  .nav-login-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .nav-signout-btn { background:none; border:none; color:var(--teal); font-size:12px; font-weight:700; cursor:pointer; margin-left:4px; padding:0; text-decoration:underline; }
+
+  /* Password input with eye toggle */
+  .pw-wrap { position:relative; }
+  .pw-wrap input { padding-right:40px !important; }
+  .pw-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--muted); font-size:16px; padding:0; line-height:1; }
+  .pw-eye:hover { color:var(--teal); }
+
+  /* Forgot password link */
+  .forgot-link { font-size:12px; color:var(--teal); text-decoration:none; display:inline-block; margin-top:4px; font-weight:600; background:none; border:none; cursor:pointer; padding:0; }
+  .forgot-link:hover { text-decoration:underline; }
+
+  /* Forgot password modal */
+  #forgotModal .modal-box { max-width:360px; }
+  .fp-step { }
+  .fp-msg { font-size:13px; color:var(--muted); margin-bottom:14px; line-height:1.6; }
+  .fp-err { display:none; font-size:12px; color:#dc2626; background:#fef2f2; padding:8px 12px; border-radius:8px; margin-bottom:10px; }
+  .fp-suc { display:none; font-size:13px; color:#065f46; background:#ecfdf5; padding:10px 14px; border-radius:8px; margin-bottom:10px; font-weight:600; }
+
   @media (max-width: 820px) {
     .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
     nav { padding: 0 16px; }
@@ -240,12 +263,19 @@
 
 <nav id="topnav">
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div class="nav-links">
-    <a href="#nutrition-overview" class="active">Nutrition</a>
-    <a href="#form-section">Form</a>
-    <a href="education.html">Education</a>
-    <a href="comments.html">Comments</a>
-     <a href="profile.html">Profiles</a>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-login-bar" id="nav-login-bar">
+      <div class="nav-login-dot"></div>
+      <span id="nav-login-phone"></span>
+      <button class="nav-signout-btn" onclick="navSignOut()">Sign out</button>
+    </div>
+    <div class="nav-links">
+      <a href="#nutrition-overview" class="active">Nutrition</a>
+      <a href="#form-section">Form</a>
+      <a href="education.html">Education</a>
+      <a href="comments.html">Comments</a>
+      <a href="profile.html">Profiles</a>
+    </div>
   </div>
 </nav>
 
@@ -408,12 +438,12 @@
             <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
             <div class="phone-input-wrap">
               <div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div>
-              <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10"/>
+              <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10" autocomplete="off"/>
             </div>
           </div>
           <div class="form-group">
             <label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
-            <input type="email" id="inp-email" placeholder="you@example.com"/>
+            <input type="email" id="inp-email" placeholder="you@example.com" autocomplete="off"/>
           </div>
         </div>
 
@@ -668,6 +698,113 @@
       </div>
     </div>
 
+
+  </div>
+</div>
+
+<!-- ─── Account Creation Modal (shown after form submit) ─── -->
+<div id="accountModal" class="modal-overlay" style="z-index:1100;">
+  <div class="modal-box" style="max-width:420px;width:94%;">
+    <div class="modal-header">
+      <h3 id="acct-modal-title" style="font-family:'Fraunces',serif;font-size:1.1rem;">Save Your Profile</h3>
+      <span class="close-btn" onclick="skipAccount()">✕</span>
+    </div>
+
+    <!-- Step A: Relation choice -->
+    <div id="acct-step-relation">
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;">Is this diet plan for yourself or someone else (family member, etc.)?</p>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <button class="btn-primary" style="margin:0;flex:1;padding:11px;" onclick="setRelation('self')">For Myself</button>
+        <button class="btn-secondary" style="margin:0;flex:1;" onclick="setRelation('other')">For Someone Else</button>
+      </div>
+      <div id="relation-fields" style="display:none;margin-bottom:14px;">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>Their Name</label>
+          <input type="text" id="rel-name" placeholder="e.g. Mom, Brother..." style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+        </div>
+        <div class="form-group">
+          <label>Relation</label>
+          <input type="text" id="rel-relation" placeholder="e.g. Mother, Son, Friend..." style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+        </div>
+      </div>
+      <button id="relation-next-btn" class="btn-primary" style="margin:0;width:100%;display:none;" onclick="goToAccountStep()">Continue →</button>
+      <button class="btn-secondary" style="margin-top:10px;width:100%;" onclick="skipAccount()">Skip — Don't Save</button>
+    </div>
+
+    <!-- Step B: Create Account or Login -->
+    <div id="acct-step-auth" style="display:none;">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Create an account to access your profiles from any device.</p>
+      <div class="hcb-tabs" style="margin-bottom:14px;">
+        <div class="hcb-tab active" id="tab-create" onclick="switchAuthTab('create')">Create Account</div>
+        <div class="hcb-tab" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="hcb-tab" id="tab-skip-save" onclick="switchAuthTab('skip')">Save Locally</div>
+      </div>
+
+      <!-- Create Account -->
+      <div id="auth-create">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number (Username)</label>
+          <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+            <span class="phone-prefix">🇮🇳 +91</span>
+            <input type="tel" id="acct-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Create Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="acct-pass" placeholder="Min 6 characters" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+            <button type="button" class="pw-eye" onclick="togglePw('acct-pass',this)" tabindex="-1">👁</button>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Confirm Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="acct-pass2" placeholder="Re-enter password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+            <button type="button" class="pw-eye" onclick="togglePw('acct-pass2',this)" tabindex="-1">👁</button>
+          </div>
+        </div>
+        <div id="acct-err" style="display:none;font-size:12px;color:#dc2626;margin-bottom:10px;background:#fef2f2;padding:8px 12px;border-radius:8px;"></div>
+        <button class="btn-primary" style="margin:0;width:100%;" onclick="createAccount()">Create Account & Save Profile</button>
+      </div>
+
+      <!-- Sign In -->
+      <div id="auth-login" style="display:none;">
+        <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px;">Sign in to link this profile to your existing account.</p>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number</label>
+          <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+            <span class="phone-prefix">🇮🇳 +91</span>
+            <input type="tel" id="login-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="login-pass" placeholder="Your password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+            <button type="button" class="pw-eye" onclick="togglePw('login-pass',this)" tabindex="-1">👁</button>
+          </div>
+          <button type="button" class="forgot-link" onclick="openForgotModal()">Change password?</button>
+        </div>
+        <div id="login-err" style="display:none;font-size:12px;color:#dc2626;margin-bottom:10px;background:#fef2f2;padding:8px 12px;border-radius:8px;"></div>
+        <button class="btn-primary" style="margin:0;width:100%;" onclick="signInAndSave()">Sign In & Link Profile</button>
+      </div>
+
+      <!-- Save Locally -->
+      <div id="auth-skip" style="display:none;">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Profile will be saved on this browser only. You won't be able to access it from other devices.</p>
+        <button class="btn-primary" style="margin:0;width:100%;background:#374151;" onclick="saveLocallyAndClose()">Save Locally</button>
+      </div>
+
+      <button class="btn-secondary" style="margin-top:10px;width:100%;" onclick="skipAccount()">Skip — Don't Save</button>
+    </div>
+
+    <!-- Step C: Success -->
+    <div id="acct-step-done" style="display:none;text-align:center;padding:10px 0;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+      <div style="font-weight:700;font-size:1rem;margin-bottom:6px;" id="acct-done-title">Account Created!</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px;" id="acct-done-msg">Your profile is saved. Sign in anytime from the Profiles page.</p>
+      <a href="profile.html" class="btn-primary" style="display:inline-block;text-decoration:none;padding:11px 24px;margin:0;">View My Profiles →</a>
+    </div>
   </div>
 </div>
 
@@ -746,19 +883,163 @@
   </div>
 </div>
 
-<script>
-// ─── CONFIG ────────────────────────────────────────────────
+<!-- ─── Forgot Password Modal ─── -->
+<div id="forgotModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:370px;">
+    <div class="modal-header">
+      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;">Change Password</h3>
+      <span class="close-btn" onclick="closeForgotModal()">✕</span>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
+      🔑 Enter your phone number, your <strong>current password</strong>, and choose a new one.
+    </p>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number</label>
+      <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+        <span class="phone-prefix">🇮🇳 +91</span>
+        <input type="tel" id="fp-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Current Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-oldpass" placeholder="Your current password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-oldpass',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">New Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-newpass" placeholder="Min 6 characters" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:14px;">
+      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Confirm New Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-newpass2" placeholder="Re-enter new password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass2',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div id="fp-err" class="fp-err"></div>
+    <div id="fp-suc" class="fp-suc"></div>
+    <button class="btn-primary" style="margin:0;width:100%;" onclick="doResetPassword()">Update Password</button>
+  </div>
+</div>
+
+<script type="module">
+// ─── FIREBASE CONFIG ────────────────────────────────────────
+// 🔧 REPLACE these values with your own Firebase project config
+// Go to: https://console.firebase.google.com → Your project → Project settings → Your apps → Web app
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
+  authDomain: "nutriplan-65582.firebaseapp.com",
+  projectId: "nutriplan-65582",
+  storageBucket: "nutriplan-65582.firebasestorage.app",
+  messagingSenderId: "851509980462",
+  appId: "1:851509980462:web:b18af741addba334ca1ebf",
+  measurementId: "G-2XZZ9YW5FJ"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ─── AUTH STATE → update nav bar ───────────────────────────
+onAuthStateChanged(auth, user => {
+  const bar = document.getElementById('nav-login-bar');
+  const phoneEl = document.getElementById('nav-login-phone');
+  if (user) {
+    const phone = user.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+    phoneEl.textContent = 'Logged in: ' + phone;
+    bar.classList.add('show');
+  } else {
+    bar.classList.remove('show');
+    phoneEl.textContent = '';
+  }
+});
+
+// Sign out from nav
+window.navSignOut = async function() {
+  await fbSignOut(auth);
+  localStorage.removeItem('nutriplan_uid');
+  localStorage.removeItem('nutriplan_phone');
+};
+
+// ─── SHOW PASSWORD TOGGLE ──────────────────────────────────
+window.togglePw = function(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  const isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.textContent = isText ? '👁' : '🙈';
+};
+
+// ─── FORGOT PASSWORD MODAL ────────────────────────────────
+window.openForgotModal = function() {
+  ['fp-phone','fp-oldpass','fp-newpass','fp-newpass2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.getElementById('fp-err').style.display = 'none';
+  document.getElementById('fp-suc').style.display = 'none';
+  document.getElementById('forgotModal').style.display = 'flex';
+};
+window.closeForgotModal = function() {
+  document.getElementById('forgotModal').style.display = 'none';
+};
+document.getElementById('forgotModal').addEventListener('click', function(e) {
+  if (e.target === this) closeForgotModal();
+});
+
+window.doResetPassword = async function() {
+  const phone    = document.getElementById('fp-phone').value.trim();
+  const oldPass  = document.getElementById('fp-oldpass').value;
+  const newPass  = document.getElementById('fp-newpass').value;
+  const newPass2 = document.getElementById('fp-newpass2').value;
+  const errEl    = document.getElementById('fp-err');
+  const sucEl    = document.getElementById('fp-suc');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!/^\d{10}$/.test(phone))  { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display = 'block'; return; }
+  if (!oldPass)                  { errEl.textContent = 'Enter your current password'; errEl.style.display = 'block'; return; }
+  if (newPass.length < 6)       { errEl.textContent = 'New password must be at least 6 characters'; errEl.style.display = 'block'; return; }
+  if (newPass !== newPass2)     { errEl.textContent = 'New passwords do not match'; errEl.style.display = 'block'; return; }
+  if (oldPass === newPass)      { errEl.textContent = 'New password must be different from the current one'; errEl.style.display = 'block'; return; }
+
+  const email = `91${phone}@nutriplan.app`;
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, oldPass);
+    await updatePassword(cred.user, newPass);
+    sucEl.textContent = '✅ Password updated! Use your new password next time you sign in.';
+    sucEl.style.display = 'block';
+    setTimeout(() => closeForgotModal(), 2500);
+  } catch(e) {
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      errEl.textContent = 'Current password is incorrect. Please try again.';
+    } else if (e.code === 'auth/user-not-found') {
+      errEl.textContent = 'No account found for this phone number.';
+    } else {
+      errEl.textContent = e.message;
+    }
+    errEl.style.display = 'block';
+  }
+};
+
+// ─── SHEET URL ─────────────────────────────────────────────
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
 
-// ─── PROFILE localStorage HELPERS ─────────────────────────
-function getProfiles() {
+// ─── PROFILE localStorage HELPERS (fallback) ──────────────
+function getLocalProfiles() {
   try { return JSON.parse(localStorage.getItem('nutriplan_profiles') || '[]'); }
   catch { return []; }
 }
-function saveProfile(id, name) {
-  const profiles = getProfiles();
+function saveLocalProfile(id, name, forSelf, relName, relation) {
+  const profiles = getLocalProfiles();
   if (!profiles.find(p => p.id === id)) {
-    profiles.push({ id, name });
+    profiles.push({ id, name, forSelf, relName: relName||'', relation: relation||'' });
     localStorage.setItem('nutriplan_profiles', JSON.stringify(profiles));
   }
 }
@@ -776,6 +1057,208 @@ async function sendToSheet(data) {
       body: JSON.stringify(data)
     });
   } catch(e) { console.warn("Sheet error:", e); }
+}
+
+// ─── FIRESTORE: Save form data ─────────────────────────────
+async function saveToFirestore(formData, accountUid, forSelf, relName, relation) {
+  try {
+    const entry = {
+      ...formData,
+      accountUid: accountUid || null,
+      forSelf: forSelf !== false,
+      relName: relName || '',
+      relation: relation || '',
+      createdAt: serverTimestamp()
+    };
+    // Always save to global submissions collection
+    await setDoc(doc(db, "submissions", formData.userId), entry);
+    // If linked to account, also save reference under the account
+    if (accountUid) {
+      await setDoc(doc(db, "accounts", accountUid, "profiles", formData.userId), {
+        userId: formData.userId,
+        name: formData.name,
+        forSelf: entry.forSelf,
+        relName: entry.relName,
+        relation: entry.relation,
+        timestamp: formData.timestamp
+      });
+    }
+  } catch(e) { console.warn("Firestore error:", e); }
+}
+
+// ─── PENDING FORM DATA (held until account modal done) ─────
+let _pendingFormData = null;
+
+// ─── ACCOUNT MODAL STATE ───────────────────────────────────
+let _isForSelf = true;
+let _relName = '';
+let _relation = '';
+
+window.setRelation = function(type) {
+  _isForSelf = type === 'self';
+  if (type === 'other') {
+    document.getElementById('relation-fields').style.display = 'block';
+    document.getElementById('relation-next-btn').style.display = 'block';
+  } else {
+    document.getElementById('relation-fields').style.display = 'none';
+    document.getElementById('relation-next-btn').style.display = 'block';
+    // If already logged in, wire the "Continue" button to auto-save
+    if (window._autoSaveForCurrentUser) {
+      document.getElementById('relation-next-btn').onclick = window._autoSaveForCurrentUser;
+    }
+  }
+};
+
+window.goToAccountStep = function() {
+  _relName = document.getElementById('rel-name').value.trim();
+  _relation = document.getElementById('rel-relation').value.trim();
+  document.getElementById('acct-step-relation').style.display = 'none';
+  document.getElementById('acct-step-auth').style.display = 'block';
+};
+
+window.switchAuthTab = function(tab) {
+  ['create','login','skip'].forEach(t => {
+    document.getElementById('tab-'+t)?.classList.toggle('active', t===tab);
+    document.getElementById('auth-'+t === 'auth-skip' ? 'auth-skip' : 'auth-'+t)?.style && (document.getElementById(t==='skip'?'auth-skip':'auth-'+t).style.display = t===tab?'block':'none');
+  });
+  document.getElementById('auth-create').style.display = tab==='create'?'block':'none';
+  document.getElementById('auth-login').style.display = tab==='login'?'block':'none';
+  document.getElementById('auth-skip').style.display = tab==='skip'?'block':'none';
+};
+
+window.createAccount = async function() {
+  const phone = document.getElementById('acct-phone').value.trim();
+  const pass = document.getElementById('acct-pass').value;
+  const pass2 = document.getElementById('acct-pass2').value;
+  const errEl = document.getElementById('acct-err');
+  errEl.style.display = 'none';
+
+  if (!/^\d{10}$/.test(phone)) { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display='block'; return; }
+  if (pass.length < 6) { errEl.textContent = 'Password must be at least 6 characters'; errEl.style.display='block'; return; }
+  if (pass !== pass2) { errEl.textContent = 'Passwords do not match'; errEl.style.display='block'; return; }
+
+  const email = `91${phone}@nutriplan.app`;
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    const uid = cred.user.uid;
+    // Save account info in Firestore
+    await setDoc(doc(db, "accounts", uid), { phone: `+91${phone}`, createdAt: serverTimestamp() });
+    // Save profile data linked to account
+    if (_pendingFormData) {
+      await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation);
+      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+    }
+    localStorage.setItem('nutriplan_uid', uid);
+    localStorage.setItem('nutriplan_phone', `+91${phone}`);
+    showAccountDone('Account Created! 🎉', 'Your profile is saved. Sign in anytime from the Profiles page.');
+  } catch(e) {
+    if (e.code === 'auth/email-already-in-use') {
+      errEl.textContent = 'This phone number already has an account. Use "Sign In" tab.';
+    } else {
+      errEl.textContent = e.message;
+    }
+    errEl.style.display = 'block';
+  }
+};
+
+window.signInAndSave = async function() {
+  const phone = document.getElementById('login-phone').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  errEl.style.display = 'none';
+
+  const email = `91${phone}@nutriplan.app`;
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+    const uid = cred.user.uid;
+    if (_pendingFormData) {
+      await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation);
+      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+    }
+    localStorage.setItem('nutriplan_uid', uid);
+    localStorage.setItem('nutriplan_phone', `+91${phone}`);
+    showAccountDone('Signed In! ✅', 'Profile linked to your account successfully.');
+  } catch(e) {
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      errEl.textContent = 'Incorrect phone number or password.';
+    } else {
+      errEl.textContent = e.message;
+    }
+    errEl.style.display = 'block';
+  }
+};
+
+window.saveLocallyAndClose = function() {
+  if (_pendingFormData) {
+    saveToFirestore(_pendingFormData, null, _isForSelf, _relName, _relation);
+    saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+  }
+  showAccountDone('Saved Locally', 'Profile saved on this browser. Create an account anytime from the Profiles page.');
+};
+
+window.skipAccount = function() {
+  // Still save to Firestore without account link
+  if (_pendingFormData) {
+    saveToFirestore(_pendingFormData, null, _isForSelf, _relName, _relation);
+    saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+  }
+  document.getElementById('accountModal').style.display = 'none';
+  _pendingFormData = null;
+};
+
+function showAccountDone(title, msg) {
+  document.getElementById('acct-step-relation').style.display = 'none';
+  document.getElementById('acct-step-auth').style.display = 'none';
+  document.getElementById('acct-step-done').style.display = 'block';
+  document.getElementById('acct-done-title').textContent = title;
+  document.getElementById('acct-done-msg').textContent = msg;
+  _pendingFormData = null;
+}
+
+function openAccountModal(formData) {
+  _pendingFormData = formData;
+  _isForSelf = true;
+  _relName = ''; _relation = '';
+
+  // If user already signed in → skip auth, just show relation step then auto-save
+  const currentUser = auth.currentUser;
+
+  document.getElementById('acct-step-relation').style.display = 'block';
+  document.getElementById('acct-step-auth').style.display = 'none';
+  document.getElementById('acct-step-done').style.display = 'none';
+  document.getElementById('relation-fields').style.display = 'none';
+  document.getElementById('relation-next-btn').style.display = 'none';
+  document.getElementById('acct-err').style.display = 'none';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('accountModal').style.display = 'flex';
+
+  if (currentUser) {
+    // Already logged in — override "Continue →" button to auto-save
+    document.getElementById('relation-next-btn').onclick = async function() {
+      _relName = document.getElementById('rel-name').value.trim();
+      _relation = document.getElementById('rel-relation').value.trim();
+      await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
+      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+      const phone = currentUser.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+      showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
+    };
+    // For self path — override setRelation to wire save directly
+    window._autoSaveForCurrentUser = async function() {
+      await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
+      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+      const phone = currentUser.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+      showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
+    };
+  } else {
+    window._autoSaveForCurrentUser = null;
+    document.getElementById('relation-next-btn').onclick = window.goToAccountStep;
+    // Reset to create tab
+    ['create','login','skip'].forEach(t => document.getElementById('tab-'+t)?.classList.remove('active'));
+    document.getElementById('tab-create')?.classList.add('active');
+    document.getElementById('auth-create').style.display = 'block';
+    document.getElementById('auth-login').style.display = 'none';
+    document.getElementById('auth-skip').style.display = 'none';
+  }
 }
 
 // ─── PROGRESS ──────────────────────────────────────────────
@@ -1016,12 +1499,14 @@ async function submitForm() {
     whatsapp_consent: g('consent-wa').checked ? 'Yes' : 'No'
   };
 
+  // Send to Google Sheets
   await sendToSheet(formData);
-  saveProfile(userId, userName);
 
+  // Hide symptoms section
   g('symptoms-section').classList.remove('revealed');
   setTimeout(()=>{ g('symptoms-section').style.display='none'; }, 300);
 
+  // Show success section
   const ss = g('success-section');
   ss.style.display = 'block';
   setTimeout(()=>ss.classList.add('revealed'), 20);
@@ -1030,6 +1515,9 @@ async function submitForm() {
 
   clearForm();
   btn.disabled=false; btn.textContent='Submit My Plan Request'; btn.style.opacity='1'; btn.style.cursor='pointer';
+
+  // Open account modal after short delay
+  setTimeout(() => openAccountModal(formData), 600);
 }
 
 // ─── CLEAR FORM ────────────────────────────────────────────
@@ -1048,6 +1536,32 @@ function clearForm() {
   setProgress(1);
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// ─── ACCORDION / CHIPS ─────────────────────────────────────
+window.toggleAccordion = h=>{ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); };
+window.toggleChip = el=>el.classList.toggle('active');
+window.ynToggle = (btn,type)=>{ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; };
+window.toggleHealthDD = ()=>{ const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow'); l.classList.toggle('open'); a.textContent=l.classList.contains('open')?'▴':'▾'; };
+window.toggleOtherInput = cb=>{ const inp=document.getElementById('other-condition-input'); inp.style.display=cb.checked?'block':'none'; if(!cb.checked){ inp.value=''; selectedConditions.delete('Other'); selectedConditions.delete(inp.dataset.val||''); renderTags(); } };
+window.updateOtherCondition = inp=>{ const prev=inp.dataset.val; if(prev) selectedConditions.delete(prev); if(inp.value.trim()){ const v=inp.value.trim(); inp.dataset.val=v; selectedConditions.add(v); } renderTags(); };
+window.handleCondition = cb=>{ if(cb.value==='Other') return; cb.checked?selectedConditions.add(cb.value):selectedConditions.delete(cb.value); renderTags(); };
+window.removeCondition = v=>{ selectedConditions.delete(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=false; renderTags(); };
+window.submitForm = submitForm;
+window.clearForm = clearForm;
+window.generateResult = generateResult;
+window.selectTimeChip = selectTimeChip;
+window.validate = validate;
+window.switchHcbTab = switchHcbTab;
+window.convertModalFtIn = convertModalFtIn;
+window.convertInchOnly = convertInchOnly;
+window.openHeightModal = openHeightModal;
+window.closeHeightModal = closeHeightModal;
+window.applyHeight = applyHeight;
+window.useHcbValue = useHcbValue;
+window.openMeasureModal = openMeasureModal;
+window.closeMeasureModal = closeMeasureModal;
+window.convertMeasureInch = convertMeasureInch;
+window.applyMeasure = applyMeasure;
 </script>
 </body>
 </html>
