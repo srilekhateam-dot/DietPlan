@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NutriPlan — My Profiles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --teal:#1a9e8f; --teal-light:#e6f7f5; --teal-dark:#14786c;
+    --bg:#f5f6f8; --white:#ffffff; --text:#1c2230;
+    --muted:#6b7280; --border:#e2e5ea;
+    --card-shadow:0 2px 16px rgba(0,0,0,0.07);
+    --radius:16px; --radius-sm:10px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh;}
+
+  nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:60px;box-shadow:0 1px 8px rgba(0,0,0,0.06);}
+  .nav-brand{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--teal);font-weight:600;letter-spacing:-0.5px;text-decoration:none;}
+  .nav-brand span{color:var(--text);font-weight:300;font-style:italic;}
+  .nav-links{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-links a{flex:0 0 auto;white-space:nowrap;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;padding:6px 14px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{background:var(--teal-light);color:var(--teal);}
+
+  .page-hero{background:linear-gradient(160deg,#f0faf9 0%,#f5f6f8 70%);border-bottom:1px solid var(--border);padding:36px 24px 28px;text-align:center;}
+  .page-hero h1{font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2rem);font-weight:600;color:var(--text);margin-bottom:6px;}
+  .page-hero h1 em{color:var(--teal);font-style:italic;}
+  .page-hero p{color:var(--muted);font-size:14px;max-width:460px;margin:0 auto;}
+
+  .page-outer{max-width:900px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Auth card */
+  .auth-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:30px;margin-bottom:22px;animation:fadeUp 0.4s ease both;}
+  .card-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:4px;}
+  .card-sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
+  .auth-tabs{display:flex;gap:7px;margin-bottom:18px;}
+  .auth-tab{flex:1;padding:9px 0;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;}
+  .auth-tab.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+  .fg label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
+  .fg input{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border-color 0.2s,box-shadow 0.2s;width:100%;}
+  .fg input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,143,0.12);background:var(--white);}
+  .ph-row{display:flex;border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--bg);transition:border-color 0.2s,box-shadow 0.2s;}
+  .ph-row:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,143,0.12);}
+  .ph-pfx{display:flex;align-items:center;gap:5px;padding:10px 12px;background:#f0f2f4;border-right:1.5px solid var(--border);font-size:13px;font-weight:600;white-space:nowrap;}
+  .ph-row input{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;flex:1;}
+  .err-box{display:none;font-size:12px;color:#dc2626;background:#fef2f2;padding:8px 12px;border-radius:8px;margin-bottom:10px;}
+  .btn{display:block;width:100%;border:none;border-radius:var(--radius-sm);padding:12px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;margin-top:6px;}
+  .btn-p{background:var(--teal);color:#fff;}
+  .btn-p:hover{background:var(--teal-dark);transform:translateY(-1px);}
+  .btn-s{background:var(--bg);color:var(--muted);border:1.5px solid var(--border);}
+  .btn-s:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+
+  /* Account bar */
+  .acct-bar{display:none;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;flex-wrap:wrap;gap:10px;animation:fadeUp 0.3s ease;}
+  .acct-bar.show{display:flex;align-items:center;justify-content:space-between;}
+  .acct-info{display:flex;align-items:center;gap:10px;}
+  .acct-avatar{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1rem;font-weight:600;flex-shrink:0;}
+  .acct-label{font-weight:700;color:var(--teal-dark);font-size:14px;}
+  .acct-phone{font-size:12px;color:var(--teal);}
+  .btn-so{padding:7px 18px;border:1.5px solid var(--teal);border-radius:20px;background:transparent;color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+  .btn-so:hover{background:var(--teal);color:#fff;}
+
+  /* Profiles section */
+  .profiles-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;animation:fadeUp 0.4s ease both;}
+  .sec-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+  .sec-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:14px;}
+  .chips-wrap{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;user-select:none;}
+  .chip:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+  .chip.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .chip-av{width:28px;height:28px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+  .chip.active .chip-av{background:rgba(255,255,255,0.25);color:#fff;}
+  .chip-rel{font-size:10.5px;opacity:0.7;font-style:italic;}
+  .chip-del{margin-left:4px;opacity:0.5;font-size:13px;cursor:pointer;padding:0 2px;transition:opacity 0.2s;}
+  .chip-del:hover{opacity:1;}
+  .empty-state{text-align:center;padding:34px 20px;color:var(--muted);width:100%;}
+  .empty-state .ei{font-size:2.8rem;margin-bottom:12px;}
+  .empty-state p{font-size:14px;margin-bottom:14px;}
+  .empty-state a{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:10px 22px;border-radius:var(--radius-sm);font-weight:600;font-size:14px;}
+
+  /* Detail panel */
+  .detail-panel{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:28px;display:none;animation:fadeUp 0.4s ease both;}
+  .detail-panel.visible{display:block;}
+  .dh{display:flex;align-items:center;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:22px;}
+  .dh-av{width:54px;height:54px;border-radius:50%;background:var(--teal-light);color:var(--teal);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;flex-shrink:0;}
+  .dh-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--text);}
+  .dh-sub{font-size:12.5px;color:var(--muted);}
+  .rel-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-light);color:var(--teal-dark);border-radius:20px;padding:3px 10px;font-size:11.5px;font-weight:700;margin-top:5px;}
+  .loading-state{text-align:center;padding:40px;color:var(--muted);}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 14px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .d-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+  .mc{background:var(--bg);border-radius:var(--radius-sm);padding:16px 14px;text-align:center;border:1px solid var(--border);}
+  .mc-l{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .mc-v{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;color:var(--teal);line-height:1;margin-bottom:3px;}
+  .mc-s{font-size:11px;color:var(--muted);}
+  .ds{margin-bottom:20px;}
+  .dst{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--teal);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--teal-light);}
+  .dr{display:flex;gap:8px;margin-bottom:7px;font-size:14px;}
+  .dk{font-weight:600;color:var(--text);min-width:160px;flex-shrink:0;}
+  .dv{color:var(--muted);}
+  .tw{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{background:var(--teal-light);color:var(--teal-dark);border-radius:20px;padding:4px 12px;font-size:12.5px;font-weight:600;}
+  .tag.red{background:#fef2f2;color:#dc2626;}
+  .tag.amber{background:#fffbeb;color:#92400e;}
+  .err-panel{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--radius-sm);padding:14px 18px;color:#dc2626;font-size:14px;text-align:center;}
+
+  /* Password show/hide toggle */
+  .pw-wrap{position:relative;}
+  .pw-wrap input{padding-right:40px !important;width:100%;}
+  .pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:0;line-height:1;}
+  .pw-eye:hover{color:var(--teal);}
+  .forgot-link{font-size:12px;color:var(--teal);text-decoration:none;display:inline-block;margin-top:4px;font-weight:600;background:none;border:none;cursor:pointer;padding:0;}
+  .forgot-link:hover{text-decoration:underline;}
+  /* Forgot password modal */
+  .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:999;}
+  .modal-box{background:#fff;width:90%;max-width:380px;border-radius:16px;padding:24px;animation:fadeUp 0.3s ease;}
+  .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .modal-header h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);}
+  .close-btn{cursor:pointer;font-size:18px;color:var(--muted);}
+  .fp-err{display:none;font-size:12px;color:#dc2626;background:#fef2f2;padding:8px 12px;border-radius:8px;margin-bottom:10px;}
+  .fp-suc{display:none;font-size:13px;color:#065f46;background:#ecfdf5;padding:10px 14px;border-radius:8px;margin-bottom:10px;font-weight:600;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @media(max-width:640px){nav{padding:0 16px;}.d-grid{grid-template-columns:1fr 1fr;}.dk{min-width:120px;}.auth-tabs{gap:4px;}.auth-tab{font-size:11.5px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
+  <div class="nav-links">
+    <a href="index.html">Form</a>
+    <a href="education.html">Education</a>
+    <a href="profile.html" class="active">Profiles</a>
+    <a href="comments.html">Comments</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <h1>My <em>Saved</em> Profiles</h1>
+  <p>Sign in to view all profiles linked to your account from any device.</p>
+</section>
+
+<div class="page-outer">
+
+  <!-- Signed-in bar -->
+  <div id="acct-bar" class="acct-bar">
+    <div class="acct-info">
+      <div class="acct-avatar">👤</div>
+      <div>
+        <div class="acct-label">My NutriPlan Account</div>
+        <div class="acct-phone" id="bar-phone"></div>
+      </div>
+    </div>
+    <button class="btn-so" onclick="doSignOut()">Sign Out</button>
+  </div>
+
+  <!-- Auth Card -->
+  <div id="auth-card" class="auth-card">
+    <div class="card-title">Sign In or Create Account</div>
+    <div class="card-sub">Your phone number is your username. Access all your saved profiles from any device.</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="ptab-login" onclick="switchTab('login')">Sign In</div>
+      <div class="auth-tab" id="ptab-create" onclick="switchTab('create')">Create Account</div>
+    </div>
+
+    <!-- Sign In -->
+    <div id="form-login">
+      <div class="fg">
+        <label>Phone Number</label>
+        <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
+          <input type="tel" id="li-phone" placeholder="9876543210" maxlength="10" onkeydown="if(event.key==='Enter')doSignIn()"/>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="li-pass" placeholder="Your password" onkeydown="if(event.key==='Enter')doSignIn()"/>
+          <button type="button" class="pw-eye" onclick="togglePw('li-pass',this)" tabindex="-1">👁</button>
+        </div>
+        <button type="button" class="forgot-link" onclick="openForgotModal()">Change password?</button>
+      </div>
+      <div class="err-box" id="li-err"></div>
+      <button class="btn btn-p" onclick="doSignIn()">Sign In →</button>
+    </div>
+
+    <!-- Create Account -->
+    <div id="form-create" style="display:none;">
+      <div class="fg">
+        <label>Phone Number (Username)</label>
+        <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
+          <input type="tel" id="cr-phone" placeholder="9876543210" maxlength="10"/>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Create Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="cr-pass" placeholder="Min 6 characters"/>
+          <button type="button" class="pw-eye" onclick="togglePw('cr-pass',this)" tabindex="-1">👁</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Confirm Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="cr-pass2" placeholder="Re-enter password" onkeydown="if(event.key==='Enter')doCreateAccount()"/>
+          <button type="button" class="pw-eye" onclick="togglePw('cr-pass2',this)" tabindex="-1">👁</button>
+        </div>
+      </div>
+      <div class="err-box" id="cr-err"></div>
+      <button class="btn btn-p" onclick="doCreateAccount()">Create Account →</button>
+    </div>
+
+    <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px;">
+      <p class="card-sub" style="margin-bottom:8px;">Or view profiles saved on this device only:</p>
+      <button class="btn btn-s" onclick="showLocalProfiles()">Browse Local Profiles</button>
+    </div>
+  </div>
+
+  <!-- Profiles List -->
+  <div id="profiles-section" class="profiles-section" style="display:none;">
+    <div class="sec-label" id="sec-label">Your Profiles</div>
+    <div class="sec-title" id="sec-title">Choose a Profile to View</div>
+    <div class="chips-wrap" id="chips-wrap"></div>
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="detail-panel" id="detail-panel"></div>
+
+</div><!-- end page-outer -->
+
+<!-- ─── Forgot Password Modal ─── -->
+<div id="forgotModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Change Password</h3>
+      <span class="close-btn" onclick="closeForgotModal()">✕</span>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
+      🔑 Enter your phone number, your <strong>current password</strong>, and choose a new one.
+    </p>
+    <div class="fg">
+      <label>Phone Number</label>
+      <div class="ph-row"><span class="ph-pfx">🇮🇳 +91</span>
+        <input type="tel" id="fp-phone" placeholder="9876543210" maxlength="10"/>
+      </div>
+    </div>
+    <div class="fg">
+      <label>Current Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-oldpass" placeholder="Your current password"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-oldpass',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label>New Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-newpass" placeholder="Min 6 characters"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:14px;">
+      <label>Confirm New Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="fp-newpass2" placeholder="Re-enter new password"/>
+        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass2',this)" tabindex="-1">👁</button>
+      </div>
+    </div>
+    <div class="fp-err" id="fp-err"></div>
+    <div class="fp-suc" id="fp-suc"></div>
+    <button class="btn btn-p" onclick="doResetPassword()">Reset Password</button>
+  </div>
+</div>
+
+<script type="module">
+// ─── FIREBASE ──────────────────────────────────────────────
+// 🔧 Replace with YOUR Firebase project config
+// Get it at: console.firebase.google.com → Project Settings → Web app
+import { initializeApp }               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         signOut as fbSignOut, onAuthStateChanged, updatePassword }
+                                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp }
+                                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
+  authDomain: "nutriplan-65582.firebaseapp.com",
+  projectId: "nutriplan-65582",
+  storageBucket: "nutriplan-65582.firebasestorage.app",
+  messagingSenderId: "851509980462",
+  appId: "1:851509980462:web:b18af741addba334ca1ebf",
+  measurementId: "G-2XZZ9YW5FJ"
+};
+
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// Google Sheets fallback URL
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
+
+let activeId   = null;
+let usingLocal = false;
+
+// ─── TAB SWITCH ───────────────────────────────────────────
+window.switchTab = tab => {
+  ['login','create'].forEach(t => {
+    document.getElementById('ptab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('form-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+};
+
+// ─── SHOW PASSWORD TOGGLE ─────────────────────────────────
+window.togglePw = function(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  const isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.textContent = isText ? '👁' : '🙈';
+};
+
+// ─── FORGOT PASSWORD MODAL ────────────────────────────────
+window.openForgotModal = function() {
+  ['fp-phone','fp-oldpass','fp-newpass','fp-newpass2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.getElementById('fp-err').style.display = 'none';
+  document.getElementById('fp-suc').style.display = 'none';
+  document.getElementById('forgotModal').style.display = 'flex';
+};
+window.closeForgotModal = function() {
+  document.getElementById('forgotModal').style.display = 'none';
+};
+document.getElementById('forgotModal').addEventListener('click', function(e) {
+  if (e.target === this) closeForgotModal();
+});
+
+window.doResetPassword = async function() {
+  const phone    = document.getElementById('fp-phone').value.trim();
+  const oldPass  = document.getElementById('fp-oldpass').value;
+  const newPass  = document.getElementById('fp-newpass').value;
+  const newPass2 = document.getElementById('fp-newpass2').value;
+  const errEl    = document.getElementById('fp-err');
+  const sucEl    = document.getElementById('fp-suc');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!/^\d{10}$/.test(phone))   { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display = 'block'; return; }
+  if (!oldPass)                   { errEl.textContent = 'Enter your current password'; errEl.style.display = 'block'; return; }
+  if (newPass.length < 6)        { errEl.textContent = 'New password must be at least 6 characters'; errEl.style.display = 'block'; return; }
+  if (newPass !== newPass2)      { errEl.textContent = 'New passwords do not match'; errEl.style.display = 'block'; return; }
+  if (oldPass === newPass)       { errEl.textContent = 'New password must be different from current password'; errEl.style.display = 'block'; return; }
+
+  const email = `91${phone}@nutriplan.app`;
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, oldPass);
+    await updatePassword(cred.user, newPass);
+    sucEl.textContent = '✅ Password updated successfully! Use your new password next time you sign in.';
+    sucEl.style.display = 'block';
+    setTimeout(() => closeForgotModal(), 2800);
+  } catch(e) {
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      errEl.textContent = 'Current password is incorrect.';
+    } else if (e.code === 'auth/user-not-found') {
+      errEl.textContent = 'No account found with this phone number.';
+    } else {
+      errEl.textContent = e.message;
+    }
+    errEl.style.display = 'block';
+  }
+};
+
+// ─── SIGN IN ──────────────────────────────────────────────
+window.doSignIn = async () => {
+  const phone = document.getElementById('li-phone').value.trim();
+  const pass  = document.getElementById('li-pass').value;
+  const err   = document.getElementById('li-err');
+  err.style.display = 'none';
+  if (!/^\d{10}$/.test(phone)) { err.textContent='Enter a valid 10-digit phone number'; err.style.display='block'; return; }
+  if (!pass)                   { err.textContent='Enter your password'; err.style.display='block'; return; }
+  try {
+    await signInWithEmailAndPassword(auth, `91${phone}@nutriplan.app`, pass);
+  } catch(e) {
+    err.textContent = (e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')
+      ? 'Incorrect phone number or password.' : e.message;
+    err.style.display = 'block';
+  }
+};
+
+// ─── CREATE ACCOUNT ───────────────────────────────────────
+window.doCreateAccount = async () => {
+  const phone = document.getElementById('cr-phone').value.trim();
+  const pass  = document.getElementById('cr-pass').value;
+  const pass2 = document.getElementById('cr-pass2').value;
+  const err   = document.getElementById('cr-err');
+  err.style.display = 'none';
+  if (!/^\d{10}$/.test(phone)) { err.textContent='Enter a valid 10-digit phone number'; err.style.display='block'; return; }
+  if (pass.length < 6)         { err.textContent='Password must be at least 6 characters'; err.style.display='block'; return; }
+  if (pass !== pass2)          { err.textContent='Passwords do not match'; err.style.display='block'; return; }
+  try {
+    await createUserWithEmailAndPassword(auth, `91${phone}@nutriplan.app`, pass);
+  } catch(e) {
+    err.textContent = e.code==='auth/email-already-in-use'
+      ? 'This phone number already has an account. Use Sign In.' : e.message;
+    err.style.display = 'block';
+  }
+};
+
+// ─── SIGN OUT ─────────────────────────────────────────────
+window.doSignOut = async () => {
+  await fbSignOut(auth);
+  usingLocal = false;
+  document.getElementById('acct-bar').classList.remove('show');
+  document.getElementById('auth-card').style.display = 'block';
+  document.getElementById('profiles-section').style.display = 'none';
+  const dp = document.getElementById('detail-panel');
+  dp.classList.remove('visible');
+  dp.innerHTML = '';
+};
+
+// ─── AUTH STATE ───────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    usingLocal = false;
+    const phone = user.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+    document.getElementById('bar-phone').textContent = phone;
+    document.getElementById('acct-bar').classList.add('show');
+    document.getElementById('auth-card').style.display = 'none';
+    await loadAccountProfiles(user.uid);
+  }
+});
+
+// ─── LOCAL PROFILES ───────────────────────────────────────
+function getLocalProfiles() {
+  try { return JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); }
+  catch { return []; }
+}
+
+window.showLocalProfiles = () => {
+  usingLocal = true;
+  document.getElementById('auth-card').style.display = 'none';
+  const profiles = getLocalProfiles();
+  renderChips(profiles, true);
+};
+
+// ─── LOAD ACCOUNT PROFILES ────────────────────────────────
+async function loadAccountProfiles(uid) {
+  const section = document.getElementById('profiles-section');
+  const wrap    = document.getElementById('chips-wrap');
+  section.style.display = 'block';
+  wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13.5px;padding:10px 0;">
+    <div style="width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    Loading your profiles…</div>`;
+
+  try {
+    const snap = await getDocs(collection(db, "accounts", uid, "profiles"));
+    if (snap.empty) {
+      document.getElementById('sec-label').textContent = 'Your Profiles';
+      document.getElementById('sec-title').textContent = 'No Profiles Yet';
+      wrap.innerHTML = `<div class="empty-state">
+        <div class="ei">🥗</div>
+        <p>No profiles linked to this account yet.<br/>Submit the diet form and create an account to save them here.</p>
+        <a href="index.html">Go to Diet Planner →</a>
+      </div>`;
+      return;
+    }
+    const list = [];
+    snap.forEach(d => list.push(d.data()));
+    list.sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+    renderChips(list, false);
+  } catch(e) {
+    wrap.innerHTML = `<div class="err-panel">Could not load profiles: ${e.message}</div>`;
+  }
+}
+
+// ─── RENDER CHIPS ─────────────────────────────────────────
+function renderChips(list, isLocal) {
+  const section = document.getElementById('profiles-section');
+  const wrap    = document.getElementById('chips-wrap');
+  section.style.display = 'block';
+
+  if (!list || list.length === 0) {
+    document.getElementById('sec-label').textContent = 'Profiles';
+    document.getElementById('sec-title').textContent = 'No Profiles Saved';
+    wrap.innerHTML = `<div class="empty-state">
+      <div class="ei">🥗</div>
+      <p>No profiles saved yet. Submit the form to create your first profile.</p>
+      <a href="index.html">Go to Diet Planner →</a>
+    </div>`;
+    return;
+  }
+
+  document.getElementById('sec-label').textContent = `${isLocal ? 'Local' : 'Account'} Profiles (${list.length})`;
+  document.getElementById('sec-title').textContent  = 'Tap a Profile to View Details';
+
+  wrap.innerHTML = list.map(p => {
+    const uid         = p.userId || p.id;
+    const isForOther  = p.forSelf === false;
+    const displayName = isForOther ? (p.relName || p.name) : (p.name || p.relName);
+    const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const relTag      = isForOther ? `<span class="chip-rel">(${p.relation||'Family'})</span>` : '';
+    const isActive    = uid === activeId;
+    return `<div class="chip ${isActive?'active':''}" onclick="selectProfile('${uid}',this,${isLocal})">
+      <div class="chip-av">${initials}</div>
+      <span>${displayName||'—'}</span>
+      ${relTag}
+      <span class="chip-del" onclick="event.stopPropagation();confirmDelete('${uid}','${(displayName||'').replace(/'/g,"\\'")}',${isLocal})">✕</span>
+    </div>`;
+  }).join('');
+}
+
+// ─── SELECT + FETCH PROFILE ───────────────────────────────
+window.selectProfile = async (userId, chipEl, isLocal) => {
+  activeId = userId;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chipEl.classList.add('active');
+
+  const panel = document.getElementById('detail-panel');
+  panel.classList.add('visible');
+  panel.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Fetching profile data…</p></div>`;
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+
+  try {
+    // 1. Try Firestore first
+    let data = null;
+    try {
+      const snap = await getDoc(doc(db, "submissions", userId));
+      if (snap.exists()) data = snap.data();
+    } catch(_){}
+
+    // 2. Fallback to Google Sheets
+    if (!data) {
+      const res = await fetch(`${SHEET_URL}?userId=${encodeURIComponent(userId)}`);
+      if (res.ok) {
+        const j = await res.json();
+        if (j && !j.error) data = j;
+      }
+    }
+
+    if (!data) throw new Error('Profile data not found. It may still be syncing — try again in a moment.');
+
+    // Get relation info
+    let relInfo = null;
+    if (isLocal) {
+      relInfo = getLocalProfiles().find(p=>(p.id||p.userId)===userId)||null;
+    } else {
+      const user = auth.currentUser;
+      if (user) {
+        const ps = await getDoc(doc(db,"accounts",user.uid,"profiles",userId));
+        if (ps.exists()) relInfo = ps.data();
+      }
+    }
+
+    renderDetail(panel, data, relInfo);
+  } catch(e) {
+    panel.innerHTML = `<div class="err-panel">⚠️ ${e.message}<br/>
+      <small style="opacity:0.7;margin-top:6px;display:block;">Make sure Firebase is configured and Apps Script is deployed with Anyone access.</small></div>`;
+  }
+};
+
+// ─── CONFIRM DELETE ───────────────────────────────────────
+window.confirmDelete = async (userId, name, isLocal) => {
+  if (!confirm(`Remove "${name}" from ${isLocal?'this browser':'your account'}?\n\nYour data in Google Sheets is kept.`)) return;
+  if (isLocal) {
+    try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
+    showLocalProfiles();
+  } else {
+    const user = auth.currentUser;
+    if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
+  }
+  if (activeId===userId) {
+    activeId=null;
+    const dp=document.getElementById('detail-panel');
+    dp.classList.remove('visible'); dp.innerHTML='';
+  }
+};
+
+// ─── RENDER DETAIL ────────────────────────────────────────
+function renderDetail(panel, d, relInfo) {
+  const isForOther  = relInfo && relInfo.forSelf===false;
+  const displayName = isForOther ? (relInfo.relName||d.name) : d.name;
+  const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+
+  const relBadge = isForOther
+    ? `<div class="rel-badge">👥 ${relInfo.relation||'Family Member'}${relInfo.relName?' · '+relInfo.relName:''}</div>`
+    : `<div class="rel-badge">👤 For Self</div>`;
+
+  const tl = (str, cls='') => {
+    if(!str) return '<span style="color:var(--muted);font-size:13px;">—</span>';
+    return str.split(',').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="tag ${cls}">${s}</span>`).join('');
+  };
+  const row = (k,v) => `<div class="dr"><span class="dk">${k}</span><span class="dv">${v||'—'}</span></div>`;
+
+  panel.innerHTML = `
+    <div class="dh">
+      <div class="dh-av">${initials}</div>
+      <div>
+        <div class="dh-name">${displayName||'—'}</div>
+        <div class="dh-sub">Submitted on ${d.timestamp||'—'}</div>
+        ${relBadge}
+      </div>
+    </div>
+
+    <div class="d-grid">
+      <div class="mc"><div class="mc-l">BMI</div><div class="mc-v">${d.bmi||'—'}</div><div class="mc-s">${d.bmi_category||''}</div></div>
+      <div class="mc"><div class="mc-l">Body Fat</div><div class="mc-v">${d.body_fat||'—'}</div><div class="mc-s">percent</div></div>
+      <div class="mc"><div class="mc-l">Daily Calories</div><div class="mc-v">${d.daily_calories||'—'}</div><div class="mc-s">kcal / day</div></div>
+    </div>
+
+    <div class="ds">
+      <div class="dst">Personal Info</div>
+      ${row('Name (Form)',d.name)}
+      ${row('Age',d.age?d.age+' yrs':null)}
+      ${row('Gender',d.gender)}
+      ${row('Height',d.height_cm?d.height_cm+' cm':null)}
+      ${row('Weight',d.weight_kg?d.weight_kg+' kg':null)}
+      ${row('Waist',d.waist_cm?d.waist_cm+' cm':null)}
+      ${row('Neck',d.neck_cm?d.neck_cm+' cm':null)}
+      ${d.hip_cm?row('Hip',d.hip_cm+' cm'):''}
+      ${row('Activity Level',d.activity)}
+      ${d.pregnant_lactating&&d.pregnant_lactating!=='No'?row('Pregnant/Lactating',d.pregnant_lactating):''}
+      ${d.phone?row('Phone',d.phone):''}
+      ${d.email?row('Email',d.email):''}
+    </div>
+
+    <div class="ds">
+      <div class="dst">Health Info</div>
+      <div class="dr"><span class="dk">Health Conditions</span><span class="dv"><div class="tw">${tl(d.health_conditions,'amber')}</div></span></div>
+      ${d.allergies?`<div class="dr" style="margin-top:8px;"><span class="dk">Allergies</span><span class="dv"><div class="tw">${tl(d.allergies,'red')}</div></span></div>`:''}
+    </div>
+
+    <div class="ds">
+      <div class="dst">Diet Preferences</div>
+      ${row('Diet Type',d.diet_preference)}
+      ${row('Meals Per Day',d.meals_per_day)}
+      ${row('Eating Window',d.eating_window)}
+      <div class="dr"><span class="dk">Meal Types</span><span class="dv"><div class="tw">${tl(d.meal_types)}</div></span></div>
+    </div>
+
+    <div class="ds">
+      <div class="dst">Food Preferences</div>
+      ${d.morning_drinks?`<div class="dr"><span class="dk">Morning Drinks</span><span class="dv"><div class="tw">${tl(d.morning_drinks)}</div></span></div>`:''}
+      ${d.fruits?`<div class="dr" style="margin-top:8px;"><span class="dk">Fruits</span><span class="dv"><div class="tw">${tl(d.fruits)}</div></span></div>`:''}
+      ${d.vegetables?`<div class="dr" style="margin-top:8px;"><span class="dk">Vegetables</span><span class="dv"><div class="tw">${tl(d.vegetables)}</div></span></div>`:''}
+      ${d.nuts_seeds?`<div class="dr" style="margin-top:8px;"><span class="dk">Nuts & Seeds</span><span class="dv"><div class="tw">${tl(d.nuts_seeds)}</div></span></div>`:''}
+    </div>
+
+    ${d.symptoms?`<div class="ds"><div class="dst">Symptoms</div><div class="tw">${tl(d.symptoms,'amber')}</div></div>`:''}
+    ${d.comments?`<div class="ds"><div class="dst">Notes & Comments</div>
+      <p style="font-size:14px;color:var(--muted);background:var(--bg);padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);line-height:1.7;">${d.comments}</p></div>`:''}
+  `;
+}
+</script>
+</body>
+</html>
