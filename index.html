@@ -714,8 +714,8 @@
     <div id="acct-step-relation">
       <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;">Is this diet plan for yourself or someone else (family member, etc.)?</p>
       <div style="display:flex;gap:10px;margin-bottom:16px;">
-        <button class="btn-primary" style="margin:0;flex:1;padding:11px;" onclick="setRelation('self')">For Myself</button>
-        <button class="btn-secondary" style="margin:0;flex:1;" onclick="setRelation('other')">For Someone Else</button>
+        <button class="btn-primary btn-self" style="margin:0;flex:1;padding:11px;" onclick="setRelation('self')">For Myself</button>
+        <button class="btn-secondary btn-other" style="margin:0;flex:1;" onclick="setRelation('other')">For Someone Else</button>
       </div>
       <div id="relation-fields" style="display:none;margin-bottom:14px;">
         <div class="form-group" style="margin-bottom:10px;">
@@ -743,11 +743,8 @@
       <!-- Create Account -->
       <div id="auth-create">
         <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number (Username)</label>
-          <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
-            <span class="phone-prefix">🇮🇳 +91</span>
-            <input type="tel" id="acct-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
-          </div>
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email (Username)</label>
+          <input type="email" id="acct-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
         </div>
         <div class="form-group" style="margin-bottom:10px;">
           <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Create Password</label>
@@ -771,11 +768,8 @@
       <div id="auth-login" style="display:none;">
         <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px;">Sign in to link this profile to your existing account.</p>
         <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number</label>
-          <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
-            <span class="phone-prefix">🇮🇳 +91</span>
-            <input type="tel" id="login-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
-          </div>
+          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
         </div>
         <div class="form-group" style="margin-bottom:14px;">
           <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Password</label>
@@ -887,43 +881,19 @@
 <div id="forgotModal" class="modal-overlay">
   <div class="modal-box" style="max-width:370px;">
     <div class="modal-header">
-      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;">Change Password</h3>
+      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;">Reset Password</h3>
       <span class="close-btn" onclick="closeForgotModal()">✕</span>
     </div>
     <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
-      🔑 Enter your phone number, your <strong>current password</strong>, and choose a new one.
+      📧 Enter your email and we'll send you a link to reset your password.
     </p>
-    <div class="form-group" style="margin-bottom:10px;">
-      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Phone Number</label>
-      <div class="phone-input-wrap" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
-        <span class="phone-prefix">🇮🇳 +91</span>
-        <input type="tel" id="fp-phone" placeholder="9876543210" maxlength="10" style="border:none!important;padding:10px 14px;font-size:14px;background:var(--bg);flex:1;outline:none;"/>
-      </div>
-    </div>
-    <div class="form-group" style="margin-bottom:10px;">
-      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Current Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-oldpass" placeholder="Your current password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-oldpass',this)" tabindex="-1">👁</button>
-      </div>
-    </div>
-    <div class="form-group" style="margin-bottom:10px;">
-      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">New Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-newpass" placeholder="Min 6 characters" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass',this)" tabindex="-1">👁</button>
-      </div>
-    </div>
     <div class="form-group" style="margin-bottom:14px;">
-      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Confirm New Password</label>
-      <div class="pw-wrap">
-        <input type="password" id="fp-newpass2" placeholder="Re-enter new password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        <button type="button" class="pw-eye" onclick="togglePw('fp-newpass2',this)" tabindex="-1">👁</button>
-      </div>
+      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email</label>
+      <input type="email" id="fp-email" placeholder="you@example.com" autocomplete="off" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;" onkeydown="if(event.key==='Enter')doResetPassword()"/>
     </div>
     <div id="fp-err" class="fp-err"></div>
     <div id="fp-suc" class="fp-suc"></div>
-    <button class="btn-primary" style="margin:0;width:100%;" onclick="doResetPassword()">Update Password</button>
+    <button class="btn-primary" style="margin:0;width:100%;" onclick="doResetPassword()">Send Reset Link</button>
   </div>
 </div>
 
@@ -932,7 +902,7 @@
 // 🔧 REPLACE these values with your own Firebase project config
 // Go to: https://console.firebase.google.com → Your project → Project settings → Your apps → Web app
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -955,7 +925,7 @@ onAuthStateChanged(auth, user => {
   const bar = document.getElementById('nav-login-bar');
   const phoneEl = document.getElementById('nav-login-phone');
   if (user) {
-    const phone = user.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+    const phone = user.email;
     phoneEl.textContent = 'Logged in: ' + phone;
     bar.classList.add('show');
   } else {
@@ -981,7 +951,7 @@ window.togglePw = function(inputId, btn) {
 
 // ─── FORGOT PASSWORD MODAL ────────────────────────────────
 window.openForgotModal = function() {
-  ['fp-phone','fp-oldpass','fp-newpass','fp-newpass2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  const el = document.getElementById('fp-email'); if(el) el.value = '';
   document.getElementById('fp-err').style.display = 'none';
   document.getElementById('fp-suc').style.display = 'none';
   document.getElementById('forgotModal').style.display = 'flex';
@@ -994,33 +964,22 @@ document.getElementById('forgotModal').addEventListener('click', function(e) {
 });
 
 window.doResetPassword = async function() {
-  const phone    = document.getElementById('fp-phone').value.trim();
-  const oldPass  = document.getElementById('fp-oldpass').value;
-  const newPass  = document.getElementById('fp-newpass').value;
-  const newPass2 = document.getElementById('fp-newpass2').value;
-  const errEl    = document.getElementById('fp-err');
-  const sucEl    = document.getElementById('fp-suc');
+  const email = document.getElementById('fp-email').value.trim();
+  const errEl = document.getElementById('fp-err');
+  const sucEl = document.getElementById('fp-suc');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
-  if (!/^\d{10}$/.test(phone))  { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display = 'block'; return; }
-  if (!oldPass)                  { errEl.textContent = 'Enter your current password'; errEl.style.display = 'block'; return; }
-  if (newPass.length < 6)       { errEl.textContent = 'New password must be at least 6 characters'; errEl.style.display = 'block'; return; }
-  if (newPass !== newPass2)     { errEl.textContent = 'New passwords do not match'; errEl.style.display = 'block'; return; }
-  if (oldPass === newPass)      { errEl.textContent = 'New password must be different from the current one'; errEl.style.display = 'block'; return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display = 'block'; return; }
 
-  const email = `91${phone}@nutriplan.app`;
   try {
-    const cred = await signInWithEmailAndPassword(auth, email, oldPass);
-    await updatePassword(cred.user, newPass);
-    sucEl.textContent = '✅ Password updated! Use your new password next time you sign in.';
+    await sendPasswordResetEmail(auth, email);
+    sucEl.innerHTML = '✅ Reset link sent!<br><span style="font-weight:400;font-size:12px;">Check your inbox — <strong>and your spam/junk folder</strong> if you don\'t see it within a minute.</span>';
     sucEl.style.display = 'block';
-    setTimeout(() => closeForgotModal(), 2500);
+    setTimeout(() => closeForgotModal(), 4000);
   } catch(e) {
-    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      errEl.textContent = 'Current password is incorrect. Please try again.';
-    } else if (e.code === 'auth/user-not-found') {
-      errEl.textContent = 'No account found for this phone number.';
+    if (e.code === 'auth/user-not-found') {
+      errEl.textContent = 'No account found with this email.';
     } else {
       errEl.textContent = e.message;
     }
@@ -1096,6 +1055,18 @@ let _relation = '';
 
 window.setRelation = function(type) {
   _isForSelf = type === 'self';
+  // Swap active styling
+  const selfBtn  = document.querySelector('#acct-step-relation .btn-self');
+  const otherBtn = document.querySelector('#acct-step-relation .btn-other');
+  if (selfBtn && otherBtn) {
+    if (type === 'self') {
+      selfBtn.className  = selfBtn.className.replace('btn-secondary','btn-primary');
+      otherBtn.className = otherBtn.className.replace('btn-primary','btn-secondary');
+    } else {
+      otherBtn.className = otherBtn.className.replace('btn-secondary','btn-primary');
+      selfBtn.className  = selfBtn.className.replace('btn-primary','btn-secondary');
+    }
+  }
   if (type === 'other') {
     document.getElementById('relation-fields').style.display = 'block';
     document.getElementById('relation-next-btn').style.display = 'block';
@@ -1127,33 +1098,32 @@ window.switchAuthTab = function(tab) {
 };
 
 window.createAccount = async function() {
-  const phone = document.getElementById('acct-phone').value.trim();
+  const email = document.getElementById('acct-email').value.trim();
   const pass = document.getElementById('acct-pass').value;
   const pass2 = document.getElementById('acct-pass2').value;
   const errEl = document.getElementById('acct-err');
   errEl.style.display = 'none';
 
-  if (!/^\d{10}$/.test(phone)) { errEl.textContent = 'Enter a valid 10-digit phone number'; errEl.style.display='block'; return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display='block'; return; }
   if (pass.length < 6) { errEl.textContent = 'Password must be at least 6 characters'; errEl.style.display='block'; return; }
   if (pass !== pass2) { errEl.textContent = 'Passwords do not match'; errEl.style.display='block'; return; }
 
-  const email = `91${phone}@nutriplan.app`;
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
     // Save account info in Firestore
-    await setDoc(doc(db, "accounts", uid), { phone: `+91${phone}`, createdAt: serverTimestamp() });
+    await setDoc(doc(db, "accounts", uid), { email: email, createdAt: serverTimestamp() });
     // Save profile data linked to account
     if (_pendingFormData) {
       await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation);
       saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
     }
     localStorage.setItem('nutriplan_uid', uid);
-    localStorage.setItem('nutriplan_phone', `+91${phone}`);
+    localStorage.setItem('nutriplan_email', email);
     showAccountDone('Account Created! 🎉', 'Your profile is saved. Sign in anytime from the Profiles page.');
   } catch(e) {
     if (e.code === 'auth/email-already-in-use') {
-      errEl.textContent = 'This phone number already has an account. Use "Sign In" tab.';
+      errEl.textContent = 'This email already has an account. Use "Sign In" tab.';
     } else {
       errEl.textContent = e.message;
     }
@@ -1162,12 +1132,11 @@ window.createAccount = async function() {
 };
 
 window.signInAndSave = async function() {
-  const phone = document.getElementById('login-phone').value.trim();
+  const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-err');
   errEl.style.display = 'none';
 
-  const email = `91${phone}@nutriplan.app`;
   try {
     const cred = await signInWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
@@ -1176,11 +1145,11 @@ window.signInAndSave = async function() {
       saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
     }
     localStorage.setItem('nutriplan_uid', uid);
-    localStorage.setItem('nutriplan_phone', `+91${phone}`);
+    localStorage.setItem('nutriplan_email', email);
     showAccountDone('Signed In! ✅', 'Profile linked to your account successfully.');
   } catch(e) {
     if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      errEl.textContent = 'Incorrect phone number or password.';
+      errEl.textContent = 'Incorrect email or password.';
     } else {
       errEl.textContent = e.message;
     }
@@ -1239,14 +1208,14 @@ function openAccountModal(formData) {
       _relation = document.getElementById('rel-relation').value.trim();
       await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
       saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-      const phone = currentUser.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+      const phone = currentUser.email;
       showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
     };
     // For self path — override setRelation to wire save directly
     window._autoSaveForCurrentUser = async function() {
       await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
       saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-      const phone = currentUser.email.replace('@nutriplan.app','').replace(/^91/,'+91 ');
+      const phone = currentUser.email;
       showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
     };
   } else {
