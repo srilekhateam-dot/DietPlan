@@ -69,12 +69,7 @@
   .nav-profile-btn { display:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--teal); color:#fff; font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; cursor:pointer; border:none; flex-shrink:0; position:relative; transition:background 0.2s; }
   .nav-profile-btn:hover { background:var(--teal-dark); }
   .nav-profile-btn.show { display:flex; }
-  .nav-profile-dropdown { position:absolute; top:calc(100% + 10px); right:0; background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-sm); box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:200px; z-index:200; display:none; overflow:hidden; }
-  .nav-profile-dropdown.open { display:block; }
-  .nav-pd-email { padding:12px 16px 8px; font-size:12px; color:var(--muted); border-bottom:1px solid var(--border); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .nav-pd-item { display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:13.5px; font-weight:500; color:var(--text); text-decoration:none; cursor:pointer; transition:background 0.15s; border:none; background:none; width:100%; text-align:left; font-family:'DM Sans',sans-serif; }
-  .nav-pd-item:hover { background:var(--teal-light); color:var(--teal); }
-  .nav-pd-item.danger:hover { background:#fef2f2; color:#dc2626; }
+
   /* Nav sign-in button (when not logged in) */
   .nav-signin-btn { display:none; align-items:center; gap:6px; background:var(--teal); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; text-decoration:none; }
   .nav-signin-btn:hover { background:var(--teal-dark); }
@@ -377,12 +372,7 @@
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
     <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
-      <button class="nav-profile-btn" id="nav-profile-btn" onclick="event.stopPropagation();toggleNavDropdown()" title="My Account"></button>
-      <div class="nav-profile-dropdown" id="nav-profile-dropdown">
-        <div class="nav-pd-email" id="nav-pd-email"></div>
-        <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
-        <button class="nav-pd-item danger" onclick="navSignOut()">🚪 Sign Out</button>
-      </div>
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="window.location.href='profile.html'" title="My Profile"></button>
     </div>
   </div>
 </nav>
@@ -819,28 +809,16 @@ const _auth = getAuth(_app);
 onAuthStateChanged(_auth, user => {
   const signinBtn  = document.getElementById('nav-signin-btn');
   const profileBtn = document.getElementById('nav-profile-btn');
-  const pdEmail    = document.getElementById('nav-pd-email');
   if (user) {
     localStorage.setItem('np_auth', 'signed-in');
     signinBtn.classList.remove('show');
     profileBtn.classList.add('show');
     const initials = (user.displayName || user.email || '?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
-    if (pdEmail) pdEmail.textContent = user.email || '';
   } else {
     localStorage.removeItem('np_auth');
     signinBtn.classList.add('show');
     profileBtn.classList.remove('show');
-  }
-});
-window.navSignOut = () => { localStorage.removeItem('np_auth'); return signOut(_auth).then(() => { location.href = 'index.html'; }); };
-window.toggleNavDropdown = () => {
-  document.getElementById('nav-profile-dropdown').classList.toggle('open');
-};
-document.addEventListener('click', e => {
-  const wrap = document.getElementById('nav-profile-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    document.getElementById('nav-profile-dropdown').classList.remove('open');
   }
 });
 </script>
