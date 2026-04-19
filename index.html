@@ -45,10 +45,12 @@
   .btn-get-started:hover { background: var(--teal-dark); transform: translateY(-1px); }
 
   nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
-  .nav-brand { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--teal); font-weight: 600; letter-spacing: -0.5px; text-decoration: none; }
+  .nav-brand { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--teal); font-weight: 600; letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
   .nav-brand span { color: var(--text); font-weight: 300; font-style: italic; }
-  .nav-links { display: flex; gap: 6px; }
-  .nav-links a { text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
+  .nav-right { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; justify-content: flex-end; }
+  .nav-links { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; flex: 1; justify-content: flex-end; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { flex: 0 0 auto; white-space: nowrap; text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
   .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
 
   .hero { text-align: center; padding: 40px 24px 32px; background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%); border-bottom: 1px solid var(--border); }
@@ -249,22 +251,8 @@
     .landing-inner { grid-template-columns: 1fr; gap: 24px; }
     .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .ln-card { padding: 12px 8px; }
-    .nav-links {
-    display: flex;
-    overflow-x: auto;           /* ✅ enables side scroll */
-    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
-    scrollbar-width: none;      /* hide scrollbar (Firefox) */
-    gap: 6px;
-  }
-
-  .nav-links::-webkit-scrollbar {
-    display: none;              /* hide scrollbar (Chrome) */
-  }
-
-  .nav-links a {
-    flex: 0 0 auto;             /* ❗ prevents shrinking */
-    white-space: nowrap;        /* ❗ keeps text in one line */
-  }
+    .nav-links a { font-size: 12.5px; padding: 6px 10px; }
+  .nav-signin-btn, .nav-profile-btn { flex-shrink: 0; }
   }
 </style>
 
@@ -288,7 +276,7 @@
 
 <nav id="topnav">
   <a class="nav-brand" href="index.html">Nutri<span>Plan</span></a>
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div class="nav-right">
     <div class="nav-links">
       <a href="#nutrition-overview" class="active">Nutrition</a>
       <a href="#form-section">Form</a>
@@ -299,8 +287,8 @@
     <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
-    <div style="position:relative;" id="nav-profile-wrap">
-      <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
+    <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="event.stopPropagation();toggleNavDropdown()" title="My Account"></button>
       <div class="nav-profile-dropdown" id="nav-profile-dropdown">
         <div class="nav-pd-email" id="nav-pd-email"></div>
         <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
