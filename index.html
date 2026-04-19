@@ -212,12 +212,7 @@
   .nav-profile-btn { display:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--teal); color:#fff; font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; cursor:pointer; border:none; flex-shrink:0; position:relative; transition:background 0.2s; }
   .nav-profile-btn:hover { background:var(--teal-dark); }
   .nav-profile-btn.show { display:flex; }
-  .nav-profile-dropdown { position:absolute; top:calc(100% + 10px); right:0; background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-sm); box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:200px; z-index:200; display:none; overflow:hidden; }
-  .nav-profile-dropdown.open { display:block; }
-  .nav-pd-email { padding:12px 16px 8px; font-size:12px; color:var(--muted); border-bottom:1px solid var(--border); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .nav-pd-item { display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:13.5px; font-weight:500; color:var(--text); text-decoration:none; cursor:pointer; transition:background 0.15s; border:none; background:none; width:100%; text-align:left; font-family:'DM Sans',sans-serif; }
-  .nav-pd-item:hover { background:var(--teal-light); color:var(--teal); }
-  .nav-pd-item.danger:hover { background:#fef2f2; color:#dc2626; }
+
   /* Nav sign-in button (when not logged in) */
   .nav-signin-btn { display:none; align-items:center; gap:6px; background:var(--teal); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; text-decoration:none; }
   .nav-signin-btn:hover { background:var(--teal-dark); }
@@ -288,12 +283,7 @@
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
     <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
-      <button class="nav-profile-btn" id="nav-profile-btn" onclick="event.stopPropagation();toggleNavDropdown()" title="My Account"></button>
-      <div class="nav-profile-dropdown" id="nav-profile-dropdown">
-        <div class="nav-pd-email" id="nav-pd-email"></div>
-        <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
-        <button class="nav-pd-item danger" onclick="navSignOut()">🚪 Sign Out</button>
-      </div>
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="window.location.href='profile.html'" title="My Profile"></button>
     </div>
   </div>
 </nav>
@@ -756,29 +746,15 @@
 <div id="accountModal" class="modal-overlay" style="z-index:1100;">
   <div class="modal-box" style="max-width:420px;width:94%;">
     <div class="modal-header">
-      <h3 id="acct-modal-title" style="font-family:'Fraunces',serif;font-size:1.1rem;">Save Your Profile</h3>
+      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;">Save Your Profile</h3>
       <span class="close-btn" onclick="skipAccount()">✕</span>
     </div>
 
-    <!-- Step A: Relation choice -->
-    <div id="acct-step-relation">
-      <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;">Is this diet plan for yourself or someone else (family member, etc.)?</p>
-      <div style="display:flex;gap:10px;margin-bottom:16px;">
-        <button class="btn-primary btn-self" style="margin:0;flex:1;padding:11px;" onclick="setRelation('self')">For Myself</button>
-        <button class="btn-secondary btn-other" style="margin:0;flex:1;" onclick="setRelation('other')">For Someone Else</button>
-      </div>
-      <div id="relation-fields" style="display:none;margin-bottom:14px;">
-        <div class="form-group" style="margin-bottom:10px;">
-          <label>Their Name</label>
-          <input type="text" id="rel-name" placeholder="e.g. Mom, Brother..." style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        </div>
-        <div class="form-group">
-          <label>Relation</label>
-          <input type="text" id="rel-relation" placeholder="e.g. Mother, Son, Friend..." style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        </div>
-      </div>
-      <button id="relation-next-btn" class="btn-primary" style="margin:0;width:100%;display:none;" onclick="goToAccountStep()">Continue →</button>
-      <button class="btn-secondary" style="margin-top:10px;width:100%;" onclick="skipAccount()">Skip — Don't Save</button>
+    <!-- Step A: Save or Don't Save -->
+    <div id="acct-step-save">
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;">Would you like to save this profile so you can view it later?</p>
+      <button class="btn-primary" style="margin:0;width:100%;margin-bottom:10px;" onclick="proceedToAuth()">Save My Profile →</button>
+      <button class="btn-secondary" style="margin:0;width:100%;" onclick="skipAccount()">Don't Save</button>
     </div>
 
     <!-- Step B: Create Account or Login -->
@@ -974,42 +950,21 @@ const db = getFirestore(app);
 onAuthStateChanged(auth, user => {
   const profileBtn = document.getElementById('nav-profile-btn');
   const signinBtn  = document.getElementById('nav-signin-btn');
-  const emailEl    = document.getElementById('nav-pd-email');
   if (user) {
     localStorage.setItem('np_auth', 'signed-in');
     const initials = (user.email||'?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
     profileBtn.classList.add('show');
-    if (emailEl) emailEl.textContent = user.email;
     if (signinBtn) signinBtn.classList.remove('show');
   } else {
     localStorage.removeItem('np_auth');
     profileBtn.classList.remove('show');
     if (signinBtn) signinBtn.classList.add('show');
-    document.getElementById('nav-profile-dropdown').classList.remove('open');
   }
 });
 
 // Sign out from nav
-window.navSignOut = async function() {
-  document.getElementById('nav-profile-dropdown').classList.remove('open');
-  await fbSignOut(auth);
-  localStorage.removeItem('nutriplan_uid');
-  localStorage.removeItem('nutriplan_phone');
-  localStorage.removeItem('np_auth');
-};
 
-// Toggle nav profile dropdown
-window.toggleNavDropdown = function() {
-  document.getElementById('nav-profile-dropdown').classList.toggle('open');
-};
-// Close dropdown when clicking outside
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('nav-profile-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    document.getElementById('nav-profile-dropdown').classList.remove('open');
-  }
-});
 
 // ─── SHOW PASSWORD TOGGLE ──────────────────────────────────
 window.togglePw = function(inputId, btn) {
@@ -1123,38 +1078,20 @@ let _isForSelf = true;
 let _relName = '';
 let _relation = '';
 
-window.setRelation = function(type) {
-  _isForSelf = type === 'self';
-  // Swap active styling
-  const selfBtn  = document.querySelector('#acct-step-relation .btn-self');
-  const otherBtn = document.querySelector('#acct-step-relation .btn-other');
-  if (selfBtn && otherBtn) {
-    if (type === 'self') {
-      selfBtn.className  = selfBtn.className.replace('btn-secondary','btn-primary');
-      otherBtn.className = otherBtn.className.replace('btn-primary','btn-secondary');
-    } else {
-      otherBtn.className = otherBtn.className.replace('btn-secondary','btn-primary');
-      selfBtn.className  = selfBtn.className.replace('btn-primary','btn-secondary');
-    }
-  }
-  if (type === 'other') {
-    document.getElementById('relation-fields').style.display = 'block';
-    document.getElementById('relation-next-btn').style.display = 'block';
+// Called when user clicks "Save My Profile →"
+window.proceedToAuth = function() {
+  document.getElementById('acct-step-save').style.display = 'none';
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    // Already signed in — save immediately, show done
+    (async () => {
+      await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
+      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
+      showAccountDone('Profile Saved! ✅', 'Linked to your account (' + currentUser.email + ').');
+    })();
   } else {
-    document.getElementById('relation-fields').style.display = 'none';
-    document.getElementById('relation-next-btn').style.display = 'block';
-    // If already logged in, wire the "Continue" button to auto-save
-    if (window._autoSaveForCurrentUser) {
-      document.getElementById('relation-next-btn').onclick = window._autoSaveForCurrentUser;
-    }
+    document.getElementById('acct-step-auth').style.display = 'block';
   }
-};
-
-window.goToAccountStep = function() {
-  _relName = document.getElementById('rel-name').value.trim();
-  _relation = document.getElementById('rel-relation').value.trim();
-  document.getElementById('acct-step-relation').style.display = 'none';
-  document.getElementById('acct-step-auth').style.display = 'block';
 };
 
 window.switchAuthTab = function(tab) {
@@ -1236,17 +1173,13 @@ window.saveLocallyAndClose = function() {
 };
 
 window.skipAccount = function() {
-  // Still save to Firestore without account link
-  if (_pendingFormData) {
-    saveToFirestore(_pendingFormData, null, _isForSelf, _relName, _relation);
-    saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-  }
+  // Don't save — just close
   document.getElementById('accountModal').style.display = 'none';
   _pendingFormData = null;
 };
 
 function showAccountDone(title, msg) {
-  document.getElementById('acct-step-relation').style.display = 'none';
+  document.getElementById('acct-step-save').style.display = 'none';
   document.getElementById('acct-step-auth').style.display = 'none';
   document.getElementById('acct-step-done').style.display = 'block';
   document.getElementById('acct-done-title').textContent = title;
@@ -1256,48 +1189,26 @@ function showAccountDone(title, msg) {
 
 function openAccountModal(formData) {
   _pendingFormData = formData;
-  _isForSelf = true;
-  _relName = ''; _relation = '';
 
-  // If user already signed in → skip auth, just show relation step then auto-save
-  const currentUser = auth.currentUser;
+  // Read relation info from the form data (already captured at submit time)
+  _isForSelf = formData.plan_for_self !== false;
+  _relName   = formData.plan_other_name || '';
+  _relation  = formData.plan_other_relation || '';
 
-  document.getElementById('acct-step-relation').style.display = 'block';
+  // Reset modal state
+  document.getElementById('acct-step-save').style.display = 'block';
   document.getElementById('acct-step-auth').style.display = 'none';
   document.getElementById('acct-step-done').style.display = 'none';
-  document.getElementById('relation-fields').style.display = 'none';
-  document.getElementById('relation-next-btn').style.display = 'none';
   document.getElementById('acct-err').style.display = 'none';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('accountModal').style.display = 'flex';
 
-  if (currentUser) {
-    // Already logged in — override "Continue →" button to auto-save
-    document.getElementById('relation-next-btn').onclick = async function() {
-      _relName = document.getElementById('rel-name').value.trim();
-      _relation = document.getElementById('rel-relation').value.trim();
-      await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
-      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-      const phone = currentUser.email;
-      showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
-    };
-    // For self path — override setRelation to wire save directly
-    window._autoSaveForCurrentUser = async function() {
-      await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
-      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-      const phone = currentUser.email;
-      showAccountDone('Profile Saved! ✅', `Linked to your account (${phone}).`);
-    };
-  } else {
-    window._autoSaveForCurrentUser = null;
-    document.getElementById('relation-next-btn').onclick = window.goToAccountStep;
-    // Reset to create tab
-    ['create','login','skip'].forEach(t => document.getElementById('tab-'+t)?.classList.remove('active'));
-    document.getElementById('tab-create')?.classList.add('active');
-    document.getElementById('auth-create').style.display = 'block';
-    document.getElementById('auth-login').style.display = 'none';
-    document.getElementById('auth-skip').style.display = 'none';
-  }
+  // Reset to create tab
+  ['create','login','skip'].forEach(t => document.getElementById('tab-'+t)?.classList.remove('active'));
+  document.getElementById('tab-create')?.classList.add('active');
+  document.getElementById('auth-create').style.display = 'block';
+  document.getElementById('auth-login').style.display = 'none';
+  document.getElementById('auth-skip').style.display = 'none';
 }
 
 // ─── PROGRESS ──────────────────────────────────────────────
@@ -1504,10 +1415,19 @@ async function submitForm() {
   const userId = generateUserId();
   const userName = g('inp-name').value.trim();
 
+  // Read "who is this for" from the form
+  const planOtherFields = document.getElementById('plan-for-other-fields');
+  const planForSelf = !planOtherFields || planOtherFields.style.display === 'none';
+  const planOtherName = (g('plan-other-name')?.value||'').trim();
+  const planOtherRelation = (g('plan-other-relation')?.value||'').trim();
+
   const formData = {
     userId,
     timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
     name: userName,
+    plan_for_self: planForSelf,
+    plan_other_name: planOtherName,
+    plan_other_relation: planOtherRelation,
     age: g('inp-age').value,
     gender: g('inp-gender').value,
     height_cm: g('inp-height').value,
