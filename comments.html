@@ -48,10 +48,14 @@
     font-weight: 600;
     letter-spacing: -0.5px;
     text-decoration: none;
+    flex-shrink: 0;
   }
   .nav-brand span { color: var(--text); font-weight: 300; font-style: italic; }
-  .nav-links { display: flex; gap: 6px; }
+  .nav-links { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; }
+  .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a {
+    flex: 0 0 auto;
+    white-space: nowrap;
     text-decoration: none;
     color: var(--muted);
     font-size: 13.5px;
@@ -328,8 +332,8 @@
     <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
-    <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
-      <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
+    <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="event.stopPropagation();toggleNavDropdown()" title="My Account"></button>
       <div class="nav-profile-dropdown" id="nav-profile-dropdown">
         <div class="nav-pd-email" id="nav-pd-email"></div>
         <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
