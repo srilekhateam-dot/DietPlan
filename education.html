@@ -47,6 +47,7 @@
     font-weight: 600;
     letter-spacing: -0.5px;
     text-decoration: none;
+    flex-shrink: 0;
   }
   .nav-brand span { color: var(--text); font-weight: 300; font-style: italic; }
   .nav-links { display: flex; gap: 6px; }
@@ -324,7 +325,7 @@
     .carb-types { grid-template-columns: 1fr 1fr; }
     .req-highlight { grid-template-columns: 1fr 1fr; }
     .carb-visual { flex-direction: column; }
-    nav { overflow: hidden; }
+    nav { padding: 0 16px; }
     .nav-right { min-width: 0; flex: 1; overflow: hidden; }
     .nav-links {
       display: flex;
@@ -375,8 +376,8 @@
     <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <!-- Shown when signed in -->
-    <div style="position:relative;flex-shrink:0;" id="nav-profile-wrap">
-      <button class="nav-profile-btn" id="nav-profile-btn" onclick="toggleNavDropdown()" title="My Account"></button>
+    <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
+      <button class="nav-profile-btn" id="nav-profile-btn" onclick="event.stopPropagation();toggleNavDropdown()" title="My Account"></button>
       <div class="nav-profile-dropdown" id="nav-profile-dropdown">
         <div class="nav-pd-email" id="nav-pd-email"></div>
         <a href="profile.html" class="nav-pd-item">👤 My Profile</a>
