@@ -2196,7 +2196,8 @@ window.addEventListener('load', () => {
 <!-- Auth state → nav -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const _app = initializeApp({
   apiKey:"AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
   authDomain:"nutriplan-65582.firebaseapp.com",
@@ -2206,10 +2207,27 @@ const _app = initializeApp({
   appId:"1:851509980462:web:b18af741addba334ca1ebf"
 });
 const _auth = getAuth(_app);
-onAuthStateChanged(_auth, user => {
+const _db = getFirestore(_app);
+
+async function isRestricted(email) {
+  if (!email) return false;
+  try {
+    const snap = await getDoc(doc(_db, "restrictedUsers", email.toLowerCase().replace(/[@.]/g, '_')));
+    return snap.exists();
+  } catch(e) { return false; }
+}
+
+onAuthStateChanged(_auth, async user => {
   const signinBtn  = document.getElementById('nav-signin-btn');
   const profileBtn = document.getElementById('nav-profile-btn');
   if (user) {
+    if (await isRestricted(user.email)) {
+      await signOut(_auth);
+      localStorage.removeItem('np_auth');
+      signinBtn.classList.add('show');
+      profileBtn.classList.remove('show');
+      return;
+    }
     localStorage.setItem('np_auth', 'signed-in');
     signinBtn.classList.remove('show');
     profileBtn.classList.add('show');
