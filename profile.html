@@ -398,6 +398,24 @@ window.doResetPassword = async function() {
   }
 };
 
+// ─── ACCESS CHECK HELPERS ─────────────────────────────────
+async function checkUserNotRestricted(email) {
+  const docId = email.toLowerCase().replace(/[@.]/g, '_');
+  try {
+    const snap = await getDoc(doc(db, "restrictedUsers", docId));
+    if (snap.exists()) return false;
+  } catch(e) { /* allow by default */ }
+  return true;
+}
+
+async function checkRegistrationOpen() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "global"));
+    if (snap.exists() && snap.data().registrationClosed === true) return false;
+  } catch(e) { /* allow by default */ }
+  return true;
+}
+
 // ─── SIGN IN ──────────────────────────────────────────────
 window.doSignIn = async () => {
   const email = document.getElementById('li-email').value.trim();
@@ -407,6 +425,13 @@ window.doSignIn = async () => {
   if (!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Enter a valid email address'; err.style.display='block'; return; }
   if (!pass)                   { err.textContent='Enter your password'; err.style.display='block'; return; }
   try {
+    // ── Check if this email is restricted ──
+    const notRestricted = await checkUserNotRestricted(email);
+    if (!notRestricted) {
+      err.textContent = 'Your account has been restricted. Please contact support for assistance.';
+      err.style.display = 'block';
+      return;
+    }
     await signInWithEmailAndPassword(auth, email, pass);
   } catch(e) {
     err.textContent = (e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')
@@ -426,7 +451,23 @@ window.doCreateAccount = async () => {
   if (pass.length < 6)         { err.textContent='Password must be at least 6 characters'; err.style.display='block'; return; }
   if (pass !== pass2)          { err.textContent='Passwords do not match'; err.style.display='block'; return; }
   try {
-    await createUserWithEmailAndPassword(auth, email, pass);
+    // ── Check if registrations are open ──
+    const regOpen = await checkRegistrationOpen();
+    if (!regOpen) {
+      err.textContent = 'New registrations are currently closed. Please contact us if you need access.';
+      err.style.display = 'block';
+      return;
+    }
+    // ── Check if this email is restricted ──
+    const notRestricted = await checkUserNotRestricted(email);
+    if (!notRestricted) {
+      err.textContent = 'This email address is not allowed to register. Please contact support.';
+      err.style.display = 'block';
+      return;
+    }
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    // ── Write account doc so admin panel can see this user ──
+    await setDoc(doc(db, "accounts", cred.user.uid), { email: email, createdAt: serverTimestamp() });
   } catch(e) {
     err.textContent = e.code==='auth/email-already-in-use'
       ? 'This email already has an account. Use Sign In.' : e.message;
@@ -454,6 +495,22 @@ window.doSignOut = async () => {
 // ─── AUTH STATE ───────────────────────────────────────────
 onAuthStateChanged(auth, async user => {
   if (user) {
+    // ── Always check restriction on every session restore ──
+    const allowed = await checkUserNotRestricted(user.email || '');
+    if (!allowed) {
+      await fbSignOut(auth);
+      localStorage.removeItem('np_auth');
+      // Show error on the sign-in form
+      const errEl = document.getElementById('li-err');
+      if (errEl) {
+        errEl.textContent = 'Your account has been restricted. Please contact support for assistance.';
+        errEl.style.display = 'block';
+      }
+      document.getElementById('nav-profile-btn').classList.remove('show');
+      document.getElementById('nav-signin-btn').classList.add('show');
+      return;
+    }
+
     usingLocal = false;
     // Cache signed-in state for instant nav on other pages
     localStorage.setItem('np_auth', 'signed-in');
@@ -634,27 +691,84 @@ document.getElementById('del-popup-overlay').addEventListener('click', function(
 });
 
 // ─── CONFIRM DELETE ───────────────────────────────────────
+// window.confirmDelete = async (userId, name, isLocal) => {
+//   _pendingDelete = { userId, name, isLocal };
+//   document.getElementById('del-popup-msg').textContent =
+//     `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data in Google Sheets is kept.`;
+//   document.getElementById('del-popup-overlay').classList.add('open');
+//   document.getElementById('del-confirm-btn').onclick = async () => {
+//     closeDelPopup();
+//     if (isLocal) {
+//       try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
+//       showLocalProfiles();
+//     } else {
+//       const user = auth.currentUser;
+//       if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
+//     }
+//     if (activeId===userId) {
+//       activeId=null;
+//       const dp=document.getElementById('detail-panel');
+//       dp.classList.remove('visible'); dp.innerHTML='';
+//     }
+//   };
+// };
+
+
+
+
+
 window.confirmDelete = async (userId, name, isLocal) => {
   _pendingDelete = { userId, name, isLocal };
   document.getElementById('del-popup-msg').textContent =
-    `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data in Google Sheets is kept.`;
+    `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data is kept for records.`;
   document.getElementById('del-popup-overlay').classList.add('open');
   document.getElementById('del-confirm-btn').onclick = async () => {
     closeDelPopup();
     if (isLocal) {
-      try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
+      try {
+        const p = JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]');
+        localStorage.setItem('nutriplan_profiles', JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId)));
+      } catch(_){}
       showLocalProfiles();
     } else {
       const user = auth.currentUser;
-      if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
+      if (user) {
+        try {
+          // 1. Remove from user's account profiles list
+          await deleteDoc(doc(db, "accounts", user.uid, "profiles", userId));
+          
+          // 2. Mark the submission as deleted by user (soft delete for admin visibility)
+          await setDoc(doc(db, "submissions", userId), {
+            deletedByUser: true,
+            deletedAt: serverTimestamp(),
+            deletedByUid: user.uid,
+            deletedByEmail: user.email
+          }, { merge: true });
+          
+          await loadAccountProfiles(user.uid);
+        } catch(e){
+          alert('Delete failed: '+e.message);
+        }
+      }
     }
-    if (activeId===userId) {
-      activeId=null;
-      const dp=document.getElementById('detail-panel');
-      dp.classList.remove('visible'); dp.innerHTML='';
+    if (activeId === userId) {
+      activeId = null;
+      const dp = document.getElementById('detail-panel');
+      dp.classList.remove('visible');
+      dp.innerHTML = '';
     }
   };
 };
+
+
+
+
+
+
+
+
+
+
 
 // ─── RENDER DETAIL ────────────────────────────────────────
 function renderDetail(panel, d, relInfo) {
@@ -714,6 +828,7 @@ function renderDetail(panel, d, relInfo) {
       <div class="dst">Diet Preferences</div>
       ${row('Diet Type',d.diet_preference)}
       ${row('Meals Per Day',d.meals_per_day)}
+      ${d.num_curries?row('Curries Per Day',d.num_curries):''}
       ${row('Eating Window',d.eating_window)}
       <div class="dr"><span class="dk">Meal Types</span><span class="dv"><div class="tw">${tl(d.meal_types)}</div></span></div>
     </div>
@@ -724,6 +839,7 @@ function renderDetail(panel, d, relInfo) {
       ${d.fruits?`<div class="dr" style="margin-top:8px;"><span class="dk">Fruits</span><span class="dv"><div class="tw">${tl(d.fruits)}</div></span></div>`:''}
       ${d.vegetables?`<div class="dr" style="margin-top:8px;"><span class="dk">Vegetables</span><span class="dv"><div class="tw">${tl(d.vegetables)}</div></span></div>`:''}
       ${d.nuts_seeds?`<div class="dr" style="margin-top:8px;"><span class="dk">Nuts & Seeds</span><span class="dv"><div class="tw">${tl(d.nuts_seeds)}</div></span></div>`:''}
+      ${d.food_dislikes?`<div class="dr" style="margin-top:8px;"><span class="dk">Food Dislikes</span><span class="dv" style="color:var(--text);white-space:pre-wrap;">${d.food_dislikes}</span></div>`:''}
     </div>
 
     ${d.symptoms?`<div class="ds"><div class="dst">Symptoms</div><div class="tw">${tl(d.symptoms,'amber')}</div></div>`:''}
