@@ -678,6 +678,7 @@
       <a href="index.html#form-section">Form</a>
       <a href="education.html" class="active">Education</a>
       <a href="comments.html">Comments</a>
+      <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages<span id="nav-msg-dot" style="display:none;position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#dc2626;border:2px solid #fff;"></span></a>
     </div>
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
     <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
@@ -2197,7 +2198,7 @@ window.addEventListener('load', () => {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const _app = initializeApp({
   apiKey:"AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
   authDomain:"nutriplan-65582.firebaseapp.com",
@@ -2233,6 +2234,11 @@ onAuthStateChanged(_auth, async user => {
     profileBtn.classList.add('show');
     const initials = (user.displayName || user.email || '?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
+    // Check unread messages
+    try {
+      const snap = await getDocs(query(collection(_db, "messages", user.uid, "inbox"), where("read","==",false)));
+      if (!snap.empty) { const d = document.getElementById('nav-msg-dot'); if(d) d.style.display='block'; }
+    } catch(_){}
   } else {
     localStorage.removeItem('np_auth');
     signinBtn.classList.add('show');
