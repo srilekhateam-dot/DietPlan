@@ -151,6 +151,23 @@
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
   @media(max-width:640px){nav{padding:0 16px;}.nav-signin-btn,.nav-profile-btn{flex-shrink:0;}.d-grid{grid-template-columns:1fr 1fr;}.dk{min-width:120px;}.auth-tabs{gap:4px;}.auth-tab{font-size:11.5px;}}
+
+  /* ─── Messages Inbox ─── */
+  .inbox-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;display:none;animation:fadeUp 0.4s ease both;}
+  .inbox-section.visible{display:block;}
+  .inbox-empty{text-align:center;padding:30px;color:var(--muted);font-size:13.5px;}
+  .inbox-empty .ei{font-size:2.5rem;margin-bottom:10px;}
+  .inbox-msg{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;background:var(--bg);transition:all 0.15s;cursor:pointer;}
+  .inbox-msg.unread{background:#fff;border-color:var(--teal);box-shadow:0 2px 8px rgba(26,158,143,0.10);}
+  .inbox-msg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px;}
+  .inbox-msg-subject{font-weight:700;font-size:14px;color:var(--text);flex:1;}
+  .inbox-msg-subject.unread::before{content:"● ";color:var(--teal);font-size:9px;vertical-align:middle;margin-right:3px;}
+  .inbox-msg-time{font-size:11.5px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+  .inbox-msg-from{font-size:12px;color:var(--teal-dark);font-weight:600;margin-bottom:6px;}
+  .inbox-msg-profile-tag{display:inline-flex;align-items:center;gap:4px;background:var(--teal-light);color:var(--teal-dark);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:700;margin-bottom:6px;}
+  .inbox-msg-body{font-size:13.5px;color:#374151;line-height:1.6;white-space:pre-wrap;display:none;}
+  .inbox-msg-body.open{display:block;}
+  .inbox-unread-badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle;}
 </style>
 
 <script>
@@ -178,7 +195,8 @@
       <a href="index.html">Form</a>
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
-
+      <a href="profile.html" class="active">My Profile</a>
+      <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages<span id="nav-msg-dot" style="display:none;position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#dc2626;border:2px solid #fff;"></span></a>
     </div>
 
     <!-- NOT signed in: simple Sign In button -->
@@ -274,6 +292,15 @@
     <div class="chips-wrap" id="chips-wrap"></div>
   </div>
 
+  <!-- Messages Inbox -->
+  <div id="inbox-section" class="inbox-section">
+    <div class="sec-label">📨 Messages from Admin</div>
+    <div class="sec-title" style="margin-bottom:14px;">Your Inbox <span id="inbox-unread-badge"></span></div>
+    <div id="inbox-list">
+      <div class="inbox-empty"><div class="ei">📭</div><p>No messages yet.</p></div>
+    </div>
+  </div>
+
   <!-- Detail Panel -->
   <div class="detail-panel" id="detail-panel"></div>
 
@@ -320,7 +347,7 @@ import { initializeApp }               from "https://www.gstatic.com/firebasejs/
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
          signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp }
+import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp, query, orderBy, where }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -523,6 +550,12 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('acct-bar').classList.add('show');
     document.getElementById('auth-card').style.display = 'none';
     await loadAccountProfiles(user.uid);
+    await loadInbox(user.uid);
+    // Nav dot
+    try {
+      const unreadSnap = await getDocs(query(collection(db,"messages",user.uid,"inbox"), where("read","==",false)));
+      if (!unreadSnap.empty) { const d=document.getElementById('nav-msg-dot'); if(d) d.style.display='block'; }
+    } catch(_){}
   } else {
     // User is signed out — clear cache and update nav
     localStorage.removeItem('np_auth');
@@ -679,6 +712,15 @@ window.scrollToAuth = function() {
   document.getElementById('auth-card').scrollIntoView({behavior:'smooth'});
   return false;
 };
+window.scrollToInbox = function(e) {
+  e.preventDefault();
+  const el = document.getElementById('inbox-section');
+  if (el && el.classList.contains('visible')) {
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    document.getElementById('auth-card')?.scrollIntoView({behavior:'smooth'});
+  }
+};
 
 // ─── DELETE POPUP ─────────────────────────────────────────
 let _pendingDelete = null;
@@ -769,6 +811,89 @@ window.confirmDelete = async (userId, name, isLocal) => {
 
 
 
+
+// ─── INBOX (ADMIN MESSAGES) ────────────────────────────────
+async function loadInbox(uid) {
+  const section = document.getElementById('inbox-section');
+  const listEl  = document.getElementById('inbox-list');
+  section.classList.add('visible');
+  listEl.innerHTML = `<div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13.5px;padding:10px 0;"><div style="width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;"></div>Loading messages…</div>`;
+  
+  try {
+    const snap = await getDocs(query(collection(db, "messages", uid, "inbox"), orderBy("sentAt", "desc")));
+    const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderInbox(msgs, uid);
+  } catch(e) {
+    // try without ordering
+    try {
+      const snap2 = await getDocs(collection(db, "messages", uid, "inbox"));
+      const msgs = snap2.docs.map(d => ({ id: d.id, ...d.data() }));
+      msgs.sort((a,b)=>(b.sentAt?.seconds||0)-(a.sentAt?.seconds||0));
+      renderInbox(msgs, uid);
+    } catch(e2) {
+      listEl.innerHTML = `<div class="inbox-empty"><div class="ei">📭</div><p>No messages yet.</p></div>`;
+    }
+  }
+}
+
+function formatMsgTime(ts) {
+  if (!ts) return '';
+  try {
+    const d = ts.toDate ? ts.toDate() : new Date(ts.seconds * 1000);
+    return d.toLocaleString('en-IN', {timeZone:'Asia/Kolkata', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+  } catch { return ''; }
+}
+
+function renderInbox(msgs, uid) {
+  const listEl = document.getElementById('inbox-list');
+  const badge  = document.getElementById('inbox-unread-badge');
+  const unreadCount = msgs.filter(m => !m.read).length;
+  badge.innerHTML = unreadCount > 0 ? `<span class="inbox-unread-badge">${unreadCount}</span>` : '';
+  
+  if (msgs.length === 0) {
+    listEl.innerHTML = `<div class="inbox-empty"><div class="ei">📭</div><p>No messages from admin yet. We'll notify you here when the team sends you something.</p></div>`;
+    return;
+  }
+  
+  listEl.innerHTML = msgs.map((m, i) => `
+    <div class="inbox-msg ${m.read?'':'unread'}" id="imsg-${m.id}" onclick="toggleInboxMsg('${m.id}','${uid}')">
+      <div class="inbox-msg-head">
+        <div class="inbox-msg-subject ${m.read?'':'unread'}">${escapeHtmlInline(m.subject||'(no subject)')}</div>
+        <div class="inbox-msg-time">${formatMsgTime(m.sentAt)}</div>
+      </div>
+      <div class="inbox-msg-from">From: NutriPlan Team</div>
+      ${m.profileName ? `<div class="inbox-msg-profile-tag">👤 Re: ${escapeHtmlInline(m.profileName)}</div>` : ''}
+      <div class="inbox-msg-body" id="ibody-${m.id}">${escapeHtmlInline(m.body||'')}</div>
+    </div>
+  `).join('');
+}
+
+// Track which message docs have already been marked read
+const _markedRead = new Set();
+
+window.toggleInboxMsg = async function(msgId, uid) {
+  const bodyEl = document.getElementById(`ibody-${msgId}`);
+  const msgEl  = document.getElementById(`imsg-${msgId}`);
+  if (!bodyEl) return;
+  const isOpen = bodyEl.classList.toggle('open');
+  // Mark as read when opened
+  if (isOpen && !_markedRead.has(msgId)) {
+    _markedRead.add(msgId);
+    msgEl.classList.remove('unread');
+    msgEl.querySelector('.inbox-msg-subject')?.classList.remove('unread');
+    try {
+      await setDoc(doc(db, "messages", uid, "inbox", msgId), { read: true }, { merge: true });
+      // Update unread badge count
+      const remaining = document.querySelectorAll('.inbox-msg.unread').length;
+      const badge = document.getElementById('inbox-unread-badge');
+      badge.innerHTML = remaining > 0 ? `<span class="inbox-unread-badge">${remaining}</span>` : '';
+    } catch(_) {}
+  }
+};
+
+function escapeHtmlInline(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 // ─── RENDER DETAIL ────────────────────────────────────────
 function renderDetail(panel, d, relInfo) {
