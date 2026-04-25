@@ -434,11 +434,13 @@
           <label>Activity Level</label>
           <select id="inp-activity">
             <option value="">Select Activity Level</option>
-            <option value="1.2">Sedentary (no exercise)</option>
-            <option value="1.375">Lightly active (1–3 days/wk)</option>
-            <option value="1.55">Moderately active (3–5 days/wk)</option>
-            <option value="1.725">Very active (6–7 days/wk)</option>
-            <option value="1.9">Super active (athlete/physical job)</option>
+            <!-- NEW -->
+<option value="1.2">Sedentary: little or no exercise</option>
+<option value="1.375">Sedentary: Exercise 1–3 times/week</option>
+<option value="1.46">Moderate: Exercise 4–5 times/week</option>
+<option value="1.55">Moderate: Daily exercise or intense 3–4 times/week</option>
+<option value="1.72">Heavy: Intense exercise 6–7 times/week</option>
+<option value="1.9">Heavy: Very intense exercise daily, or physical job</option>
           </select>
           <span class="error-msg">Please select activity level</span>
         </div>
@@ -615,6 +617,14 @@
         <input type="hidden" id="eat-window-val" value=""/>
       </div>
       <div class="section-divider"></div>
+      <div class="form-group" style="margin-top:4px;margin-bottom:18px;">
+        <label>Number of Curries Per Day</label>
+        <select id="inp-curries">
+          <option value="">Select number</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+        </select>
+      </div>
+      <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
       <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
       <div class="accordion-item" id="drinks-section">
@@ -689,6 +699,13 @@
             <div class="sub-chip" onclick="toggleChip(this)">Zucchini</div>
           </div>
         </div>
+      </div>
+      <div class="section-divider"></div>
+      <div class="step-label" style="margin-bottom:8px;">Step 3 · Dislikes</div>
+      <div class="section-title" style="margin-bottom:10px;">Food Dislikes</div>
+      <div class="form-group">
+        <label>Foods You Dislike or Avoid <span style="font-family:'DM Sans';font-size:13px;color:var(--muted);font-weight:400;">(optional)</span></label>
+        <textarea id="inp-dislikes" placeholder="e.g. Bitter gourd, Mushrooms, Raw onion..."></textarea>
       </div>
     </div>
 
@@ -929,7 +946,7 @@
 // Go to: https://console.firebase.google.com → Your project → Project settings → Your apps → Web app
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
@@ -947,10 +964,19 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ─── AUTH STATE → update nav bar ───────────────────────────
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   const profileBtn = document.getElementById('nav-profile-btn');
   const signinBtn  = document.getElementById('nav-signin-btn');
   if (user) {
+    // ── Always check restriction on every session restore ──
+    const allowed = await checkUserNotRestricted(user.email || '');
+    if (!allowed) {
+      await fbSignOut(auth);
+      localStorage.removeItem('np_auth');
+      profileBtn.classList.remove('show');
+      if (signinBtn) signinBtn.classList.add('show');
+      return;
+    }
     localStorage.setItem('np_auth', 'signed-in');
     const initials = (user.email||'?').slice(0,2).toUpperCase();
     profileBtn.textContent = initials;
@@ -1104,6 +1130,24 @@ window.switchAuthTab = function(tab) {
   document.getElementById('auth-skip').style.display = tab==='skip'?'block':'none';
 };
 
+// ─── ACCESS CHECK HELPERS ───────────────────────────────────
+async function checkRegistrationOpen() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "global"));
+    if (snap.exists() && snap.data().registrationClosed === true) return false;
+  } catch(e) { /* if read fails, allow by default */ }
+  return true;
+}
+
+async function checkUserNotRestricted(email) {
+  const docId = email.toLowerCase().replace(/[@.]/g, '_');
+  try {
+    const snap = await getDoc(doc(db, "restrictedUsers", docId));
+    if (snap.exists()) return false; // restricted
+  } catch(e) { /* allow by default */ }
+  return true;
+}
+
 window.createAccount = async function() {
   const email = document.getElementById('acct-email').value.trim();
   const pass = document.getElementById('acct-pass').value;
@@ -1116,6 +1160,21 @@ window.createAccount = async function() {
   if (pass !== pass2) { errEl.textContent = 'Passwords do not match'; errEl.style.display='block'; return; }
 
   try {
+    // ── Check if registrations are open ──
+    const regOpen = await checkRegistrationOpen();
+    if (!regOpen) {
+      errEl.textContent = 'New registrations are currently closed. Please contact us if you need access.';
+      errEl.style.display = 'block';
+      return;
+    }
+    // ── Check if this email is restricted ──
+    const notRestricted = await checkUserNotRestricted(email);
+    if (!notRestricted) {
+      errEl.textContent = 'This email address is not allowed to register. Please contact support.';
+      errEl.style.display = 'block';
+      return;
+    }
+
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
     // Save account info in Firestore
@@ -1145,6 +1204,14 @@ window.signInAndSave = async function() {
   errEl.style.display = 'none';
 
   try {
+    // ── Check if this email is restricted ──
+    const notRestricted = await checkUserNotRestricted(email);
+    if (!notRestricted) {
+      errEl.textContent = 'Your account has been restricted. Please contact support for assistance.';
+      errEl.style.display = 'block';
+      return;
+    }
+
     const cred = await signInWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
     if (_pendingFormData) {
@@ -1342,8 +1409,29 @@ function calcBMI(wt,ht) { return (wt/((ht/100)**2)).toFixed(1); }
 function bmiCategory(b) { if(b<18.5) return 'Underweight'; if(b<25) return 'Normal weight'; if(b<30) return 'Overweight'; return 'Obese'; }
 function bmiColor(b) { if(b<18.5) return '#5bc8f5'; if(b<25) return '#60d394'; if(b<30) return '#f4a742'; return '#e74c3c'; }
 function bmiToBarPct(bmi) { const MIN=15,RANGE=25; const c=Math.min(40,Math.max(15,parseFloat(bmi))); return ((c-MIN)/RANGE*100).toFixed(1)+'%'; }
-function calcBodyFat(gender,bmi,age) { const sex=gender==='Female'?1:0; return Math.max(5,(1.20*bmi+0.23*age-10.8*sex-5.4)).toFixed(1); }
-function calcCalories(gender,wt,ht,age,activity) { let bmr=gender==='Female'?655+9.6*wt+1.8*ht-4.7*age:66+13.7*wt+5*ht-6.8*age; return Math.round(bmr*(parseFloat(activity)||1.2)); }
+// function calcBodyFat(gender,bmi,age) { const sex=gender==='Female'?1:0; return Math.max(5,(1.20*bmi+0.23*age-10.8*sex-5.4)).toFixed(1); }
+// NEW - replace with this:
+function calcBodyFat(gender, waist, neck, hip, height) {
+  let bfp;
+  if (gender === 'Female') {
+    const log1 = Math.log10(waist + hip - neck);
+    const log2 = Math.log10(height);
+    bfp = 495 / (1.29579 - 0.35004 * log1 + 0.22100 * log2) - 450;
+  } else {
+    const log1 = Math.log10(waist - neck);
+    const log2 = Math.log10(height);
+    bfp = 495 / (1.0324 - 0.19077 * log1 + 0.15456 * log2) - 450;
+  }
+  return Math.max(3, bfp).toFixed(1);
+}
+// function calcCalories(gender,wt,ht,age,activity) { let bmr=gender==='Female'?655+9.6*wt+1.8*ht-4.7*age:66+13.7*wt+5*ht-6.8*age; return Math.round(bmr*(parseFloat(activity)||1.2)); }
+// NEW
+function calcCalories(gender, wt, ht, age, activity) {
+  const bmr = gender === 'Female'
+    ? (10 * wt) + (6.25 * ht) - (5 * age) - 161
+    : (10 * wt) + (6.25 * ht) - (5 * age) + 5;
+  return Math.round(bmr * (parseFloat(activity) || 1.2));
+}
 
 // ─── GENERATE RESULT ───────────────────────────────────────
 function generateResult() {
@@ -1361,15 +1449,37 @@ function generateResult() {
   const activity=document.getElementById('inp-activity').value;
   const bmi=calcBMI(wt,ht); const bmiNum=parseFloat(bmi);
   const cat=bmiCategory(bmiNum); const color=bmiColor(bmiNum);
-  const fat=calcBodyFat(gender,bmiNum,age);
+  // const fat=calcBodyFat(gender,bmiNum,age);
+  // NEW - replace with this:
+const waist = parseFloat(document.getElementById('inp-waist').value) || 0;
+const neck  = parseFloat(document.getElementById('inp-neck').value)  || 0;
+const hip   = parseFloat(document.getElementById('inp-hip').value)   || 0;
+const fat   = (waist > 0 && neck > 0 && (gender !== 'Female' || hip > 0))
+  ? calcBodyFat(gender, waist, neck, hip, ht)
+  : '—';
   const cal=calcCalories(gender,wt,ht,age,activity);
 
   const bmiEl=document.getElementById('r-bmi'); bmiEl.textContent=bmi; bmiEl.style.color=color;
   document.getElementById('r-bmi-cat').textContent=cat; document.getElementById('r-bmi-cat').style.color=color;
   const marker=document.getElementById('bmi-marker'); marker.style.left=bmiToBarPct(bmiNum); marker.style.borderColor=color;
   document.getElementById('bmi-cat-label').textContent=cat; document.getElementById('bmi-cat-label').style.color=color;
-  document.getElementById('r-fat').textContent=fat+'%';
-  document.getElementById('r-fat-cat').textContent=parseFloat(fat)<25?'Healthy range':'Above average';
+  // document.getElementById('r-fat').textContent=fat+'%';
+  // document.getElementById('r-fat-cat').textContent=parseFloat(fat)<25?'Healthy range':'Above average';
+
+  // NEW:
+document.getElementById('r-fat').textContent = fat !== '—' ? fat + '%' : '—';
+const fatNum = parseFloat(fat);
+let fatCat = '';
+if (!isNaN(fatNum)) {
+  if (gender === 'Female') {
+    fatCat = fatNum < 14 ? 'Essential fat' : fatNum < 21 ? 'Athletic' : fatNum < 25 ? 'Fit' : fatNum < 32 ? 'Average' : 'Obese';
+  } else {
+    fatCat = fatNum < 6 ? 'Essential fat' : fatNum < 14 ? 'Athletic' : fatNum < 18 ? 'Fit' : fatNum < 25 ? 'Average' : 'Obese';
+  }
+} else {
+  fatCat = 'Enter waist, neck' + (gender === 'Female' ? ' & hip' : '');
+}
+document.getElementById('r-fat-cat').textContent = fatCat;
   document.getElementById('r-cal').textContent=cal;
 
   ['results-section','health-section','prefs-section','symptoms-section'].forEach((id,i)=>{
@@ -1449,10 +1559,12 @@ async function submitForm() {
     diet_preference: g('inp-diet').value,
     meal_types: chips('#meal-types .chip').join(', '),
     eating_window: g('eat-window-val').value,
+    num_curries: g('inp-curries').value,
     morning_drinks: chips('#drink-opts .sub-chip').join(', '),
     nuts_seeds: chips('#nuts-section .sub-chip').join(', '),
     fruits: chips('#fruits-section .sub-chip').join(', '),
     vegetables: chips('#veggies-section .sub-chip').join(', '),
+    food_dislikes: g('inp-dislikes').value,
     symptoms: chips('#symptoms-group .chip').join(', '),
     comments: g('inp-comments').value,
     whatsapp_consent: g('consent-wa').checked ? 'Yes' : 'No'
@@ -1472,6 +1584,10 @@ async function submitForm() {
   setProgress(4);
   ss.scrollIntoView({behavior:'smooth'});
 
+  clearForm();
+  // Mark as submitted BEFORE clearing, so coming back from profile page stays clean
+  try { sessionStorage.setItem('nutriplan_submitted', '1'); } catch(e){}
+  
   clearForm();
   btn.disabled=false; btn.textContent='Submit My Plan Request'; btn.style.opacity='1'; btn.style.cursor='pointer';
 
@@ -1537,6 +1653,198 @@ window.openMeasureModal = openMeasureModal;
 window.closeMeasureModal = closeMeasureModal;
 window.convertMeasureInch = convertMeasureInch;
 window.applyMeasure = applyMeasure;
+
+// ─── SESSION PERSISTENCE ────────────────────────────────────
+// Saves/restores all form state in sessionStorage so a refresh
+// or navigating away and back doesn't wipe what the user typed.
+
+const SS_KEY = 'nutriplan_draft';
+
+function saveDraft() {
+  const g = id => document.getElementById(id);
+  const activeChips = sel => [...document.querySelectorAll(sel)].filter(c=>c.classList.contains('active')).map(c=>c.textContent.trim());
+
+  const draft = {
+    name:        g('inp-name')?.value,
+    age:         g('inp-age')?.value,
+    gender:      g('inp-gender')?.value,
+    height:      g('inp-height')?.value,
+    weight:      g('inp-weight')?.value,
+    activity:    g('inp-activity')?.value,
+    waist:       g('inp-waist')?.value,
+    hip:         g('inp-hip')?.value,
+    neck:        g('inp-neck')?.value,
+    preg:        g('inp-preg')?.value,
+    phone:       g('inp-phone')?.value,
+    email:       g('inp-email')?.value,
+    allergies:   g('inp-allergies')?.value,
+    conditions:  [...selectedConditions],
+    meals:       g('inp-meals')?.value,
+    curries:     g('inp-curries')?.value,
+    diet:        g('inp-diet')?.value,
+    eatWindow:   g('eat-window-val')?.value,
+    dislikes:    g('inp-dislikes')?.value,
+    comments:    g('inp-comments')?.value,
+    waConsent:   g('consent-wa')?.checked,
+    // chips
+    mealTypes:   activeChips('#meal-types .chip'),
+    drinks:      activeChips('#drink-opts .sub-chip'),
+    nuts:        activeChips('#nuts-section .sub-chip'),
+    fruits:      activeChips('#fruits-section .sub-chip'),
+    veggies:     activeChips('#veggies-section .sub-chip'),
+    symptoms:    activeChips('#symptoms-group .chip'),
+    // section visibility
+    sectionsOpen: ['results-section','health-section','prefs-section','symptoms-section']
+                    .filter(id=>{ const el=g(id); return el && el.style.display!=='none' && el.style.display!==''; }),
+    // drink yes/no toggle
+    drinkYes:    document.querySelector('.yn-btn.yes')?.classList.contains('active'),
+    // plan for self/other
+    planForOther: g('plan-for-other-fields')?.style.display === 'block',
+    planOtherName: g('plan-other-name')?.value,
+    planOtherRelation: g('plan-other-relation')?.value,
+  };
+  try { sessionStorage.setItem(SS_KEY, JSON.stringify(draft)); } catch(e){}
+}
+
+function restoreDraft() {
+// If form was already submitted, don't restore — wipe everything and start fresh
+  try {
+    if (sessionStorage.getItem('nutriplan_submitted') === '1') {
+      sessionStorage.removeItem(SS_KEY);
+      sessionStorage.removeItem('nutriplan_submitted');
+      return;
+    }
+  } catch(e){}
+  
+  
+  let draft;
+  try { draft = JSON.parse(sessionStorage.getItem(SS_KEY)||'null'); } catch(e){}
+  if (!draft) return;
+
+  const g = id => document.getElementById(id);
+  const setVal = (id, v) => { if(g(id) && v !== undefined && v !== null) g(id).value = v; };
+
+  setVal('inp-name', draft.name);
+  setVal('inp-age', draft.age);
+  setVal('inp-height', draft.height);
+  setVal('inp-weight', draft.weight);
+  setVal('inp-waist', draft.waist);
+  setVal('inp-hip', draft.hip);
+  setVal('inp-neck', draft.neck);
+  setVal('inp-phone', draft.phone);
+  setVal('inp-email', draft.email);
+  setVal('inp-allergies', draft.allergies);
+  setVal('inp-dislikes', draft.dislikes);
+  setVal('inp-comments', draft.comments);
+  setVal('eat-window-val', draft.eatWindow);
+  setVal('plan-other-name', draft.planOtherName);
+  setVal('plan-other-relation', draft.planOtherRelation);
+
+  if (g('inp-gender') && draft.gender) {
+    g('inp-gender').value = draft.gender;
+    const femaleRow = document.getElementById('female-extra-row');
+    if (femaleRow) femaleRow.style.display = draft.gender === 'Female' ? 'grid' : 'none';
+    if (draft.gender === 'Female') {
+      setVal('inp-preg', draft.preg);
+    }
+  }
+  if (g('inp-activity') && draft.activity) g('inp-activity').value = draft.activity;
+  if (g('inp-meals') && draft.meals) g('inp-meals').value = draft.meals;
+  if (g('inp-curries') && draft.curries) g('inp-curries').value = draft.curries;
+  if (g('inp-diet') && draft.diet) g('inp-diet').value = draft.diet;
+  if (g('consent-wa')) g('consent-wa').checked = !!draft.waConsent;
+
+  // Restore health conditions
+  if (draft.conditions && draft.conditions.length) {
+    draft.conditions.forEach(v => {
+      selectedConditions.add(v);
+      const cb = document.querySelector(`#health-dd-list input[value="${v}"]`);
+      if (cb) cb.checked = true;
+    });
+    renderTags();
+  }
+
+  // Restore chips helper
+  const restoreChips = (selector, activeList) => {
+    if (!activeList || !activeList.length) return;
+    document.querySelectorAll(selector).forEach(chip => {
+      if (activeList.includes(chip.textContent.trim())) chip.classList.add('active');
+    });
+  };
+  restoreChips('#meal-types .chip', draft.mealTypes);
+  restoreChips('#drink-opts .sub-chip', draft.drinks);
+  restoreChips('#nuts-section .sub-chip', draft.nuts);
+  restoreChips('#fruits-section .sub-chip', draft.fruits);
+  restoreChips('#veggies-section .sub-chip', draft.veggies);
+  restoreChips('#symptoms-group .chip', draft.symptoms);
+
+  // Restore eating window chip highlight
+  if (draft.eatWindow) {
+    document.querySelectorAll('#time-window-chips .time-chip').forEach(tc => {
+      if (tc.dataset.value === draft.eatWindow) tc.classList.add('active');
+    });
+  }
+
+  // Restore drink yes/no toggle
+  if (draft.drinkYes === false) {
+    const noBtn = document.querySelector('.yn-btn.no');
+    if (noBtn) { noBtn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); noBtn.classList.add('active'); }
+    const d = g('drink-opts'); if(d) d.style.display = 'none';
+  }
+
+  // Restore plan for other
+  if (draft.planForOther) {
+    const fields = g('plan-for-other-fields');
+    const selfBtn = g('plan-for-self');
+    const otherBtn = g('plan-for-other');
+    if (fields) fields.style.display = 'block';
+    if (selfBtn) selfBtn.style.cssText += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
+    if (otherBtn) otherBtn.style.cssText += ';border-color:var(--teal);background:var(--teal);color:#fff;';
+  }
+
+  // Re-show sections that were visible
+  if (draft.sectionsOpen && draft.sectionsOpen.length) {
+    draft.sectionsOpen.forEach((id, i) => {
+      setTimeout(() => {
+        const el = g(id);
+        if (el) { el.style.display = 'block'; setTimeout(()=>el.classList.add('revealed'), 20); }
+      }, i * 80);
+    });
+    // Restore progress bar
+    const stepMap = { 'results-section': 2, 'health-section': 2, 'prefs-section': 3, 'symptoms-section': 4 };
+    const maxStep = Math.max(...draft.sectionsOpen.map(id => stepMap[id] || 1));
+    setProgress(maxStep);
+  }
+}
+
+// Attach save-on-change listeners to all inputs/selects/textareas
+function attachPersistenceListeners() {
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('change', saveDraft);
+    el.addEventListener('input', saveDraft);
+  });
+  // Also save when chips are toggled (chips use onclick)
+  document.querySelectorAll('.chip, .sub-chip, .time-chip, .yn-btn').forEach(el => {
+    const orig = el.getAttribute('onclick') || '';
+    el.addEventListener('click', () => setTimeout(saveDraft, 50));
+  });
+}
+
+// Clear draft when form is submitted successfully
+const _origClearForm = clearForm;
+window.clearForm = function() {
+  _origClearForm();
+    try { 
+    sessionStorage.removeItem(SS_KEY);
+    sessionStorage.removeItem('nutriplan_submitted');
+  } catch(e){}
+};
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', () => {
+  attachPersistenceListeners();
+  restoreDraft();
+});
 </script>
 </body>
 </html>
