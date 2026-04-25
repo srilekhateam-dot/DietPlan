@@ -277,7 +277,7 @@
       <a href="#form-section">Form</a>
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
-      
+      <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages<span id="nav-msg-dot" style="display:none;position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#dc2626;border:2px solid #fff;"></span></a>
     </div>
     <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
@@ -982,12 +982,25 @@ onAuthStateChanged(auth, async user => {
     profileBtn.textContent = initials;
     profileBtn.classList.add('show');
     if (signinBtn) signinBtn.classList.remove('show');
+    // ── Check unread messages ──
+    checkUnreadMessages(user.uid);
   } else {
     localStorage.removeItem('np_auth');
     profileBtn.classList.remove('show');
     if (signinBtn) signinBtn.classList.add('show');
   }
 });
+
+async function checkUnreadMessages(uid) {
+  try {
+    const { collection: col, getDocs: gd, query: q, where: w } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const snap = await gd(q(col(db, "messages", uid, "inbox"), w("read", "==", false)));
+    if (!snap.empty) {
+      const dot = document.getElementById('nav-msg-dot');
+      if (dot) dot.style.display = 'block';
+    }
+  } catch(_){}
+}
 
 // Sign out from nav
 
