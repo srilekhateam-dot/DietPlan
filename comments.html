@@ -843,6 +843,7 @@ async function loadMyQueries(uid) {
   }
 }
 
+window._firestoreDb = _db;
 window._firestoreAddDoc = addDoc;
 window._firestoreCollection = collection;
 window._firestoreServerTimestamp = serverTimestamp;
