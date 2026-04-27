@@ -383,9 +383,72 @@
   <!-- DIVIDER -->
   <div class="section-divider"></div>
 
-  
+  <!-- MY PREVIOUS QUERIES -->
+  <div id="my-queries-section" style="display:none;">
+    <div class="comments-header">
+      <h2>My Previous Queries</h2>
+      <span class="comment-count" id="my-query-count">0 queries</span>
+    </div>
+    <div id="my-queries-loading" class="loading-comments">Loading your queries…</div>
+    <div id="my-queries-list"></div>
+  </div>
 
 </div>
+
+<style>
+  /* My queries list */
+  .my-query-item {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    animation: fadeUp 0.3s ease both;
+  }
+  .my-query-meta {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .my-query-category {
+    display: inline-block;
+    background: var(--teal-light); color: var(--teal-dark);
+    font-size: 11px; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px;
+  }
+  .my-query-time { font-size: 11.5px; color: var(--muted); margin-left: auto; }
+  .my-query-text { font-size: 13.5px; color: #374151; line-height: 1.6; margin-bottom: 10px; }
+
+  /* Admin reply bubble under query */
+  .my-query-replies { margin-top: 10px; }
+  .my-query-reply-bubble {
+    background: linear-gradient(135deg, #e6f7f5 0%, #f0fdf9 100%);
+    border: 1.5px solid #a7f3d0;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .my-query-reply-label {
+    font-size: 10.5px; font-weight: 700; color: var(--teal-dark);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    display: flex; align-items: center; gap: 5px; margin-bottom: 5px;
+  }
+  .my-query-reply-label::before { content: '↩'; font-size: 12px; }
+  .my-query-reply-subj { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .my-query-reply-body { font-size: 13px; color: #374151; line-height: 1.6; }
+  .my-query-reply-time { font-size: 10.5px; color: var(--muted); margin-top: 6px; }
+
+  .no-replies-chip {
+    font-size: 11.5px; color: var(--muted);
+    background: var(--bg); border: 1px dashed var(--border);
+    border-radius: 20px; padding: 4px 12px; display: inline-block;
+  }
+  .login-prompt-box {
+    background: var(--white); border: 1.5px dashed var(--border);
+    border-radius: var(--radius-sm); padding: 24px; text-align: center;
+    color: var(--muted); font-size: 13.5px; margin-top: 8px;
+  }
+  .login-prompt-box a { color: var(--teal); font-weight: 600; text-decoration: none; }
+</style>
 
 <script>
 // ---- GOOGLE SHEETS INTEGRATION ----
@@ -593,7 +656,7 @@ renderComments();
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, query, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, where, getDocs, addDoc, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const _app = initializeApp({
   apiKey:"AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
   authDomain:"nutriplan-65582.firebaseapp.com",
@@ -654,6 +717,9 @@ onAuthStateChanged(_auth, async user => {
     // Store current user for Firestore comment submission
     window._currentUser = { uid: user.uid, email: user.email, displayName: user.displayName };
 
+    // Load this user's previous queries + admin replies
+    loadMyQueries(user.uid);
+
     // Check unread messages
     try {
       const snap = await getDocs(query(collection(_db, "messages", user.uid, "inbox"), where("read","==",false)));
@@ -664,11 +730,119 @@ onAuthStateChanged(_auth, async user => {
     signinBtn.classList.add('show');
     profileBtn.classList.remove('show');
     window._currentUser = null;
+
+    // Show login prompt in queries section
+    const section = document.getElementById('my-queries-section');
+    section.style.display = 'block';
+    document.getElementById('my-queries-loading').style.display = 'none';
+    document.getElementById('my-queries-list').innerHTML = `
+      <div class="login-prompt-box">
+        <div style="font-size:1.8rem;margin-bottom:10px;">🔒</div>
+        <div><a href="profile.html">Sign in</a> to view your previous queries and admin replies.</div>
+      </div>`;
   }
 });
 
-// Expose Firestore addDoc + collection for use in submitComment
-window._firestoreDb = _db;
+// ── Load current user's queries + admin replies ─────────────
+async function loadMyQueries(uid) {
+  const section = document.getElementById('my-queries-section');
+  const loadingEl = document.getElementById('my-queries-loading');
+  const listEl = document.getElementById('my-queries-list');
+  const countEl = document.getElementById('my-query-count');
+  section.style.display = 'block';
+
+  try {
+    // Fetch this user's comments
+    let myComments = [];
+    try {
+      const snap = await getDocs(query(
+        collection(_db, "comments"),
+        where("uid", "==", uid),
+        orderBy("submittedAt", "desc")
+      ));
+      myComments = snap.docs.map(d => ({ _id: d.id, ...d.data() }));
+    } catch(e) {
+      // fallback without orderBy if index missing
+      const snap = await getDocs(query(collection(_db, "comments"), where("uid", "==", uid)));
+      myComments = snap.docs.map(d => ({ _id: d.id, ...d.data() }));
+      myComments.sort((a,b) => (b.submittedAt?.seconds||0) - (a.submittedAt?.seconds||0));
+    }
+
+    loadingEl.style.display = 'none';
+
+    if (myComments.length === 0) {
+      countEl.textContent = '0 queries';
+      listEl.innerHTML = '<div class="loading-comments" style="padding:20px 0;">You haven\'t submitted any queries yet.</div>';
+      return;
+    }
+
+    // For each comment, fetch its adminReplies sub-collection
+    const renderItems = await Promise.all(myComments.map(async (c) => {
+      let replies = [];
+      try {
+        const rSnap = await getDocs(query(
+          collection(_db, "comments", c._id, "adminReplies"),
+          orderBy("sentAt", "asc")
+        ));
+        replies = rSnap.docs.map(d => ({ _id: d.id, ...d.data() }));
+      } catch(_) {
+        try {
+          const rSnap2 = await getDocs(collection(_db, "comments", c._id, "adminReplies"));
+          replies = rSnap2.docs.map(d => ({ _id: d.id, ...d.data() }));
+        } catch(_) {}
+      }
+      return { ...c, replies };
+    }));
+
+    countEl.textContent = `${renderItems.length} ${renderItems.length === 1 ? 'query' : 'queries'}`;
+
+    listEl.innerHTML = renderItems.map(c => {
+      // Format timestamp
+      let timeStr = '';
+      if (c.submittedAt) {
+        try {
+          const d = c.submittedAt.toDate ? c.submittedAt.toDate() : new Date((c.submittedAt.seconds||0)*1000);
+          timeStr = d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+        } catch(_) { timeStr = c.timestamp || ''; }
+      } else { timeStr = c.timestamp || ''; }
+
+      const repliesHtml = c.replies.length === 0
+        ? `<div class="my-query-replies"><span class="no-replies-chip">⏳ Awaiting admin reply</span></div>`
+        : `<div class="my-query-replies">${c.replies.map(r => {
+            let rTime = '';
+            if (r.sentAt) {
+              try {
+                const rd = r.sentAt.toDate ? r.sentAt.toDate() : new Date((r.sentAt.seconds||0)*1000);
+                rTime = rd.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+              } catch(_) {}
+            }
+            return `
+              <div class="my-query-reply-bubble">
+                <div class="my-query-reply-label">Admin Reply</div>
+                <div class="my-query-reply-subj">${escapeHtml(r.subject || 'Re: Your query')}</div>
+                <div class="my-query-reply-body">${escapeHtml(r.body || '')}</div>
+                <div class="my-query-reply-time">${rTime}</div>
+              </div>`;
+          }).join('')}</div>`;
+
+      return `
+        <div class="my-query-item">
+          <div class="my-query-meta">
+            <span class="my-query-category">${escapeHtml(c.category || 'General Query')}</span>
+            <span class="my-query-time">${escapeHtml(timeStr)}</span>
+          </div>
+          <div class="my-query-text">${escapeHtml(c.query || '')}</div>
+          ${repliesHtml}
+        </div>`;
+    }).join('');
+
+  } catch(e) {
+    loadingEl.style.display = 'none';
+    listEl.innerHTML = `<div class="loading-comments">Could not load your queries. Please refresh.</div>`;
+    console.warn('loadMyQueries error:', e);
+  }
+}
+
 window._firestoreAddDoc = addDoc;
 window._firestoreCollection = collection;
 window._firestoreServerTimestamp = serverTimestamp;
