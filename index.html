@@ -353,6 +353,22 @@
   <p>Enter your body metrics and lifestyle details to receive a tailored nutrition plan crafted for your goals.</p>
 </section>
 
+<!-- ─── Form Submission Closed Banner ─── -->
+<div id="form-closed-banner" style="display:none; max-width:1100px; margin:36px auto 0; padding:0 24px;">
+  <div style="background:#fff; border:2px solid #e2e5ea; border-radius:16px; padding:52px 32px; text-align:center; box-shadow:0 2px 16px rgba(0,0,0,0.07);">
+    <div style="font-size:3rem; margin-bottom:18px;">🔒</div>
+    <div style="font-family:'Fraunces',serif; font-size:1.6rem; font-weight:600; color:#1c2230; margin-bottom:10px;">Form Submissions Closed</div>
+    <p style="color:#6b7280; font-size:15px; max-width:480px; margin:0 auto 24px; line-height:1.7;">
+      We are not accepting new diet plan requests at this time. Please check back later or contact us for more information.
+    </p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="education.html" style="display:inline-block; background:#1a9e8f; color:#fff; text-decoration:none; padding:12px 26px; border-radius:10px; font-weight:600; font-size:14px;">Explore Nutrition Education →</a>
+      <a href="profile.html" style="display:inline-block; background:#374151; color:#fff; text-decoration:none; padding:12px 26px; border-radius:10px; font-weight:600; font-size:14px;">My Profile →</a>
+    </div>
+  </div>
+</div>
+
+<div id="form-content-wrap">
 <div class="progress-area" id="form-section">
   <div class="progress-label" id="progress-label">Step 1 of 4 — Your Body Metrics</div>
   <div class="progress-wrap" id="progress-wrap">
@@ -759,6 +775,8 @@
   </div>
 </div>
 
+</div><!-- end form-content-wrap -->
+
 <!-- ─── Account Creation Modal (shown after form submit) ─── -->
 <div id="accountModal" class="modal-overlay" style="z-index:1100;">
   <div class="modal-box" style="max-width:420px;width:94%;">
@@ -1152,6 +1170,30 @@ async function checkRegistrationOpen() {
   return true;
 }
 
+async function checkFormSubmissionOpen() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "global"));
+    if (snap.exists() && snap.data().formSubmissionClosed === true) return false;
+  } catch(e) { /* allow by default */ }
+  return true;
+}
+
+function applyFormClosedState(closed) {
+  const banner = document.getElementById('form-closed-banner');
+  const wrap   = document.getElementById('form-content-wrap');
+  const hero   = document.querySelector('.hero');
+  if (!banner || !wrap) return;
+  if (closed) {
+    banner.style.display = 'block';
+    wrap.style.display   = 'none';
+    if (hero) hero.style.display = 'none';
+  } else {
+    banner.style.display = 'none';
+    wrap.style.display   = 'block';
+    if (hero) hero.style.display = '';
+  }
+}
+
 async function checkUserNotRestricted(email) {
   const docId = email.toLowerCase().replace(/[@.]/g, '_');
   try {
@@ -1160,6 +1202,12 @@ async function checkUserNotRestricted(email) {
   } catch(e) { /* allow by default */ }
   return true;
 }
+
+// Check form state on page load (regardless of auth)
+(async () => {
+  const open = await checkFormSubmissionOpen();
+  applyFormClosedState(!open);
+})();
 
 window.createAccount = async function() {
   const email = document.getElementById('acct-email').value.trim();
