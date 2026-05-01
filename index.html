@@ -171,14 +171,12 @@
   .meals-select { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; width: 100%; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
   .meals-select:focus { border-color: var(--teal); }
 
-  /* Hidden sections */
-  /* Modified to show sections always */
-.hidden-section {
-  display: block; /* Always show */
-  opacity: 1;     /* Full visibility */
-  transform: none;
-  margin-bottom: 28px; /* Optional: adds spacing between the now visible cards */
-}
+  .hidden-section {
+    display: block;
+    opacity: 1;
+    transform: none;
+    margin-bottom: 28px;
+  }
   .hidden-section.revealed { display: block; opacity: 1; transform: none; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -207,44 +205,71 @@
   .hcb-use-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
   .hcb-input::placeholder { color: #c6cbd2; opacity: 2; }
 
-  /* Converter hint badge under waist/hip/neck inputs */
   .converter-hint { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 3px; cursor: pointer; opacity: 0.8; }
   .converter-hint:hover { opacity: 1; }
 
   #female-extra-row .form-group input,
   #female-extra-row .form-group select { width: 100%; }
 
-  /* Nav profile avatar & dropdown */
   .nav-profile-btn { display:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--teal); color:#fff; font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; cursor:pointer; border:none; flex-shrink:0; position:relative; transition:background 0.2s; }
   .nav-profile-btn:hover { background:var(--teal-dark); }
   .nav-profile-btn.show { display:flex; }
 
-  /* Nav sign-in button (when not logged in) */
   .nav-signin-btn { display:none; align-items:center; gap:6px; background:var(--teal); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; text-decoration:none; }
   .nav-signin-btn:hover { background:var(--teal-dark); }
   .nav-signin-btn.show { display:flex; }
 
-  /* Password input with eye toggle */
   .pw-wrap { position:relative; }
   .pw-wrap input { padding-right:40px !important; }
   .pw-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--muted); font-size:16px; padding:0; line-height:1; }
   .pw-eye:hover { color:var(--teal); }
 
-  /* Forgot password link */
   .forgot-link { font-size:12px; color:var(--teal); text-decoration:none; display:inline-block; margin-top:4px; font-weight:600; background:none; border:none; cursor:pointer; padding:0; }
   .forgot-link:hover { text-decoration:underline; }
 
-  /* Forgot password modal */
   #forgotModal .modal-box { max-width:360px; }
   .fp-step { }
   .fp-msg { font-size:13px; color:var(--muted); margin-bottom:14px; line-height:1.6; }
   .fp-err { display:none; font-size:12px; color:#dc2626; background:#fef2f2; padding:8px 12px; border-radius:8px; margin-bottom:10px; }
   .fp-suc { display:none; font-size:13px; color:#065f46; background:#ecfdf5; padding:10px 14px; border-radius:8px; margin-bottom:10px; font-weight:600; }
 
-  .goal-rate-btn { transition: all 0.2s; }
+  /* ── GOAL RATE BUTTONS ─── */
+  .goal-rate-btn { transition: all 0.2s; cursor: pointer; }
   .goal-rate-btn:hover { border-color: var(--teal) !important; }
   .goal-rate-btn.active-goal { border-color: var(--teal) !important; background: var(--teal) !important; }
-  .goal-rate-btn.active-goal div { color: #fff !important; }
+  .goal-rate-btn.active-goal .grb-title,
+  .goal-rate-btn.active-goal .grb-rate,
+  .goal-rate-btn.active-goal .grb-kcal { color: #fff !important; opacity: 1 !important; }
+
+  /* ── HIGHLIGHTED GOAL CALORIES CARD ── */
+  .goal-cal-highlight {
+    background: linear-gradient(135deg, #1a9e8f 0%, #14786c 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 20px rgba(26,158,143,0.35) !important;
+  }
+  .goal-cal-highlight .metric-label { color: rgba(255,255,255,0.8) !important; }
+  .goal-cal-highlight .metric-value { color: #fff !important; font-size: 2.4rem !important; }
+  .goal-cal-highlight .metric-sub { color: rgba(255,255,255,0.75) !important; }
+  .goal-cal-highlight .gcal-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+
+  #form-section {
+    position: sticky;
+    top: 60px;
+    z-index: 100;
+    background: var(--bg);
+    padding: 12px 24px 10px;
+    border-bottom: 1px solid var(--border);
+  }
 
   @media (max-width: 820px) {
     .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
@@ -258,30 +283,18 @@
     .landing-cards { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .ln-card { padding: 12px 8px; }
     .nav-links a { font-size: 12.5px; padding: 6px 10px; }
-  .nav-signin-btn, .nav-profile-btn { flex-shrink: 0; }
+    .nav-signin-btn, .nav-profile-btn { flex-shrink: 0; }
+    .grb-grid { grid-template-columns: 1fr !important; }
   }
-
-  
-  #form-section {
-  position: sticky;
-  top: 60px; /* height of your navbar */
-  z-index: 100;
-  background: var(--bg);
-  padding: 12px 24px 10px;
-  border-bottom: 1px solid var(--border);
-}
 </style>
 
 <script>
-// ── Instant nav auth: read cached state before first paint ──
 (function(){
-  var cached = localStorage.getItem('np_auth'); // 'signed-in' or null
+  var cached = localStorage.getItem('np_auth');
   var style = document.createElement('style');
   if (cached === 'signed-in') {
-    // Show avatar, hide sign-in immediately
     style.textContent = '#nav-signin-btn{display:none!important}#nav-profile-btn{display:flex!important}';
   } else {
-    // Show sign-in, hide avatar immediately
     style.textContent = '#nav-profile-btn{display:none!important}#nav-signin-btn{display:flex!important}';
   }
   document.head.appendChild(style);
@@ -300,9 +313,7 @@
       <a href="comments.html">Comments</a>
       <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages<span id="nav-msg-dot" style="display:none;position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#dc2626;border:2px solid #fff;"></span></a>
     </div>
-    <!-- Shown when NOT signed in -->
     <a href="profile.html" class="nav-signin-btn" id="nav-signin-btn">Sign In</a>
-    <!-- Shown when signed in -->
     <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="window.location.href='profile.html'" title="My Profile"></button>
     </div>
@@ -315,54 +326,16 @@
       <div class="landing-badge">Nutrition Education</div>
       <h1 class="landing-title">What is <em>Nutrition</em>?</h1>
       <p class="landing-desc">Nutrition is the process of eating the right foods that your body needs to stay healthy, grow, and have energy. It includes nutrients like carbohydrates, proteins, fats, vitamins, minerals, and water, which help your body function properly. A balanced diet with fruits, vegetables, grains, and proteins keeps your body strong, improves immunity, and prevents diseases.</p>
-      <!-- <div class="landing-nutrients">
-        <a href="education.html#carbohydrates" class="ln-chip">Carbohydrates</a>
-        <a href="education.html#proteins" class="ln-chip">Proteins</a>
-        <a href="education.html#fats" class="ln-chip">Fats</a>
-        <a href="education.html#vitamins" class="ln-chip">Vitamins</a>
-        <a href="education.html#vitamins" class="ln-chip">Minerals</a>
-      </div> -->
       <a href="education.html" class="landing-readmore">Read full Nutrition Guide →</a>
     </div>
     <div class="landing-cards">
-
-  <a href="education.html#carbohydrates" class="ln-card">
-    <div class="ln-card-icon">🌾</div>
-    <div class="ln-card-name">Carbohydrates</div>
-    <div class="ln-card-sub">Primary energy source</div>
-  </a>
-
-  <a href="education.html#proteins" class="ln-card">
-    <div class="ln-card-icon">🥩</div>
-    <div class="ln-card-name">Proteins</div>
-    <div class="ln-card-sub">Build & repair tissues</div>
-  </a>
-
-  <a href="education.html#fats" class="ln-card">
-    <div class="ln-card-icon">🥑</div>
-    <div class="ln-card-name">Fats</div>
-    <div class="ln-card-sub">Stored energy & hormones</div>
-  </a>
-
-  <a href="education.html#vitamins" class="ln-card">
-    <div class="ln-card-icon">🍊</div>
-    <div class="ln-card-name">Vitamins</div>
-    <div class="ln-card-sub">Regulate body processes</div>
-  </a>
-
-  <a href="education.html#minerals" class="ln-card">
-    <div class="ln-card-icon">⚡</div>
-    <div class="ln-card-name">Minerals</div>
-    <div class="ln-card-sub">Bone & nerve support</div>
-  </a>
-
-  <a href="education.html#water" class="ln-card">
-    <div class="ln-card-icon">💧</div>
-    <div class="ln-card-name">Water</div>
-    <div class="ln-card-sub">Hydration & digestion</div>
-  </a>
-
-</div>
+      <a href="education.html#carbohydrates" class="ln-card"><div class="ln-card-icon">🌾</div><div class="ln-card-name">Carbohydrates</div><div class="ln-card-sub">Primary energy source</div></a>
+      <a href="education.html#proteins" class="ln-card"><div class="ln-card-icon">🥩</div><div class="ln-card-name">Proteins</div><div class="ln-card-sub">Build & repair tissues</div></a>
+      <a href="education.html#fats" class="ln-card"><div class="ln-card-icon">🥑</div><div class="ln-card-name">Fats</div><div class="ln-card-sub">Stored energy & hormones</div></a>
+      <a href="education.html#vitamins" class="ln-card"><div class="ln-card-icon">🍊</div><div class="ln-card-name">Vitamins</div><div class="ln-card-sub">Regulate body processes</div></a>
+      <a href="education.html#minerals" class="ln-card"><div class="ln-card-icon">⚡</div><div class="ln-card-name">Minerals</div><div class="ln-card-sub">Bone & nerve support</div></a>
+      <a href="education.html#water" class="ln-card"><div class="ln-card-icon">💧</div><div class="ln-card-name">Water</div><div class="ln-card-sub">Hydration & digestion</div></a>
+    </div>
   </div>
   <div class="landing-cta-row">
     <a href="#form-section" class="btn-get-started" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'});return false;">Get Started — Build My Diet Plan</a>
@@ -374,14 +347,11 @@
   <p>Enter your body metrics and lifestyle details to receive a tailored nutrition plan crafted for your goals.</p>
 </section>
 
-<!-- ─── Form Submission Closed Banner ─── -->
 <div id="form-closed-banner" style="display:none; max-width:1100px; margin:36px auto 0; padding:0 24px;">
   <div style="background:#fff; border:2px solid #e2e5ea; border-radius:16px; padding:52px 32px; text-align:center; box-shadow:0 2px 16px rgba(0,0,0,0.07);">
     <div style="font-size:3rem; margin-bottom:18px;">🔒</div>
     <div style="font-family:'Fraunces',serif; font-size:1.6rem; font-weight:600; color:#1c2230; margin-bottom:10px;">Form Submissions Closed</div>
-    <p style="color:#6b7280; font-size:15px; max-width:480px; margin:0 auto 24px; line-height:1.7;">
-      We are not accepting new diet plan requests at this time. Please check back later or contact us for more information.
-    </p>
+    <p style="color:#6b7280; font-size:15px; max-width:480px; margin:0 auto 24px; line-height:1.7;">We are not accepting new diet plan requests at this time. Please check back later or contact us for more information.</p>
     <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
       <a href="education.html" style="display:inline-block; background:#1a9e8f; color:#fff; text-decoration:none; padding:12px 26px; border-radius:10px; font-weight:600; font-size:14px;">Explore Nutrition Education →</a>
       <a href="profile.html" style="display:inline-block; background:#374151; color:#fff; text-decoration:none; padding:12px 26px; border-radius:10px; font-weight:600; font-size:14px;">My Profile →</a>
@@ -391,7 +361,6 @@
 
 <div id="form-content-wrap">
 <div class="progress-area" id="form-section">
-  
   <div class="progress-label" id="progress-label">Step 1 of 4 — Your Body Metrics</div>
   <div class="progress-wrap" id="progress-wrap">
     <div class="progress-step" id="ps1"></div>
@@ -403,244 +372,157 @@
 
 <div class="page-outer">
   <div class="form-column">
-      <!-- STEP 0: Who is this for? — visible ONLY when logged in -->
-      <div id="step0-block" style="display:none;    margin:0 auto 28px auto;margin-bottom:28px; max-width:1100px;border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:#ffffff;">
-        <div style="padding:14px 18px;border-bottom:1.5px solid #c8ede9;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal-dark);margin-bottom:2px;">Step 0</div>
-          <div style="font-size:15px;font-weight:700;color:var(--text);">Who is this diet plan for?</div>
+
+    <!-- STEP 0 -->
+    <div id="step0-block" style="display:none; margin:0 auto 28px auto; max-width:1100px; border:1.5px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; background:#ffffff;">
+      <div style="padding:14px 18px; border-bottom:1.5px solid #c8ede9;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal-dark); margin-bottom:2px;">Step 0</div>
+        <div style="font-size:15px; font-weight:700; color:var(--text);">Who is this diet plan for?</div>
+      </div>
+      <div style="padding:16px 18px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <button id="plan-for-self" onclick="setPlanFor('self')" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 12px; border-radius:var(--radius-sm); border:2px solid var(--teal); background:var(--teal); color:#fff; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif;">
+            <span style="font-size:1.6rem;">👤</span><span style="font-weight:700; font-size:14px;">For Myself</span><span style="font-size:11.5px; opacity:0.85;">Fill in my own details</span>
+          </button>
+          <button id="plan-for-other" onclick="setPlanFor('other')" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 12px; border-radius:var(--radius-sm); border:2px solid var(--border); background:var(--bg); color:var(--muted); cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif;">
+            <span style="font-size:1.6rem;">👥</span><span style="font-weight:700; font-size:14px;">For Someone Else</span><span style="font-size:11.5px;">Family member, friend…</span>
+          </button>
         </div>
-        <div style="padding:16px 18px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <button id="plan-for-self" onclick="setPlanFor('self')" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--teal);background:var(--teal);color:#fff;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;">
-              <span style="font-size:1.6rem;">👤</span>
-              <span style="font-weight:700;font-size:14px;">For Myself</span>
-              <span style="font-size:11.5px;opacity:0.85;">Fill in my own details</span>
-            </button>
-            <button id="plan-for-other" onclick="setPlanFor('other')" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;">
-              <span style="font-size:1.6rem;">👥</span>
-              <span style="font-weight:700;font-size:14px;">For Someone Else</span>
-              <span style="font-size:11.5px;">Family member, friend…</span>
-            </button>
-          </div>
-          <div id="plan-for-other-fields" style="display:none;margin-top:16px;padding:16px;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:var(--radius-sm);">
-            <div style="font-size:12px;font-weight:600;color:var(--teal-dark);margin-bottom:10px;">Tell us about them</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-              <div class="form-group">
-                <label>Their Name</label>
-                <input type="text" id="plan-other-name" placeholder="e.g. Mom, Brother…" oninput="syncOtherNameToStep1(this.value)"/>
-              </div>
-              <div class="form-group">
-                <label>Relation</label>
-                <input type="text" id="plan-other-relation" placeholder="e.g. Mother, Son, Friend…"/>
-              </div>
-            </div>
+        <div id="plan-for-other-fields" style="display:none; margin-top:16px; padding:16px; background:var(--teal-light); border:1.5px solid #c8ede9; border-radius:var(--radius-sm);">
+          <div style="font-size:12px; font-weight:600; color:var(--teal-dark); margin-bottom:10px;">Tell us about them</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="form-group"><label>Their Name</label><input type="text" id="plan-other-name" placeholder="e.g. Mom, Brother…" oninput="syncOtherNameToStep1(this.value)"/></div>
+            <div class="form-group"><label>Relation</label><input type="text" id="plan-other-relation" placeholder="e.g. Mother, Son, Friend…"/></div>
           </div>
         </div>
       </div>
-      
+    </div>
+
     <!-- STEP 1 -->
     <div class="card" id="step1-card">
       <div class="step-label">Step 1</div>
       <div class="section-title">Body Measurements</div>
-
-    
-
       <div class="form-grid">
-        <div class="form-group" id="fg-name">
-          <label>Name</label>
-          <input type="text" id="inp-name" placeholder="John Doe"/>
-          <span class="error-msg">Please enter your name</span>
-        </div>
-        <div class="form-group" id="fg-age">
-          <label>Age</label>
-          <input type="number" id="inp-age" placeholder="30" min="10" max="100"/>
-          <span class="error-msg">Please enter a valid age</span>
-        </div>
-        <div class="form-group" id="fg-gender">
-          <label>Gender</label>
-          <select id="inp-gender">
-            <option value="">Select Gender</option>
-            <option>Male</option><option>Female</option><option>Other</option>
-          </select>
-          <span class="error-msg">Please select gender</span>
-        </div>
-        <div class="form-group" id="fg-height">
-          <label>Height (cm)</label>
-          <input type="number" id="inp-height" placeholder="170" min="100" max="250"/>
-          <span class="converter-hint" onclick="openHeightModal()" style="cursor:pointer;">📐 ft-inch → cm converter</span>
-          <span class="error-msg">Please enter height (100–250 cm)</span>
-        </div>
-        <div class="form-group" id="fg-weight">
-          <label>Weight (kg)</label>
-          <input type="number" id="inp-weight" placeholder="70" min="20" max="300"/>
-          <span class="error-msg">Please enter weight</span>
-        </div>
-        <div class="form-group" id="fg-activity">
-          <label>Activity Level</label>
+        <div class="form-group" id="fg-name"><label>Name</label><input type="text" id="inp-name" placeholder="John Doe"/><span class="error-msg">Please enter your name</span></div>
+        <div class="form-group" id="fg-age"><label>Age</label><input type="number" id="inp-age" placeholder="30" min="10" max="100"/><span class="error-msg">Please enter a valid age</span></div>
+        <div class="form-group" id="fg-gender"><label>Gender</label><select id="inp-gender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select><span class="error-msg">Please select gender</span></div>
+        <div class="form-group" id="fg-height"><label>Height (cm)</label><input type="number" id="inp-height" placeholder="170" min="100" max="250"/><span class="converter-hint" onclick="openHeightModal()" style="cursor:pointer;">📐 ft-inch → cm converter</span><span class="error-msg">Please enter height (100–250 cm)</span></div>
+        <div class="form-group" id="fg-weight"><label>Weight (kg)</label><input type="number" id="inp-weight" placeholder="70" min="20" max="300"/><span class="error-msg">Please enter weight</span></div>
+        <div class="form-group" id="fg-activity"><label>Activity Level</label>
           <select id="inp-activity">
             <option value="">Select Activity Level</option>
-            <!-- NEW -->
-<option value="1.2">Sedentary: little or no exercise</option>
-<option value="1.375">Sedentary: Exercise 1–3 times/week</option>
-<option value="1.46">Moderate: Exercise 4–5 times/week</option>
-<option value="1.55">Moderate: Daily exercise or intense 3–4 times/week</option>
-<option value="1.72">Heavy: Intense exercise 6–7 times/week</option>
-<option value="1.9">Heavy: Very intense exercise daily, or physical job</option>
+            <option value="1.2">Sedentary: little or no exercise</option>
+            <option value="1.375">Sedentary: Exercise 1–3 times/week</option>
+            <option value="1.46">Moderate: Exercise 4–5 times/week</option>
+            <option value="1.55">Moderate: Daily exercise or intense 3–4 times/week</option>
+            <option value="1.72">Heavy: Intense exercise 6–7 times/week</option>
+            <option value="1.9">Heavy: Very intense exercise daily, or physical job</option>
           </select>
           <span class="error-msg">Please select activity level</span>
         </div>
-
-        <div class="form-group" id="fg-waist">
-          <label>Waist (cm)</label>
-          <input type="number" id="inp-waist" placeholder="80"/>
-          <span class="converter-hint" onclick="openMeasureModal('waist')" style="cursor:pointer;">📏 inch → cm converter</span>
-        </div>
-        <div class="form-group" id="fg-neck">
-          <label>Neck (cm)</label>
-          <input type="number" id="inp-neck" placeholder="38"/>
-          <span class="converter-hint" onclick="openMeasureModal('neck')" style="cursor:pointer;">📏 inch → cm converter</span>
-        </div>
-
+        <div class="form-group" id="fg-waist"><label>Waist (cm)</label><input type="number" id="inp-waist" placeholder="80"/><span class="converter-hint" onclick="openMeasureModal('waist')" style="cursor:pointer;">📏 inch → cm converter</span></div>
+        <div class="form-group" id="fg-neck"><label>Neck (cm)</label><input type="number" id="inp-neck" placeholder="38"/><span class="converter-hint" onclick="openMeasureModal('neck')" style="cursor:pointer;">📏 inch → cm converter</span></div>
         <div id="female-extra-row" class="form-group full" style="display:none;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%;">
-            <div class="form-group">
-              <label>Hip (cm)</label>
-              <input type="number" id="inp-hip" placeholder="95"/>
-              <span class="converter-hint" onclick="openMeasureModal('hip')" style="cursor:pointer;">📏 inch → cm converter</span>
-            </div>
-            <div class="form-group">
-              <label>Pregnant/Lactating</label>
-              <select id="inp-preg">
-                <option value="">Select</option>
-                <option>No</option>
-                <option>Pregnant</option>
-                <option>Lactating</option>
-              </select>
-            </div>
+            <div class="form-group"><label>Hip (cm)</label><input type="number" id="inp-hip" placeholder="95"/><span class="converter-hint" onclick="openMeasureModal('hip')" style="cursor:pointer;">📏 inch → cm converter</span></div>
+            <div class="form-group"><label>Pregnant/Lactating</label><select id="inp-preg"><option value="">Select</option><option>No</option><option>Pregnant</option><option>Lactating</option></select></div>
           </div>
         </div>
-
         <div class="contact-row">
           <div class="form-group">
             <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
-            <div class="phone-input-wrap">
-              <div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div>
-              <input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10" autocomplete="off"/>
-            </div>
+            <div class="phone-input-wrap"><div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div><input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10" autocomplete="off"/></div>
           </div>
-          <div class="form-group">
-            <label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
-            <input type="email" id="inp-email" placeholder="you@example.com" autocomplete="off"/>
-          </div>
+          <div class="form-group"><label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label><input type="email" id="inp-email" placeholder="you@example.com" autocomplete="off"/></div>
         </div>
-
         <div class="contact-hint">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#1a9e8f;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
           Your phone number and email are private — we will never share or disclose them to any third party.
         </div>
       </div>
       <button class="btn-primary" onclick="generateResult()">Generate Result →</button>
 
-      <!-- INLINE RESULTS — shown inside Step 1 after Generate Result -->
-      <div id="inline-results" style="display:none;margin-top:32px;border-top:2px solid var(--teal);padding-top:28px;">
+      <!-- ── INLINE RESULTS ── -->
+      <div id="inline-results" style="display:none; margin-top:32px; border-top:2px solid var(--teal); padding-top:28px;">
         <div class="step-label">Your Result</div>
-        <div style="font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:24px;">YOUR RESULT</div>
+        <div style="font-family:'Fraunces',serif; font-size:1.3rem; font-weight:600; color:var(--text); margin-bottom:24px;">YOUR RESULT</div>
 
-        <!-- SECTION 1: BMI Results -->
+        <!-- SECTION 1: BMI -->
         <div style="margin-bottom:28px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Section 1 — BMI Results</div>
-          <div class="results-grid" style="grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;">
-            <div class="metric-card">
-              <div class="metric-label">Present Weight</div>
-              <div class="metric-value" id="r-present-wt" style="font-size:1.6rem;">—</div>
-              <div class="metric-sub">kg</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Ideal Weight</div>
-              <div class="metric-value" id="r-ideal-wt" style="font-size:1.6rem;color:#60d394;">—</div>
-              <div class="metric-sub">kg (midpoint BMI 18.5–24.9)</div>
-            </div>
+          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 1 — BMI Results</div>
+          <div class="results-grid" style="grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:14px;">
+            <div class="metric-card"><div class="metric-label">Present Weight</div><div class="metric-value" id="r-present-wt" style="font-size:1.6rem;">—</div><div class="metric-sub">kg</div></div>
+            <div class="metric-card"><div class="metric-label">Ideal Weight</div><div class="metric-value" id="r-ideal-wt" style="font-size:1.6rem; color:#60d394;">—</div><div class="metric-sub">kg (midpoint BMI 18.5–24.9)</div></div>
             <div class="metric-card">
               <div class="metric-label">Body Mass Index</div>
               <div class="metric-value" id="r-bmi">—</div>
               <div class="metric-sub" id="r-bmi-cat">—</div>
-              <div class="bmi-bar-wrap">
-                <div class="bmi-bar-track">
-                  <div class="bmi-marker-pin" id="bmi-marker" style="left:50%"></div>
-                </div>
-                <div class="bmi-zones">
-                  <span class="bmi-zone" style="color:#5bc8f5;">Under</span>
-                  <span class="bmi-zone" style="color:#60d394;">Normal</span>
-                  <span class="bmi-zone" style="color:#f4a742;">Over</span>
-                  <span class="bmi-zone" style="color:#e74c3c;">Obese</span>
-                </div>
-              </div>
+              <div class="bmi-bar-wrap"><div class="bmi-bar-track"><div class="bmi-marker-pin" id="bmi-marker" style="left:50%"></div></div><div class="bmi-zones"><span class="bmi-zone" style="color:#5bc8f5;">Under</span><span class="bmi-zone" style="color:#60d394;">Normal</span><span class="bmi-zone" style="color:#f4a742;">Over</span><span class="bmi-zone" style="color:#e74c3c;">Obese</span></div></div>
             </div>
           </div>
-          <div class="results-grid" style="grid-template-columns:repeat(3,1fr);gap:14px;">
-            <div class="metric-card">
-              <div class="metric-label">Ideal Weight Range</div>
-              <div class="metric-value" id="r-ideal-range" style="font-size:1.1rem;">—</div>
-              <div class="metric-sub">kg (BMI 18.5–24.9)</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Target Weight</div>
-              <div class="metric-value" id="r-target-wt" style="font-size:1.6rem;">—</div>
-              <div class="metric-sub">kg</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label" id="r-wl-label">Weight Change</div>
-              <div class="metric-value" id="r-wl-total" style="font-size:1.6rem;">—</div>
-              <div class="metric-sub" id="r-wl-direction">—</div>
-            </div>
+          <div class="results-grid" style="grid-template-columns:repeat(3,1fr); gap:14px;">
+            <div class="metric-card"><div class="metric-label">Ideal Weight Range</div><div class="metric-value" id="r-ideal-range" style="font-size:1.1rem;">—</div><div class="metric-sub">kg (BMI 18.5–24.9)</div></div>
+            <div class="metric-card"><div class="metric-label">Target Weight</div><div class="metric-value" id="r-target-wt" style="font-size:1.6rem;">—</div><div class="metric-sub">kg</div></div>
+            <div class="metric-card"><div class="metric-label" id="r-wl-label">Weight Change</div><div class="metric-value" id="r-wl-total" style="font-size:1.6rem;">—</div><div class="metric-sub" id="r-wl-direction">—</div></div>
           </div>
         </div>
 
         <!-- SECTION 2: Goal -->
-        <div style="margin-bottom:28px;border-top:1px solid var(--border);padding-top:22px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Section 2 — Your Goal</div>
-          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:14px;">Your Goal</div>
-          <div id="goal-maintain-block" style="display:none;background:#f0faf9;border:1.5px solid #c8ede9;border-radius:var(--radius-sm);padding:16px;text-align:center;">
-            <div style="font-size:1.1rem;font-weight:700;color:var(--teal);">🎯 Maintain Weight</div>
-            <div style="font-size:13px;color:var(--muted);margin-top:6px;">Your current weight is within the ideal range. Focus on maintaining it.</div>
-            <div style="margin-top:10px;font-size:14px;">Maintenance Calories: <strong id="goal-maintain-cal" style="color:var(--teal);">—</strong> kcal/day</div>
+        <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 2 — Your Goal</div>
+          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:14px;">Your Goal</div>
+
+          <!-- Maintain -->
+          <div id="goal-maintain-block" style="display:none; background:#f0faf9; border:1.5px solid #c8ede9; border-radius:var(--radius-sm); padding:16px; text-align:center;">
+            <div style="font-size:1.1rem; font-weight:700; color:var(--teal);">🎯 Maintain Weight</div>
+            <div style="font-size:13px; color:var(--muted); margin-top:6px;">Your current weight is within the ideal range. Focus on maintaining it.</div>
+            <div style="margin-top:10px; font-size:14px;">Maintenance Calories: <strong id="goal-maintain-cal" style="color:var(--teal);">—</strong> kcal/day</div>
           </div>
+
+          <!-- Change -->
           <div id="goal-change-block" style="display:none;">
-            <div style="font-size:13px;color:var(--muted);margin-bottom:12px;" id="goal-change-desc">Select your weekly goal:</div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-              <div class="goal-rate-btn" data-rate="0.25" onclick="selectGoalRate(this)" style="padding:14px 10px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);cursor:pointer;text-align:center;transition:all 0.2s;">
-                <div style="font-weight:700;font-size:14px;color:var(--text);">Mild</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:3px;">0.25 kg/week</div>
-                <div style="font-size:11px;color:var(--teal);margin-top:4px;">±250 kcal</div>
-              </div>
-              <div class="goal-rate-btn active-goal" data-rate="0.5" onclick="selectGoalRate(this)" style="padding:14px 10px;border-radius:var(--radius-sm);border:2px solid var(--teal);background:var(--teal);cursor:pointer;text-align:center;transition:all 0.2s;">
-                <div style="font-weight:700;font-size:14px;color:#fff;">Standard</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;">0.5 kg/week</div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.9);margin-top:4px;">±500 kcal</div>
-              </div>
-              <div class="goal-rate-btn" data-rate="1" onclick="selectGoalRate(this)" style="padding:14px 10px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);cursor:pointer;text-align:center;transition:all 0.2s;">
-                <div style="font-weight:700;font-size:14px;color:var(--text);">Extreme</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:3px;">1 kg/week</div>
-                <div style="font-size:11px;color:#f4a742;margin-top:4px;">±1000 kcal</div>
+            <!-- Big goal statement -->
+            <div id="goal-statement-banner" style="background:linear-gradient(135deg, #1a9e8f 0%, #14786c 100%);; border-radius:var(--radius-sm); padding:18px 22px; margin-bottom:18px; display:flex; align-items:center; gap:14px;">
+              <span style="font-size:2rem; flex-shrink:0;" id="goal-stmt-icon">🎯</span>
+              <div>
+                <div id="goal-stmt-text" style="font-size:1.1rem; font-weight:700; color:#fff; line-height:1.4;"></div>
+                <div id="goal-stmt-sub" style="font-size:13px; color:rgba(255, 255, 255, 0.907); margin-top:3px;"></div>
               </div>
             </div>
-            <div id="extreme-warning" style="display:none;margin-top:12px;background:#fef9ec;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:#92400e;">
+
+            <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:12px;">Select your weekly rate:</div>
+            <div class="grb-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+              <div class="goal-rate-btn" data-rate="0.25" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--border); background:var(--bg); text-align:center;">
+                <div class="grb-title" style="font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px;"></div>
+                <div class="grb-rate" style="font-size:12px; color:var(--muted); margin-bottom:4px;">0.25 kg/week</div>
+                <div class="grb-kcal" style="font-size:11px; color:var(--teal); font-weight:600;">±250 kcal</div>
+              </div>
+              <div class="goal-rate-btn active-goal" data-rate="0.5" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--teal); background:var(--teal); text-align:center;">
+                <div class="grb-title" style="font-weight:700; font-size:14px; color:#fff; margin-bottom:4px;"></div>
+                <div class="grb-rate" style="font-size:12px; color:rgba(255,255,255,0.85); margin-bottom:4px;">0.5 kg/week</div>
+                <div class="grb-kcal" style="font-size:11px; color:rgba(255,255,255,0.9); font-weight:600;">±500 kcal</div>
+              </div>
+              <div class="goal-rate-btn" data-rate="1" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--border); background:var(--bg); text-align:center;">
+                <div class="grb-title" style="font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px;"></div>
+                <div class="grb-rate" style="font-size:12px; color:var(--muted); margin-bottom:4px;">1 kg/week</div>
+                <div class="grb-kcal" style="font-size:11px; color:#f4a742; font-weight:600;">±1000 kcal</div>
+              </div>
+            </div>
+            <div id="extreme-warning" style="display:none; margin-top:12px; background:#fef9ec; border:1.5px solid #fde68a; border-radius:var(--radius-sm); padding:10px 14px; font-size:13px; color:#92400e;">
               ⚠️ <strong>Not generally recommended</strong> — Extreme calorie deficits/surpluses can be hard to sustain and may impact health. Consider the Standard plan.
             </div>
           </div>
         </div>
 
         <!-- SECTION 3: Calories -->
-        <div style="margin-bottom:28px;border-top:1px solid var(--border);padding-top:22px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Section 3 — Calories</div>
-          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:16px;">Calorie Breakdown</div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
+        <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 3 — Calories</div>
+          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:16px;">Calorie Breakdown</div>
+
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:14px;">
             <div class="metric-card" style="border-left:4px solid #5bc8f5;">
               <div class="metric-label">BMR (Basal Metabolic Rate)</div>
-              <div class="metric-value" id="r-bmr" style="font-size:1.8rem;color:#5bc8f5;">—</div>
+              <div class="metric-value" id="r-bmr" style="font-size:1.8rem; color:#5bc8f5;">—</div>
               <div class="metric-sub">kcal/day (at complete rest)</div>
             </div>
             <div class="metric-card" style="border-left:4px solid var(--teal);">
@@ -649,48 +531,44 @@
               <div class="metric-sub">kcal/day (BMR × activity)</div>
             </div>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
-            <div class="metric-card" style="border-left:4px solid #60d394;">
-              <div class="metric-label">Goal Calories</div>
-              <div class="metric-value" id="r-goal-cal" style="font-size:1.8rem;color:#60d394;">—</div>
-              <div class="metric-sub" id="r-goal-cal-desc">kcal/day</div>
-            </div>
+
+          <!-- Goal Calories — highlighted as most important -->
+          <div class="metric-card goal-cal-highlight" id="goal-cal-card" style="margin-bottom:14px; border-radius:var(--radius-sm); padding:22px 20px; text-align:center;">
+            <div class="metric-label" style="color:rgba(255,255,255,0.75); font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">⭐ Your Daily Calorie Target</div>
+            <div class="metric-value" id="r-goal-cal" style="font-size:2.6rem; color:#fff; font-family:'Fraunces',serif; font-weight:600;">—</div>
+            <div class="metric-sub" id="r-goal-cal-desc" style="color:rgba(255,255,255,0.75); font-size:13px; margin-top:4px;">kcal/day</div>
+            <div class="gcal-badge" id="r-goal-cal-badge">Goal Calories</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:14px;">
             <div class="metric-card" style="border-left:4px solid #f4a742;">
               <div class="metric-label">Timeline to Goal</div>
-              <div class="metric-value" id="r-timeline" style="font-size:1.4rem;color:#f4a742;">—</div>
-              <div class="metric-sub" id="r-timeline-desc">days</div>
+              <div class="metric-value" id="r-timeline" style="font-size:1.5rem; color:#f4a742;">—</div>
+              <div class="metric-sub" id="r-timeline-desc">—</div>
             </div>
-          </div>
-          <div class="metric-card" style="border-left:4px solid #a78bfa;">
-            <div class="metric-label">After Goal Calories (Maintenance at Ideal Weight)</div>
-            <div class="metric-value" id="r-after-goal-cal" style="font-size:1.8rem;color:#a78bfa;">—</div>
-            <div class="metric-sub">kcal/day once you reach your goal weight</div>
+            <div class="metric-card" style="border-left:4px solid #a78bfa;">
+              <div class="metric-label">After-Goal Maintenance</div>
+              <div class="metric-value" id="r-after-goal-cal" style="font-size:1.8rem; color:#a78bfa;">—</div>
+              <div class="metric-sub">kcal/day at ideal weight</div>
+            </div>
           </div>
         </div>
 
         <!-- SECTION 4: Body Fat -->
-        <div style="margin-bottom:28px;border-top:1px solid var(--border);padding-top:22px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Section 4 — Body Fat</div>
-          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:16px;">Body Fat Analysis</div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
-            <div class="metric-card">
-              <div class="metric-label">Body Fat %</div>
-              <div class="metric-value" id="r-fat">—</div>
-              <div class="metric-sub" id="r-fat-cat">—</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Daily Calories (Goal)</div>
-              <div class="metric-value" id="r-cal">—</div>
-              <div class="metric-sub">kcal / day</div>
-            </div>
+        <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 4 — Body Fat</div>
+          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:16px;">Body Fat Analysis</div>
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px;">
+            <div class="metric-card"><div class="metric-label">Body Fat %</div><div class="metric-value" id="r-fat">—</div><div class="metric-sub" id="r-fat-cat">—</div></div>
+            <div class="metric-card"><div class="metric-label">Daily Calories (Goal)</div><div class="metric-value" id="r-cal">—</div><div class="metric-sub">kcal / day</div></div>
           </div>
         </div>
 
-        <!-- After Results Message -->
-        <div style="background:linear-gradient(135deg,#f0faf9,#e8f5f3);border:1.5px solid #c8ede9;border-radius:var(--radius-sm);padding:20px 22px;text-align:center;margin-top:10px;">
-          <div style="font-size:1.2rem;margin-bottom:8px;">✅</div>
-          <div style="font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--teal-dark);margin-bottom:6px;">Body metrics are calculated.</div>
-          <div style="font-size:13.5px;color:#374151;">Now let's create your personalized diet plan below.</div>
+        <!-- Completion message -->
+        <div style="background:linear-gradient(135deg,#f0faf9,#e8f5f3); border:1.5px solid #c8ede9; border-radius:var(--radius-sm); padding:20px 22px; text-align:center; margin-top:10px;">
+          <div style="font-size:1.2rem; margin-bottom:8px;">✅</div>
+          <div style="font-family:'Fraunces',serif; font-size:1rem; font-weight:600; color:var(--teal-dark); margin-bottom:6px;">Body metrics are calculated.</div>
+          <div style="font-size:13.5px; color:#374151;">Now let's create your personalized diet plan below.</div>
         </div>
       </div>
     </div>
@@ -702,10 +580,7 @@
       <div class="form-group">
         <label>Health Conditions</label>
         <div class="health-conditions-wrap">
-          <div class="health-dd-trigger" onclick="toggleHealthDD()">
-            <span id="health-dd-placeholder">Select conditions (click to expand)</span>
-            <span id="health-dd-arrow">▾</span>
-          </div>
+          <div class="health-dd-trigger" onclick="toggleHealthDD()"><span id="health-dd-placeholder">Select conditions (click to expand)</span><span id="health-dd-arrow">▾</span></div>
           <div class="health-dd-list" id="health-dd-list">
             <label class="health-option"><input type="checkbox" value="Diabetes" onchange="handleCondition(this)"/><span>Diabetes</span></label>
             <label class="health-option"><input type="checkbox" value="Hypertension" onchange="handleCondition(this)"/><span>Hypertension</span></label>
@@ -715,49 +590,22 @@
             <label class="health-option"><input type="checkbox" value="Anemia" onchange="handleCondition(this)"/><span>Anemia</span></label>
             <label class="health-option"><input type="checkbox" value="IBS" onchange="handleCondition(this)"/><span>IBS / Gut Issues</span></label>
             <label class="health-option"><input type="checkbox" value="None" onchange="handleCondition(this)"/><span>None</span></label>
-            <label class="health-option" id="other-condition-option">
-              <input type="checkbox" value="Other" onchange="handleCondition(this); toggleOtherInput(this)"/>
-              <span>Other (specify below)</span>
-            </label>
+            <label class="health-option" id="other-condition-option"><input type="checkbox" value="Other" onchange="handleCondition(this); toggleOtherInput(this)"/><span>Other (specify below)</span></label>
             <input type="text" class="health-option-other-input" id="other-condition-input" placeholder="e.g. Kidney stones, Migraine..." oninput="updateOtherCondition(this)"/>
           </div>
         </div>
         <div class="selected-tags" id="conditions-tags"></div>
       </div>
-      <div class="form-group" style="margin-top:18px;">
-        <label>Allergies</label>
-        <input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..."/>
-      </div>
+      <div class="form-group" style="margin-top:18px;"><label>Allergies</label><input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..."/></div>
     </div>
 
     <!-- STEP 3 -->
     <div class="card hidden-section wide-card" id="prefs-section">
       <div class="step-label">Step 3</div>
       <div class="section-title">Your Diet Preferences</div>
-      <div class="form-group" style="margin-top:18px;">
-        <label>Diet Preferences</label>
-        <select class="diet-select" id="inp-diet">
-          <option value="">Select type of Diet</option>
-          <option>Vegetarian</option><option>Non Vegetarian</option><option>Eggetarian</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin-top:18px;">
-        <label>Meals Per Day</label>
-        <select class="meals-select" id="inp-meals">
-          <option value="">Select number</option>
-          <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin-top:18px;">
-        <label>Type of Meal</label>
-        <div class="chip-group" id="meal-types">
-          <div class="chip" onclick="toggleChip(this)">Breakfast</div>
-          <div class="chip" onclick="toggleChip(this)">Mid Morning</div>
-          <div class="chip" onclick="toggleChip(this)">Lunch</div>
-          <div class="chip" onclick="toggleChip(this)">Evening Snacks</div>
-          <div class="chip" onclick="toggleChip(this)">Dinner</div>
-        </div>
-      </div>
+      <div class="form-group" style="margin-top:18px;"><label>Diet Preferences</label><select class="diet-select" id="inp-diet"><option value="">Select type of Diet</option><option>Vegetarian</option><option>Non Vegetarian</option><option>Eggetarian</option></select></div>
+      <div class="form-group" style="margin-top:18px;"><label>Meals Per Day</label><select class="meals-select" id="inp-meals"><option value="">Select number</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="form-group" style="margin-top:18px;"><label>Type of Meal</label><div class="chip-group" id="meal-types"><div class="chip" onclick="toggleChip(this)">Breakfast</div><div class="chip" onclick="toggleChip(this)">Mid Morning</div><div class="chip" onclick="toggleChip(this)">Lunch</div><div class="chip" onclick="toggleChip(this)">Evening Snacks</div><div class="chip" onclick="toggleChip(this)">Dinner</div></div></div>
       <div class="form-group" style="margin-top:18px;">
         <label>Eating Time Window</label>
         <div class="time-chip-group" id="time-window-chips">
@@ -766,103 +614,44 @@
           <div class="time-chip" onclick="selectTimeChip(this)" data-value="9:00 AM to 7:00 PM">9 AM – 7 PM <span class="tc-hrs">(10 hrs)</span></div>
           <div class="time-chip" onclick="selectTimeChip(this)" data-value="9:00 AM to 8:00 PM">9 AM – 8 PM <span class="tc-hrs">(11 hrs)</span></div>
         </div>
-        <div class="time-chip-hint">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Tap your preferred eating window for the day
-        </div>
+        <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Tap your preferred eating window for the day</div>
         <input type="hidden" id="eat-window-val" value=""/>
       </div>
       <div class="section-divider"></div>
-      <div class="form-group" style="margin-top:4px;margin-bottom:18px;">
-        <label>Number of Curries Per Day</label>
-        <select id="inp-curries">
-          <option value="">Select number</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-        </select>
-      </div>
+      <div class="form-group" style="margin-top:4px; margin-bottom:18px;"><label>Number of Curries Per Day</label><select id="inp-curries"><option value="">Select number</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
       <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
       <div class="accordion-item" id="drinks-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Morning Drinks</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-          <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Do you drink morning drinks?</p>
-          <div class="yn-toggle">
-            <button class="yn-btn yes active" onclick="ynToggle(this,'yes')">Yes</button>
-            <button class="yn-btn no" onclick="ynToggle(this,'no')">No</button>
-          </div>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Do you drink morning drinks?</p>
+          <div class="yn-toggle"><button class="yn-btn yes active" onclick="ynToggle(this,'yes')">Yes</button><button class="yn-btn no" onclick="ynToggle(this,'no')">No</button></div>
           <div class="drink-options" id="drink-opts">
             <div class="sub-label">Choose your drinks</div>
-            <div class="sub-chip-group">
-              <div class="sub-chip" onclick="toggleChip(this)">Warm Water</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Lemon & Honey</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Green Tea</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Black Coffee</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Herbal Tea</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Milk</div>
-              <div class="sub-chip" onclick="toggleChip(this)">Detox Water</div>
-            </div>
+            <div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Warm Water</div><div class="sub-chip" onclick="toggleChip(this)">Lemon & Honey</div><div class="sub-chip" onclick="toggleChip(this)">Green Tea</div><div class="sub-chip" onclick="toggleChip(this)">Black Coffee</div><div class="sub-chip" onclick="toggleChip(this)">Herbal Tea</div><div class="sub-chip" onclick="toggleChip(this)">Milk</div><div class="sub-chip" onclick="toggleChip(this)">Detox Water</div></div>
           </div>
         </div>
       </div>
       <div class="accordion-item" id="nuts-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Nuts & Seeds</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-          <div class="sub-label">Nuts</div>
-          <div class="sub-chip-group">
-            <div class="sub-chip" onclick="toggleChip(this)">Almonds</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Walnuts</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Cashews</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Pistachios</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Peanuts</div>
-          </div>
-          <div class="sub-label">Seeds</div>
-          <div class="sub-chip-group">
-            <div class="sub-chip" onclick="toggleChip(this)">Sunflower Seeds</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Chia Seeds</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Flaxseeds</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Pumpkin Seeds</div>
-          </div>
+          <div class="sub-label">Nuts</div><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Almonds</div><div class="sub-chip" onclick="toggleChip(this)">Walnuts</div><div class="sub-chip" onclick="toggleChip(this)">Cashews</div><div class="sub-chip" onclick="toggleChip(this)">Pistachios</div><div class="sub-chip" onclick="toggleChip(this)">Peanuts</div></div>
+          <div class="sub-label">Seeds</div><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Sunflower Seeds</div><div class="sub-chip" onclick="toggleChip(this)">Chia Seeds</div><div class="sub-chip" onclick="toggleChip(this)">Flaxseeds</div><div class="sub-chip" onclick="toggleChip(this)">Pumpkin Seeds</div></div>
         </div>
       </div>
       <div class="accordion-item" id="fruits-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Fruits</span><span class="chevron">▾</span></div>
-        <div class="accordion-body">
-          <div class="sub-chip-group">
-            <div class="sub-chip" onclick="toggleChip(this)">Apple</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Banana</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Orange</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Papaya</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Pomegranate</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Guava</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Mango</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Berries</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Grapes</div>
-          </div>
-        </div>
+        <div class="accordion-body"><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Apple</div><div class="sub-chip" onclick="toggleChip(this)">Banana</div><div class="sub-chip" onclick="toggleChip(this)">Orange</div><div class="sub-chip" onclick="toggleChip(this)">Papaya</div><div class="sub-chip" onclick="toggleChip(this)">Pomegranate</div><div class="sub-chip" onclick="toggleChip(this)">Guava</div><div class="sub-chip" onclick="toggleChip(this)">Mango</div><div class="sub-chip" onclick="toggleChip(this)">Berries</div><div class="sub-chip" onclick="toggleChip(this)">Grapes</div></div></div>
       </div>
       <div class="accordion-item" id="veggies-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Vegetables</span><span class="chevron">▾</span></div>
-        <div class="accordion-body">
-          <div class="sub-chip-group">
-            <div class="sub-chip" onclick="toggleChip(this)">Spinach</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Broccoli</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Carrot</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Cucumber</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Tomato</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Capsicum</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Beetroot</div>
-            <div class="sub-chip" onclick="toggleChip(this)">Zucchini</div>
-          </div>
-        </div>
+        <div class="accordion-body"><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Spinach</div><div class="sub-chip" onclick="toggleChip(this)">Broccoli</div><div class="sub-chip" onclick="toggleChip(this)">Carrot</div><div class="sub-chip" onclick="toggleChip(this)">Cucumber</div><div class="sub-chip" onclick="toggleChip(this)">Tomato</div><div class="sub-chip" onclick="toggleChip(this)">Capsicum</div><div class="sub-chip" onclick="toggleChip(this)">Beetroot</div><div class="sub-chip" onclick="toggleChip(this)">Zucchini</div></div></div>
       </div>
       <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Dislikes</div>
       <div class="section-title" style="margin-bottom:10px;">Food Dislikes</div>
-      <div class="form-group">
-        <label>Foods You Dislike or Avoid <span style="font-family:'DM Sans';font-size:13px;color:var(--muted);font-weight:400;">(optional)</span></label>
-        <textarea id="inp-dislikes" placeholder="e.g. Bitter gourd, Mushrooms, Raw onion..."></textarea>
-      </div>
+      <div class="form-group"><label>Foods You Dislike or Avoid <span style="font-family:'DM Sans'; font-size:13px; color:var(--muted); font-weight:400;">(optional)</span></label><textarea id="inp-dislikes" placeholder="e.g. Bitter gourd, Mushrooms, Raw onion..."></textarea></div>
     </div>
 
     <!-- STEP 4 -->
@@ -870,29 +659,14 @@
       <div class="step-label">Step 4</div>
       <div class="section-title">Current Symptoms</div>
       <div class="chip-group" id="symptoms-group">
-        <div class="chip" onclick="toggleChip(this)">Fatigue</div>
-        <div class="chip" onclick="toggleChip(this)">Hair Fall</div>
-        <div class="chip" onclick="toggleChip(this)">Weak Immunity</div>
-        <div class="chip" onclick="toggleChip(this)">Joint Pain</div>
-        <div class="chip" onclick="toggleChip(this)">Poor Sleep</div>
-        <div class="chip" onclick="toggleChip(this)">Lack of Focus</div>
-        <div class="chip" onclick="toggleChip(this)">Bloating</div>
-        <div class="chip" onclick="toggleChip(this)">Low Energy</div>
-        <div class="chip" onclick="toggleChip(this)">Frequent Illness</div>
-        <div class="chip" onclick="toggleChip(this)">Mood Swings</div>
-        <div class="chip" onclick="toggleChip(this)">Breathlessness</div>
-        <div class="chip" onclick="toggleChip(this)">Skin Issues</div>
+        <div class="chip" onclick="toggleChip(this)">Fatigue</div><div class="chip" onclick="toggleChip(this)">Hair Fall</div><div class="chip" onclick="toggleChip(this)">Weak Immunity</div><div class="chip" onclick="toggleChip(this)">Joint Pain</div><div class="chip" onclick="toggleChip(this)">Poor Sleep</div><div class="chip" onclick="toggleChip(this)">Lack of Focus</div><div class="chip" onclick="toggleChip(this)">Bloating</div><div class="chip" onclick="toggleChip(this)">Low Energy</div><div class="chip" onclick="toggleChip(this)">Frequent Illness</div><div class="chip" onclick="toggleChip(this)">Mood Swings</div><div class="chip" onclick="toggleChip(this)">Breathlessness</div><div class="chip" onclick="toggleChip(this)">Skin Issues</div>
       </div>
       <div class="section-divider"></div>
-      <div class="section-title" style="margin-bottom:12px;">Any Queries or Comments <span style="font-family:'DM Sans';font-size:13px;color:var(--muted);font-weight:400;">(optional)</span></div>
-      <div class="form-group">
-        <textarea id="inp-comments" placeholder="Write your questions, goals, or any special requirements here..."></textarea>
-      </div>
+      <div class="section-title" style="margin-bottom:12px;">Any Queries or Comments <span style="font-family:'DM Sans'; font-size:13px; color:var(--muted); font-weight:400;">(optional)</span></div>
+      <div class="form-group"><textarea id="inp-comments" placeholder="Write your questions, goals, or any special requirements here..."></textarea></div>
       <div class="consent-box" onclick="document.getElementById('consent-wa').click(); event.stopPropagation();">
         <input type="checkbox" id="consent-wa" onclick="event.stopPropagation()"/>
-        <label for="consent-wa">
-          I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan and follow-up guidance. <strong>We will only reach out regarding your nutrition plan and will never send spam or share your details.</strong>
-        </label>
+        <label for="consent-wa">I agree to be contacted via <span class="whatsapp-icon">WhatsApp</span> for my personalized diet plan and follow-up guidance. <strong>We will only reach out regarding your nutrition plan and will never send spam or share your details.</strong></label>
       </div>
       <div class="submit-row">
         <button id="submitBtn" class="btn-primary" onclick="submitForm()" style="flex:2;">Submit My Plan Request</button>
@@ -901,207 +675,111 @@
     </div>
 
     <!-- SUCCESS -->
-    <div class="card hidden-section wide-card" id="success-section" style="text-align:center;padding:48px 32px;">
-      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+    <div class="card hidden-section wide-card" id="success-section" style="text-align:center; padding:48px 32px;">
+      <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
       <div class="section-title" style="margin-bottom:8px;">Plan Request Submitted!</div>
-      <p style="color:var(--muted);margin-bottom:24px;">Your personalized diet plan is being prepared. We'll reach out to you shortly based on your inputs.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="education.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 28px;">Explore Nutrition Education →</a>
-        <a href="profile.html" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:12px 28px;background:#374151;">View My Profile →</a>
+      <p style="color:var(--muted); margin-bottom:24px;">Your personalized diet plan is being prepared. We'll reach out to you shortly based on your inputs.</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <a href="education.html" class="btn-primary" style="display:inline-block; text-decoration:none; width:auto; padding:12px 28px;">Explore Nutrition Education →</a>
+        <a href="profile.html" class="btn-primary" style="display:inline-block; text-decoration:none; width:auto; padding:12px 28px; background:#374151;">View My Profile →</a>
       </div>
     </div>
 
-
   </div>
 </div>
-
 </div><!-- end form-content-wrap -->
 
-<!-- ─── Account Creation Modal (shown after form submit) ─── -->
+<!-- Account Modal -->
 <div id="accountModal" class="modal-overlay" style="z-index:1100;">
-  <div class="modal-box" style="max-width:420px;width:94%;">
-    <div class="modal-header">
-      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;">Save Your Profile</h3>
-      <span class="close-btn" onclick="skipAccount()">✕</span>
-    </div>
-
-    <!-- Step A: Save or Don't Save -->
+  <div class="modal-box" style="max-width:420px; width:94%;">
+    <div class="modal-header"><h3 style="font-family:'Fraunces',serif; font-size:1.1rem;">Save Your Profile</h3><span class="close-btn" onclick="skipAccount()">✕</span></div>
     <div id="acct-step-save">
-      <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;">Would you like to save this profile so you can view it later?</p>
-      <button class="btn-primary" style="margin:0;width:100%;margin-bottom:10px;" onclick="proceedToAuth()">Save My Profile →</button>
-      <button class="btn-secondary" style="margin:0;width:100%;" onclick="skipAccount()">Don't Save</button>
+      <p style="font-size:13.5px; color:var(--muted); margin-bottom:20px;">Would you like to save this profile so you can view it later?</p>
+      <button class="btn-primary" style="margin:0; width:100%; margin-bottom:10px;" onclick="proceedToAuth()">Save My Profile →</button>
+      <button class="btn-secondary" style="margin:0; width:100%;" onclick="skipAccount()">Don't Save</button>
     </div>
-
-    <!-- Step B: Create Account or Login -->
     <div id="acct-step-auth" style="display:none;">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Create an account to access your profiles from any device.</p>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Create an account to access your profiles from any device.</p>
       <div class="hcb-tabs" style="margin-bottom:14px;">
         <div class="hcb-tab active" id="tab-create" onclick="switchAuthTab('create')">Create Account</div>
         <div class="hcb-tab" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
         <div class="hcb-tab" id="tab-skip-save" onclick="switchAuthTab('skip')">Save Locally</div>
       </div>
-
-      <!-- Create Account -->
       <div id="auth-create">
-        <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email (Username)</label>
-          <input type="email" id="acct-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        </div>
-        <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Create Password</label>
-          <div class="pw-wrap">
-            <input type="password" id="acct-pass" placeholder="Min 6 characters" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-            <button type="button" class="pw-eye" onclick="togglePw('acct-pass',this)" tabindex="-1">👁</button>
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:14px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Confirm Password</label>
-          <div class="pw-wrap">
-            <input type="password" id="acct-pass2" placeholder="Re-enter password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-            <button type="button" class="pw-eye" onclick="togglePw('acct-pass2',this)" tabindex="-1">👁</button>
-          </div>
-        </div>
-        <div id="acct-err" style="display:none;font-size:12px;color:#dc2626;margin-bottom:10px;background:#fef2f2;padding:8px 12px;border-radius:8px;"></div>
-        <button class="btn-primary" style="margin:0;width:100%;" onclick="createAccount()">Create Account & Save Profile</button>
+        <div class="form-group" style="margin-bottom:10px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Email (Username)</label><input type="email" id="acct-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;"/></div>
+        <div class="form-group" style="margin-bottom:10px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Create Password</label><div class="pw-wrap"><input type="password" id="acct-pass" placeholder="Min 6 characters" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;"/><button type="button" class="pw-eye" onclick="togglePw('acct-pass',this)" tabindex="-1">👁</button></div></div>
+        <div class="form-group" style="margin-bottom:14px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Confirm Password</label><div class="pw-wrap"><input type="password" id="acct-pass2" placeholder="Re-enter password" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;"/><button type="button" class="pw-eye" onclick="togglePw('acct-pass2',this)" tabindex="-1">👁</button></div></div>
+        <div id="acct-err" style="display:none; font-size:12px; color:#dc2626; margin-bottom:10px; background:#fef2f2; padding:8px 12px; border-radius:8px;"></div>
+        <button class="btn-primary" style="margin:0; width:100%;" onclick="createAccount()">Create Account & Save Profile</button>
       </div>
-
-      <!-- Sign In -->
       <div id="auth-login" style="display:none;">
-        <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px;">Sign in to link this profile to your existing account.</p>
-        <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email</label>
-          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-        </div>
-        <div class="form-group" style="margin-bottom:14px;">
-          <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Password</label>
-          <div class="pw-wrap">
-            <input type="password" id="login-pass" placeholder="Your password" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;"/>
-            <button type="button" class="pw-eye" onclick="togglePw('login-pass',this)" tabindex="-1">👁</button>
-          </div>
-          <button type="button" class="forgot-link" onclick="openForgotModal()">Change password?</button>
-        </div>
-        <div id="login-err" style="display:none;font-size:12px;color:#dc2626;margin-bottom:10px;background:#fef2f2;padding:8px 12px;border-radius:8px;"></div>
-        <button class="btn-primary" style="margin:0;width:100%;" onclick="signInAndSave()">Sign In & Link Profile</button>
+        <p style="font-size:12.5px; color:var(--muted); margin-bottom:12px;">Sign in to link this profile to your existing account.</p>
+        <div class="form-group" style="margin-bottom:10px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Email</label><input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;"/></div>
+        <div class="form-group" style="margin-bottom:14px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Password</label><div class="pw-wrap"><input type="password" id="login-pass" placeholder="Your password" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;"/><button type="button" class="pw-eye" onclick="togglePw('login-pass',this)" tabindex="-1">👁</button></div><button type="button" class="forgot-link" onclick="openForgotModal()">Change password?</button></div>
+        <div id="login-err" style="display:none; font-size:12px; color:#dc2626; margin-bottom:10px; background:#fef2f2; padding:8px 12px; border-radius:8px;"></div>
+        <button class="btn-primary" style="margin:0; width:100%;" onclick="signInAndSave()">Sign In & Link Profile</button>
       </div>
-
-      <!-- Save Locally -->
       <div id="auth-skip" style="display:none;">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Profile will be saved on this browser only. You won't be able to access it from other devices.</p>
-        <button class="btn-primary" style="margin:0;width:100%;background:#374151;" onclick="saveLocallyAndClose()">Save Locally</button>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Profile will be saved on this browser only. You won't be able to access it from other devices.</p>
+        <button class="btn-primary" style="margin:0; width:100%; background:#374151;" onclick="saveLocallyAndClose()">Save Locally</button>
       </div>
-
-      <button class="btn-secondary" style="margin-top:10px;width:100%;" onclick="skipAccount()">Skip — Don't Save</button>
+      <button class="btn-secondary" style="margin-top:10px; width:100%;" onclick="skipAccount()">Skip — Don't Save</button>
     </div>
-
-    <!-- Step C: Success -->
-    <div id="acct-step-done" style="display:none;text-align:center;padding:10px 0;">
-      <div style="font-size:2.5rem;margin-bottom:12px;">✅</div>
-      <div style="font-weight:700;font-size:1rem;margin-bottom:6px;" id="acct-done-title">Account Created!</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:18px;" id="acct-done-msg">Your profile is saved. Sign in anytime from the Profiles page.</p>
-      <a href="profile.html" class="btn-primary" style="display:inline-block;text-decoration:none;padding:11px 24px;margin:0;">View My Profiles →</a>
+    <div id="acct-step-done" style="display:none; text-align:center; padding:10px 0;">
+      <div style="font-size:2.5rem; margin-bottom:12px;">✅</div>
+      <div style="font-weight:700; font-size:1rem; margin-bottom:6px;" id="acct-done-title">Account Created!</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:18px;" id="acct-done-msg">Your profile is saved.</p>
+      <a href="profile.html" class="btn-primary" style="display:inline-block; text-decoration:none; padding:11px 24px; margin:0;">View My Profiles →</a>
     </div>
   </div>
 </div>
 
-<!-- ─── Height Modal ─── -->
+<!-- Height Modal -->
 <div id="heightModal" class="modal-overlay">
   <div class="modal-box">
-    <div class="modal-header">
-      <h3>Height Converter</h3>
-      <span class="close-btn" onclick="closeHeightModal()">✕</span>
-    </div>
-    <div class="hcb-tabs">
-      <div class="hcb-tab active" onclick="switchHcbTab(this,'ft-in')">ft & in</div>
-      <div class="hcb-tab" onclick="switchHcbTab(this,'in')">inches</div>
-    </div>
+    <div class="modal-header"><h3>Height Converter</h3><span class="close-btn" onclick="closeHeightModal()">✕</span></div>
+    <div class="hcb-tabs"><div class="hcb-tab active" onclick="switchHcbTab(this,'ft-in')">ft & in</div><div class="hcb-tab" onclick="switchHcbTab(this,'in')">inches</div></div>
     <div id="hcb-panel-ft-in">
-      <div class="hcb-field-row">
-        <div class="hcb-input-wrap">
-          <span class="hcb-input-label">Feet</span>
-          <input class="hcb-input" type="number" id="modal-ft" placeholder="5" oninput="convertModalFtIn()"/>
-        </div>
-        <div class="hcb-sep">·</div>
-        <div class="hcb-input-wrap">
-          <span class="hcb-input-label">Inches</span>
-          <input class="hcb-input" type="number" id="modal-in" placeholder="7" oninput="convertModalFtIn()"/>
-        </div>
-      </div>
-      <div class="hcb-result-box">
-        <div class="hcb-result-label">Result</div>
-        <div class="hcb-result-val" id="modal-result">—</div>
-        <div class="hcb-result-unit">cm</div>
-      </div>
+      <div class="hcb-field-row"><div class="hcb-input-wrap"><span class="hcb-input-label">Feet</span><input class="hcb-input" type="number" id="modal-ft" placeholder="5" oninput="convertModalFtIn()"/></div><div class="hcb-sep">·</div><div class="hcb-input-wrap"><span class="hcb-input-label">Inches</span><input class="hcb-input" type="number" id="modal-in" placeholder="7" oninput="convertModalFtIn()"/></div></div>
+      <div class="hcb-result-box"><div class="hcb-result-label">Result</div><div class="hcb-result-val" id="modal-result">—</div><div class="hcb-result-unit">cm</div></div>
       <button class="hcb-use-btn" onclick="applyHeight()">Use This Height</button>
     </div>
     <div id="hcb-panel-in" style="display:none;">
-      <div class="hcb-field-row">
-        <div class="hcb-input-wrap">
-          <span class="hcb-input-label">Inches</span>
-          <input class="hcb-input" type="number" id="hcb-inch-only" placeholder="67" oninput="convertInchOnly()"/>
-        </div>
-      </div>
-      <div class="hcb-result-box">
-        <div class="hcb-result-label">Result</div>
-        <div class="hcb-result-val" id="hcb-inch-result">—</div>
-        <div class="hcb-result-unit">cm</div>
-      </div>
+      <div class="hcb-field-row"><div class="hcb-input-wrap"><span class="hcb-input-label">Inches</span><input class="hcb-input" type="number" id="hcb-inch-only" placeholder="67" oninput="convertInchOnly()"/></div></div>
+      <div class="hcb-result-box"><div class="hcb-result-label">Result</div><div class="hcb-result-val" id="hcb-inch-result">—</div><div class="hcb-result-unit">cm</div></div>
       <button class="hcb-use-btn" onclick="useHcbValue('hcb-inch-result')">Use This Height</button>
     </div>
   </div>
 </div>
 
-<!-- ─── Measurement Converter Modal (Waist / Hip / Neck) ─── -->
+<!-- Measure Converter Modal -->
 <div id="measureModal" class="modal-overlay">
   <div class="modal-box">
-    <div class="modal-header">
-      <h3 id="measure-modal-title">Waist Converter</h3>
-      <span class="close-btn" onclick="closeMeasureModal()">✕</span>
-    </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;">Enter your measurement in inches and we'll convert it to centimetres for you.</p>
+    <div class="modal-header"><h3 id="measure-modal-title">Waist Converter</h3><span class="close-btn" onclick="closeMeasureModal()">✕</span></div>
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:16px;">Enter your measurement in inches and we'll convert it to centimetres for you.</p>
     <div class="hcb-field-row">
-      <div class="hcb-input-wrap">
-        <span class="hcb-input-label">Inches</span>
-        <input class="hcb-input" type="number" id="measure-inch-input" placeholder="32" step="0.1" oninput="convertMeasureInch()"/>
-      </div>
-      <div class="hcb-sep" style="font-size:22px;color:var(--muted);padding-bottom:8px;">→</div>
-      <div class="hcb-input-wrap">
-        <span class="hcb-input-label">Centimetres</span>
-        <input class="hcb-input" type="number" id="measure-cm-preview" placeholder="—" readonly style="background:var(--teal-light)!important;color:var(--teal-dark)!important;font-weight:600;cursor:default;"/>
-      </div>
+      <div class="hcb-input-wrap"><span class="hcb-input-label">Inches</span><input class="hcb-input" type="number" id="measure-inch-input" placeholder="32" step="0.1" oninput="convertMeasureInch()"/></div>
+      <div class="hcb-sep" style="font-size:22px; color:var(--muted); padding-bottom:8px;">→</div>
+      <div class="hcb-input-wrap"><span class="hcb-input-label">Centimetres</span><input class="hcb-input" type="number" id="measure-cm-preview" placeholder="—" readonly style="background:var(--teal-light)!important; color:var(--teal-dark)!important; font-weight:600; cursor:default;"/></div>
     </div>
-    <div class="hcb-result-box">
-      <div class="hcb-result-label">Converted Value</div>
-      <div class="hcb-result-val" id="measure-modal-result">—</div>
-      <div class="hcb-result-unit">cm</div>
-    </div>
+    <div class="hcb-result-box"><div class="hcb-result-label">Converted Value</div><div class="hcb-result-val" id="measure-modal-result">—</div><div class="hcb-result-unit">cm</div></div>
     <button class="hcb-use-btn" onclick="applyMeasure()">Use This Value</button>
   </div>
 </div>
 
-<!-- ─── Forgot Password Modal ─── -->
+<!-- Forgot Password Modal -->
 <div id="forgotModal" class="modal-overlay">
   <div class="modal-box" style="max-width:370px;">
-    <div class="modal-header">
-      <h3 style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;">Reset Password</h3>
-      <span class="close-btn" onclick="closeForgotModal()">✕</span>
-    </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
-      📧 Enter your email and we'll send you a link to reset your password.
-    </p>
-    <div class="form-group" style="margin-bottom:14px;">
-      <label style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Email</label>
-      <input type="email" id="fp-email" placeholder="you@example.com" autocomplete="off" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;width:100%;background:var(--bg);outline:none;" onkeydown="if(event.key==='Enter')doResetPassword()"/>
-    </div>
+    <div class="modal-header"><h3 style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600;">Reset Password</h3><span class="close-btn" onclick="closeForgotModal()">✕</span></div>
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:16px; line-height:1.6; background:#fef9ec; border:1px solid #fde68a; border-radius:8px; padding:10px 12px;">📧 Enter your email and we'll send you a link to reset your password.</p>
+    <div class="form-group" style="margin-bottom:14px;"><label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted);">Email</label><input type="email" id="fp-email" placeholder="you@example.com" autocomplete="off" style="border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:14px; width:100%; background:var(--bg); outline:none;" onkeydown="if(event.key==='Enter')doResetPassword()"/></div>
     <div id="fp-err" class="fp-err"></div>
     <div id="fp-suc" class="fp-suc"></div>
-    <button class="btn-primary" style="margin:0;width:100%;" onclick="doResetPassword()">Send Reset Link</button>
+    <button class="btn-primary" style="margin:0; width:100%;" onclick="doResetPassword()">Send Reset Link</button>
   </div>
 </div>
 
 <script type="module">
-// ─── FIREBASE CONFIG ────────────────────────────────────────
-// 🔧 REPLACE these values with your own Firebase project config
-// Go to: https://console.firebase.google.com → Your project → Project settings → Your apps → Web app
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -1116,18 +794,15 @@ const firebaseConfig = {
   measurementId: "G-2XZZ9YW5FJ"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ─── AUTH STATE → update nav bar ───────────────────────────
 onAuthStateChanged(auth, async user => {
   const profileBtn = document.getElementById('nav-profile-btn');
   const signinBtn  = document.getElementById('nav-signin-btn');
   const step0Block = document.getElementById('step0-block');
   if (user) {
-    // ── Always check restriction on every session restore ──
     const allowed = await checkUserNotRestricted(user.email || '');
     if (!allowed) {
       await fbSignOut(auth);
@@ -1141,15 +816,12 @@ onAuthStateChanged(auth, async user => {
     profileBtn.textContent = initials;
     profileBtn.classList.add('show');
     if (signinBtn) signinBtn.classList.remove('show');
-    // ── Show Step 0 block since user is logged in ──
     if (step0Block) step0Block.style.display = 'block';
-    // ── Check unread messages ──
     checkUnreadMessages(user.uid);
   } else {
     localStorage.removeItem('np_auth');
     profileBtn.classList.remove('show');
     if (signinBtn) signinBtn.classList.add('show');
-    // ── Hide Step 0 block since user is not logged in ──
     if (step0Block) step0Block.style.display = 'none';
   }
 });
@@ -1158,17 +830,10 @@ async function checkUnreadMessages(uid) {
   try {
     const { collection: col, getDocs: gd, query: q, where: w } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
     const snap = await gd(q(col(db, "messages", uid, "inbox"), w("read", "==", false)));
-    if (!snap.empty) {
-      const dot = document.getElementById('nav-msg-dot');
-      if (dot) dot.style.display = 'block';
-    }
+    if (!snap.empty) { const dot = document.getElementById('nav-msg-dot'); if (dot) dot.style.display = 'block'; }
   } catch(_){}
 }
 
-// Sign out from nav
-
-
-// ─── SHOW PASSWORD TOGGLE ──────────────────────────────────
 window.togglePw = function(inputId, btn) {
   const inp = document.getElementById(inputId);
   const isText = inp.type === 'text';
@@ -1176,116 +841,64 @@ window.togglePw = function(inputId, btn) {
   btn.textContent = isText ? '👁' : '🙈';
 };
 
-// ─── FORGOT PASSWORD MODAL ────────────────────────────────
 window.openForgotModal = function() {
   const el = document.getElementById('fp-email'); if(el) el.value = '';
   document.getElementById('fp-err').style.display = 'none';
   document.getElementById('fp-suc').style.display = 'none';
   document.getElementById('forgotModal').style.display = 'flex';
 };
-window.closeForgotModal = function() {
-  document.getElementById('forgotModal').style.display = 'none';
-};
-document.getElementById('forgotModal').addEventListener('click', function(e) {
-  if (e.target === this) closeForgotModal();
-});
+window.closeForgotModal = function() { document.getElementById('forgotModal').style.display = 'none'; };
+document.getElementById('forgotModal').addEventListener('click', function(e) { if (e.target === this) closeForgotModal(); });
 
 window.doResetPassword = async function() {
   const email = document.getElementById('fp-email').value.trim();
   const errEl = document.getElementById('fp-err');
   const sucEl = document.getElementById('fp-suc');
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
-
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
   if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display = 'block'; return; }
-
   try {
     await sendPasswordResetEmail(auth, email);
-    sucEl.innerHTML = '✅ Reset link sent!<br><span style="font-weight:400;font-size:12px;">Check your inbox — <strong>and your spam/junk folder</strong> if you don\'t see it within a minute.</span>';
+    sucEl.innerHTML = '✅ Reset link sent!<br><span style="font-weight:400;font-size:12px;">Check your inbox and spam folder.</span>';
     sucEl.style.display = 'block';
     setTimeout(() => closeForgotModal(), 4000);
   } catch(e) {
-    if (e.code === 'auth/user-not-found') {
-      errEl.textContent = 'No account found with this email.';
-    } else {
-      errEl.textContent = e.message;
-    }
+    errEl.textContent = e.code === 'auth/user-not-found' ? 'No account found with this email.' : e.message;
     errEl.style.display = 'block';
   }
 };
 
-// ─── SHEET URL ─────────────────────────────────────────────
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
 
-// ─── PROFILE localStorage HELPERS (fallback) ──────────────
-function getLocalProfiles() {
-  try { return JSON.parse(localStorage.getItem('nutriplan_profiles') || '[]'); }
-  catch { return []; }
-}
+function getLocalProfiles() { try { return JSON.parse(localStorage.getItem('nutriplan_profiles') || '[]'); } catch { return []; } }
 function saveLocalProfile(id, name, forSelf, relName, relation) {
   const profiles = getLocalProfiles();
-  if (!profiles.find(p => p.id === id)) {
-    profiles.push({ id, name, forSelf, relName: relName||'', relation: relation||'' });
-    localStorage.setItem('nutriplan_profiles', JSON.stringify(profiles));
-  }
+  if (!profiles.find(p => p.id === id)) { profiles.push({ id, name, forSelf, relName: relName||'', relation: relation||'' }); localStorage.setItem('nutriplan_profiles', JSON.stringify(profiles)); }
 }
-function generateUserId() {
-  return 'user_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-}
+function generateUserId() { return 'user_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 
-// ─── SHEET ─────────────────────────────────────────────────
 async function sendToSheet(data) {
-  try {
-    await fetch(SHEET_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-  } catch(e) { console.warn("Sheet error:", e); }
+  try { await fetch(SHEET_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }); } catch(e) { console.warn("Sheet error:", e); }
 }
 
-// ─── FIRESTORE: Save form data ─────────────────────────────
 async function saveToFirestore(formData, accountUid, forSelf, relName, relation) {
   try {
-    const entry = {
-      ...formData,
-      accountUid: accountUid || null,
-      forSelf: forSelf !== false,
-      relName: relName || '',
-      relation: relation || '',
-      createdAt: serverTimestamp()
-    };
-    // Always save to global submissions collection
+    const entry = { ...formData, accountUid: accountUid || null, forSelf: forSelf !== false, relName: relName || '', relation: relation || '', createdAt: serverTimestamp() };
     await setDoc(doc(db, "submissions", formData.userId), entry);
-    // If linked to account, also save reference under the account
     if (accountUid) {
-      await setDoc(doc(db, "accounts", accountUid, "profiles", formData.userId), {
-        userId: formData.userId,
-        name: formData.name,
-        forSelf: entry.forSelf,
-        relName: entry.relName,
-        relation: entry.relation,
-        timestamp: formData.timestamp
-      });
+      await setDoc(doc(db, "accounts", accountUid, "profiles", formData.userId), { userId: formData.userId, name: formData.name, forSelf: entry.forSelf, relName: entry.relName, relation: entry.relation, timestamp: formData.timestamp });
     }
   } catch(e) { console.warn("Firestore error:", e); }
 }
 
-// ─── PENDING FORM DATA (held until account modal done) ─────
 let _pendingFormData = null;
-
-// ─── ACCOUNT MODAL STATE ───────────────────────────────────
 let _isForSelf = true;
 let _relName = '';
 let _relation = '';
 
-// Called when user clicks "Save My Profile →"
 window.proceedToAuth = function() {
   document.getElementById('acct-step-save').style.display = 'none';
   const currentUser = auth.currentUser;
   if (currentUser) {
-    // Already signed in — save immediately, show done
     (async () => {
       await saveToFirestore(_pendingFormData, currentUser.uid, _isForSelf, _relName, _relation);
       saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
@@ -1297,29 +910,19 @@ window.proceedToAuth = function() {
 };
 
 window.switchAuthTab = function(tab) {
-  ['create','login','skip'].forEach(t => {
-    document.getElementById('tab-'+t)?.classList.toggle('active', t===tab);
-    document.getElementById('auth-'+t === 'auth-skip' ? 'auth-skip' : 'auth-'+t)?.style && (document.getElementById(t==='skip'?'auth-skip':'auth-'+t).style.display = t===tab?'block':'none');
-  });
+  ['create','login','skip'].forEach(t => { document.getElementById('tab-'+t)?.classList.toggle('active', t===tab); });
   document.getElementById('auth-create').style.display = tab==='create'?'block':'none';
   document.getElementById('auth-login').style.display = tab==='login'?'block':'none';
   document.getElementById('auth-skip').style.display = tab==='skip'?'block':'none';
 };
 
-// ─── ACCESS CHECK HELPERS ───────────────────────────────────
 async function checkRegistrationOpen() {
-  try {
-    const snap = await getDoc(doc(db, "settings", "global"));
-    if (snap.exists() && snap.data().registrationClosed === true) return false;
-  } catch(e) { /* if read fails, allow by default */ }
+  try { const snap = await getDoc(doc(db, "settings", "global")); if (snap.exists() && snap.data().registrationClosed === true) return false; } catch(e) {}
   return true;
 }
 
 async function checkFormSubmissionOpen() {
-  try {
-    const snap = await getDoc(doc(db, "settings", "global"));
-    if (snap.exists() && snap.data().formSubmissionClosed === true) return false;
-  } catch(e) { /* allow by default */ }
+  try { const snap = await getDoc(doc(db, "settings", "global")); if (snap.exists() && snap.data().formSubmissionClosed === true) return false; } catch(e) {}
   return true;
 }
 
@@ -1328,31 +931,17 @@ function applyFormClosedState(closed) {
   const wrap   = document.getElementById('form-content-wrap');
   const hero   = document.querySelector('.hero');
   if (!banner || !wrap) return;
-  if (closed) {
-    banner.style.display = 'block';
-    wrap.style.display   = 'none';
-    if (hero) hero.style.display = 'none';
-  } else {
-    banner.style.display = 'none';
-    wrap.style.display   = 'block';
-    if (hero) hero.style.display = '';
-  }
+  if (closed) { banner.style.display = 'block'; wrap.style.display = 'none'; if (hero) hero.style.display = 'none'; }
+  else { banner.style.display = 'none'; wrap.style.display = 'block'; if (hero) hero.style.display = ''; }
 }
 
 async function checkUserNotRestricted(email) {
   const docId = email.toLowerCase().replace(/[@.]/g, '_');
-  try {
-    const snap = await getDoc(doc(db, "restrictedUsers", docId));
-    if (snap.exists()) return false; // restricted
-  } catch(e) { /* allow by default */ }
+  try { const snap = await getDoc(doc(db, "restrictedUsers", docId)); if (snap.exists()) return false; } catch(e) {}
   return true;
 }
 
-// Check form state on page load (regardless of auth)
-(async () => {
-  const open = await checkFormSubmissionOpen();
-  applyFormClosedState(!open);
-})();
+(async () => { const open = await checkFormSubmissionOpen(); applyFormClosedState(!open); })();
 
 window.createAccount = async function() {
   const email = document.getElementById('acct-email').value.trim();
@@ -1360,45 +949,23 @@ window.createAccount = async function() {
   const pass2 = document.getElementById('acct-pass2').value;
   const errEl = document.getElementById('acct-err');
   errEl.style.display = 'none';
-
   if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display='block'; return; }
   if (pass.length < 6) { errEl.textContent = 'Password must be at least 6 characters'; errEl.style.display='block'; return; }
   if (pass !== pass2) { errEl.textContent = 'Passwords do not match'; errEl.style.display='block'; return; }
-
   try {
-    // ── Check if registrations are open ──
     const regOpen = await checkRegistrationOpen();
-    if (!regOpen) {
-      errEl.textContent = 'New registrations are currently closed. Please contact us if you need access.';
-      errEl.style.display = 'block';
-      return;
-    }
-    // ── Check if this email is restricted ──
+    if (!regOpen) { errEl.textContent = 'New registrations are currently closed.'; errEl.style.display = 'block'; return; }
     const notRestricted = await checkUserNotRestricted(email);
-    if (!notRestricted) {
-      errEl.textContent = 'This email address is not allowed to register. Please contact support.';
-      errEl.style.display = 'block';
-      return;
-    }
-
+    if (!notRestricted) { errEl.textContent = 'This email address is not allowed to register.'; errEl.style.display = 'block'; return; }
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
-    // Save account info in Firestore
     await setDoc(doc(db, "accounts", uid), { email: email, createdAt: serverTimestamp() });
-    // Save profile data linked to account
-    if (_pendingFormData) {
-      await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation);
-      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-    }
+    if (_pendingFormData) { await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation); saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation); }
     localStorage.setItem('nutriplan_uid', uid);
     localStorage.setItem('nutriplan_email', email);
     showAccountDone('Account Created! 🎉', 'Your profile is saved. Sign in anytime from the Profiles page.');
   } catch(e) {
-    if (e.code === 'auth/email-already-in-use') {
-      errEl.textContent = 'This email already has an account. Use "Sign In" tab.';
-    } else {
-      errEl.textContent = e.message;
-    }
+    errEl.textContent = e.code === 'auth/email-already-in-use' ? 'This email already has an account. Use "Sign In" tab.' : e.message;
     errEl.style.display = 'block';
   }
 };
@@ -1408,48 +975,27 @@ window.signInAndSave = async function() {
   const pass = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-err');
   errEl.style.display = 'none';
-
   try {
-    // ── Check if this email is restricted ──
     const notRestricted = await checkUserNotRestricted(email);
-    if (!notRestricted) {
-      errEl.textContent = 'Your account has been restricted. Please contact support for assistance.';
-      errEl.style.display = 'block';
-      return;
-    }
-
+    if (!notRestricted) { errEl.textContent = 'Your account has been restricted.'; errEl.style.display = 'block'; return; }
     const cred = await signInWithEmailAndPassword(auth, email, pass);
     const uid = cred.user.uid;
-    if (_pendingFormData) {
-      await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation);
-      saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-    }
+    if (_pendingFormData) { await saveToFirestore(_pendingFormData, uid, _isForSelf, _relName, _relation); saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation); }
     localStorage.setItem('nutriplan_uid', uid);
     localStorage.setItem('nutriplan_email', email);
     showAccountDone('Signed In! ✅', 'Profile linked to your account successfully.');
   } catch(e) {
-    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      errEl.textContent = 'Incorrect email or password.';
-    } else {
-      errEl.textContent = e.message;
-    }
+    errEl.textContent = (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') ? 'Incorrect email or password.' : e.message;
     errEl.style.display = 'block';
   }
 };
 
 window.saveLocallyAndClose = function() {
-  if (_pendingFormData) {
-    saveToFirestore(_pendingFormData, null, _isForSelf, _relName, _relation);
-    saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation);
-  }
+  if (_pendingFormData) { saveToFirestore(_pendingFormData, null, _isForSelf, _relName, _relation); saveLocalProfile(_pendingFormData.userId, _pendingFormData.name, _isForSelf, _relName, _relation); }
   showAccountDone('Saved Locally', 'Profile saved on this browser. Create an account anytime from the Profiles page.');
 };
 
-window.skipAccount = function() {
-  // Don't save — just close
-  document.getElementById('accountModal').style.display = 'none';
-  _pendingFormData = null;
-};
+window.skipAccount = function() { document.getElementById('accountModal').style.display = 'none'; _pendingFormData = null; };
 
 function showAccountDone(title, msg) {
   document.getElementById('acct-step-save').style.display = 'none';
@@ -1462,21 +1008,15 @@ function showAccountDone(title, msg) {
 
 function openAccountModal(formData) {
   _pendingFormData = formData;
-
-  // Read relation info from the form data (already captured at submit time)
   _isForSelf = formData.plan_for_self !== false;
   _relName   = formData.plan_other_name || '';
   _relation  = formData.plan_other_relation || '';
-
-  // Reset modal state
   document.getElementById('acct-step-save').style.display = 'block';
   document.getElementById('acct-step-auth').style.display = 'none';
   document.getElementById('acct-step-done').style.display = 'none';
   document.getElementById('acct-err').style.display = 'none';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('accountModal').style.display = 'flex';
-
-  // Reset to create tab
   ['create','login','skip'].forEach(t => document.getElementById('tab-'+t)?.classList.remove('active'));
   document.getElementById('tab-create')?.classList.add('active');
   document.getElementById('auth-create').style.display = 'block';
@@ -1484,7 +1024,6 @@ function openAccountModal(formData) {
   document.getElementById('auth-skip').style.display = 'none';
 }
 
-// ─── PROGRESS ──────────────────────────────────────────────
 function setProgress(step) {
   const labels = ['Step 1 of 4 — Your Body Metrics','Step 2 of 4 — Health Info','Step 3 of 4 — Preferences','Step 4 of 4 — Symptoms & Submit'];
   document.getElementById('progress-label').textContent = labels[step-1];
@@ -1492,7 +1031,7 @@ function setProgress(step) {
 }
 setProgress(1);
 
-// ─── HEIGHT MODAL ──────────────────────────────────────────
+// ── HEIGHT MODAL ──
 function switchHcbTab(tab, panel) {
   document.querySelectorAll('.hcb-tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
@@ -1512,31 +1051,16 @@ function convertInchOnly() {
 }
 function openHeightModal() { document.getElementById('heightModal').style.display = 'flex'; }
 function closeHeightModal() { document.getElementById('heightModal').style.display = 'none'; }
-function applyHeight() {
-  const val = document.getElementById('modal-result').textContent;
-  if(val && val !== '—') {
-    document.getElementById('inp-height').value = val;
-    closeHeightModal();
-  }
-}
-function useHcbValue(resultId) {
-  const val = document.getElementById(resultId).textContent;
-  if(val && val !== '—') {
-    document.getElementById('inp-height').value = val;
-    document.getElementById('fg-height').classList.remove('has-error');
-    closeHeightModal();
-  }
-}
+function applyHeight() { const val = document.getElementById('modal-result').textContent; if(val && val !== '—') { document.getElementById('inp-height').value = val; closeHeightModal(); } }
+function useHcbValue(resultId) { const val = document.getElementById(resultId).textContent; if(val && val !== '—') { document.getElementById('inp-height').value = val; document.getElementById('fg-height').classList.remove('has-error'); closeHeightModal(); } }
 
-// ─── MEASURE MODAL (Waist / Hip / Neck) ───────────────────
-let _measureTarget = null; // which field to fill: 'waist' | 'hip' | 'neck'
-
+// ── MEASURE MODAL ──
+let _measureTarget = null;
 const measureConfig = {
-  waist: { title: 'Waist Converter',    inputId: 'inp-waist', placeholder: '32' },
-  hip:   { title: 'Hip Converter',      inputId: 'inp-hip',   placeholder: '38' },
-  neck:  { title: 'Neck Converter',     inputId: 'inp-neck',  placeholder: '15' },
+  waist: { title: 'Waist Converter', inputId: 'inp-waist', placeholder: '32' },
+  hip:   { title: 'Hip Converter',   inputId: 'inp-hip',   placeholder: '38' },
+  neck:  { title: 'Neck Converter',  inputId: 'inp-neck',  placeholder: '15' },
 };
-
 function openMeasureModal(target) {
   _measureTarget = target;
   const cfg = measureConfig[target];
@@ -1548,41 +1072,18 @@ function openMeasureModal(target) {
   document.getElementById('measureModal').style.display = 'flex';
   setTimeout(() => document.getElementById('measure-inch-input').focus(), 80);
 }
-
-function closeMeasureModal() {
-  document.getElementById('measureModal').style.display = 'none';
-  _measureTarget = null;
-}
-
+function closeMeasureModal() { document.getElementById('measureModal').style.display = 'none'; _measureTarget = null; }
 function convertMeasureInch() {
   const inch = parseFloat(document.getElementById('measure-inch-input').value);
-  if (!isNaN(inch) && inch > 0) {
-    const cm = Math.round(inch * 2.54 * 10) / 10; // 1 decimal
-    document.getElementById('measure-cm-preview').value = cm;
-    document.getElementById('measure-modal-result').textContent = cm;
-  } else {
-    document.getElementById('measure-cm-preview').value = '';
-    document.getElementById('measure-modal-result').textContent = '—';
-  }
+  if (!isNaN(inch) && inch > 0) { const cm = Math.round(inch * 2.54 * 10) / 10; document.getElementById('measure-cm-preview').value = cm; document.getElementById('measure-modal-result').textContent = cm; }
+  else { document.getElementById('measure-cm-preview').value = ''; document.getElementById('measure-modal-result').textContent = '—'; }
 }
+function applyMeasure() { const val = document.getElementById('measure-modal-result').textContent; if (!_measureTarget || val === '—') return; document.getElementById(measureConfig[_measureTarget].inputId).value = val; closeMeasureModal(); }
 
-function applyMeasure() {
-  const val = document.getElementById('measure-modal-result').textContent;
-  if (!_measureTarget || val === '—') return;
-  const cfg = measureConfig[_measureTarget];
-  document.getElementById(cfg.inputId).value = val;
-  closeMeasureModal();
-}
+document.getElementById('measureModal').addEventListener('click', function(e) { if (e.target === this) closeMeasureModal(); });
+document.getElementById('heightModal').addEventListener('click', function(e) { if (e.target === this) closeHeightModal(); });
 
-// Close modals on overlay click
-document.getElementById('measureModal').addEventListener('click', function(e) {
-  if (e.target === this) closeMeasureModal();
-});
-document.getElementById('heightModal').addEventListener('click', function(e) {
-  if (e.target === this) closeHeightModal();
-});
-
-// ─── FORM UTILS ────────────────────────────────────────────
+// ── FORM UTILS ──
 function selectTimeChip(el) {
   document.querySelectorAll('#time-window-chips .time-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -1601,118 +1102,127 @@ function validate() {
     {id:'fg-neck',    inp:'inp-neck',    check: v=>v>=20&&v<=80},
   ];
   let ok = true;
-  fields.forEach(f => {
-    const fg = document.getElementById(f.id);
-    const valid = f.check(document.getElementById(f.inp).value);
-    fg.classList.toggle('has-error', !valid);
-    if(!valid) ok = false;
-  });
+  fields.forEach(f => { const fg = document.getElementById(f.id); const valid = f.check(document.getElementById(f.inp).value); fg.classList.toggle('has-error', !valid); if(!valid) ok = false; });
   return ok;
 }
 
-// ─── CALCULATIONS ──────────────────────────────────────────
+// ── CALCULATIONS ──
 function calcBMI(wt,ht) { return (wt/((ht/100)**2)).toFixed(1); }
 function bmiCategory(b) { if(b<18.5) return 'Underweight'; if(b<25) return 'Normal weight'; if(b<30) return 'Overweight'; return 'Obese'; }
 function bmiColor(b) { if(b<18.5) return '#5bc8f5'; if(b<25) return '#60d394'; if(b<30) return '#f4a742'; return '#e74c3c'; }
 function bmiToBarPct(bmi) { const MIN=15,RANGE=25; const c=Math.min(40,Math.max(15,parseFloat(bmi))); return ((c-MIN)/RANGE*100).toFixed(1)+'%'; }
-// function calcBodyFat(gender,bmi,age) { const sex=gender==='Female'?1:0; return Math.max(5,(1.20*bmi+0.23*age-10.8*sex-5.4)).toFixed(1); }
-// NEW - replace with this:
 function calcBodyFat(gender, waist, neck, hip, height) {
   let bfp;
-  if (gender === 'Female') {
-    const log1 = Math.log10(waist + hip - neck);
-    const log2 = Math.log10(height);
-    bfp = 495 / (1.29579 - 0.35004 * log1 + 0.22100 * log2) - 450;
-  } else {
-    const log1 = Math.log10(waist - neck);
-    const log2 = Math.log10(height);
-    bfp = 495 / (1.0324 - 0.19077 * log1 + 0.15456 * log2) - 450;
-  }
+  if (gender === 'Female') { const log1 = Math.log10(waist + hip - neck); const log2 = Math.log10(height); bfp = 495 / (1.29579 - 0.35004 * log1 + 0.22100 * log2) - 450; }
+  else { const log1 = Math.log10(waist - neck); const log2 = Math.log10(height); bfp = 495 / (1.0324 - 0.19077 * log1 + 0.15456 * log2) - 450; }
   return Math.max(3, bfp).toFixed(1);
 }
-// function calcCalories(gender,wt,ht,age,activity) { let bmr=gender==='Female'?655+9.6*wt+1.8*ht-4.7*age:66+13.7*wt+5*ht-6.8*age; return Math.round(bmr*(parseFloat(activity)||1.2)); }
-// NEW
 function calcCalories(gender, wt, ht, age, activity) {
-  const bmr = gender === 'Female'
-    ? (10 * wt) + (6.25 * ht) - (5 * age) - 161
-    : (10 * wt) + (6.25 * ht) - (5 * age) + 5;
+  const bmr = gender === 'Female' ? (10 * wt) + (6.25 * ht) - (5 * age) - 161 : (10 * wt) + (6.25 * ht) - (5 * age) + 5;
   return Math.round(bmr * (parseFloat(activity) || 1.2));
 }
 
-// ─── GOAL RATE STATE ───────────────────────────────────────
-let _currentGoalRate = 0.5; // default Standard
-let _lastCalcData = null; // store last calculation for re-render
+// ── Format duration nicely: days → "X months Y weeks Z days" ──
+function formatDuration(days) {
+  if (days <= 0) return '—';
+  const months = Math.floor(days / 30);
+  const remAfterMonths = days % 30;
+  const weeks = Math.floor(remAfterMonths / 7);
+  const remDays = remAfterMonths % 7;
+  const parts = [];
+  if (months > 0) parts.push(months + (months === 1 ? ' month' : ' months'));
+  if (weeks > 0)  parts.push(weeks + (weeks === 1 ? ' week' : ' weeks'));
+  if (remDays > 0 && months === 0) parts.push(remDays + (remDays === 1 ? ' day' : ' days')); // skip days if months shown
+  return parts.join(' ') || (days + ' days');
+}
+
+// ── GOAL RATE STATE ──
+let _currentGoalRate = 0.5;
+let _lastCalcData = null;
+let _currentDirection = 'maintain';
+
+// Labels for goal rate buttons
+function getGoalRateLabels(direction) {
+  return {
+    '0.25': direction === 'loss' ? 'Mild Loss'     : 'Mild Gain',
+    '0.5':  direction === 'loss' ? 'Standard Loss'  : 'Standard Gain',
+    '1':    direction === 'loss' ? 'Extreme Loss'   : 'Extreme Gain',
+  };
+}
+
+function updateGoalRateButtonLabels(direction) {
+  const labels = getGoalRateLabels(direction);
+  document.querySelectorAll('.goal-rate-btn').forEach(btn => {
+    const rate = btn.dataset.rate;
+    const titleEl = btn.querySelector('.grb-title');
+    if (titleEl && labels[rate]) titleEl.textContent = labels[rate];
+  });
+}
 
 window.selectGoalRate = function(btn) {
   document.querySelectorAll('.goal-rate-btn').forEach(b => {
     b.classList.remove('active-goal');
     b.style.border = '2px solid var(--border)';
     b.style.background = 'var(--bg)';
-    b.querySelectorAll('div').forEach(d => d.style.color = '');
+    b.querySelector('.grb-title').style.color = 'var(--text)';
+    b.querySelector('.grb-rate').style.color = 'var(--muted)';
   });
   btn.classList.add('active-goal');
   btn.style.border = '2px solid var(--teal)';
   btn.style.background = 'var(--teal)';
-  btn.querySelectorAll('div').forEach(d => d.style.color = '#fff');
+  btn.querySelector('.grb-title').style.color = '#fff';
+  btn.querySelector('.grb-rate').style.color = 'rgba(255,255,255,0.85)';
 
   _currentGoalRate = parseFloat(btn.dataset.rate);
-
   const extremeWarn = document.getElementById('extreme-warning');
   if (extremeWarn) extremeWarn.style.display = _currentGoalRate === 1 ? 'block' : 'none';
-
   if (_lastCalcData) updateGoalCalSection(_lastCalcData);
 };
 
 function updateGoalCalSection(d) {
-  const { maintenance, bmr, gender, wt, ht, age, activity,
-          idealWeight, kgDiff, direction } = d;
+  const { maintenance, bmr, gender, wt, ht, age, activity, idealWeight, kgDiff, direction } = d;
+  const calAdj  = _currentGoalRate === 0.25 ? 250 : _currentGoalRate === 0.5 ? 500 : 1000;
+  const goalCal = direction === 'loss' ? Math.round(maintenance - calAdj)
+                : direction === 'gain' ? Math.round(maintenance + calAdj)
+                : maintenance;
 
-  const calAdj   = _currentGoalRate === 0.25 ? 250 : _currentGoalRate === 0.5 ? 500 : 1000;
-  const goalCal  = direction === 'loss'
-    ? Math.round(maintenance - calAdj)
-    : direction === 'gain'
-      ? Math.round(maintenance + calAdj)
-      : maintenance;
+  const daysToGoal = _currentGoalRate > 0 && kgDiff > 0 ? Math.round((kgDiff / _currentGoalRate) * 7) : 0;
 
-  const daysToGoal = _currentGoalRate > 0 && kgDiff > 0
-    ? Math.round((kgDiff / _currentGoalRate) * 7)
-    : 0;
-
-  // After-goal maintenance: recalculate using ideal weight
-  const afterBmr  = gender === 'Female'
-    ? (10 * idealWeight) + (6.25 * (ht)) - (5 * age) - 161
-    : (10 * idealWeight) + (6.25 * (ht)) - (5 * age) + 5;
+  const afterBmr = gender === 'Female'
+    ? (10 * idealWeight) + (6.25 * ht) - (5 * age) - 161
+    : (10 * idealWeight) + (6.25 * ht) - (5 * age) + 5;
   const afterGoalCal = Math.round(afterBmr * (parseFloat(activity) || 1.2));
 
   const g = id => document.getElementById(id);
-  g('r-goal-cal').textContent  = goalCal;
-  g('r-cal').textContent       = goalCal; // keep legacy field in sync
-  g('r-goal-cal-desc').textContent = direction === 'maintain'
-    ? 'kcal/day (maintaining)'
-    : `kcal/day (${direction === 'loss' ? '−' : '+'}${calAdj} from maintenance)`;
+  g('r-goal-cal').textContent = goalCal;
+  g('r-cal').textContent = goalCal;
 
+  // Badge label
+  const rateName = _currentGoalRate === 0.25 ? 'Mild' : _currentGoalRate === 0.5 ? 'Standard' : 'Extreme';
+  const dirLabel = direction === 'loss' ? 'Weight Loss' : direction === 'gain' ? 'Weight Gain' : 'Maintenance';
+  g('r-goal-cal-desc').textContent = direction === 'maintain'
+    ? 'kcal/day — maintaining your ideal weight'
+    : `kcal/day — ${direction === 'loss' ? '−' : '+'}${calAdj} from maintenance`;
+  const badge = g('r-goal-cal-badge');
+  if (badge) badge.textContent = direction === 'maintain' ? '🎯 Maintenance' : `${rateName} ${dirLabel}`;
+
+  // Timeline with months
   if (daysToGoal > 0) {
-    const weeks = Math.floor(daysToGoal / 7);
-    const days  = daysToGoal % 7;
     g('r-timeline').textContent = daysToGoal;
-    g('r-timeline-desc').textContent = weeks > 0
-      ? `days (~${weeks}w ${days}d)`
-      : `days`;
+    g('r-timeline-desc').textContent = formatDuration(daysToGoal);
   } else {
     g('r-timeline').textContent = '—';
     g('r-timeline-desc').textContent = 'Already at ideal weight';
   }
-
   g('r-after-goal-cal').textContent = afterGoalCal;
 }
 
-// ─── SYNC "For Someone Else" name → Step 1 Name field ──────
 window.syncOtherNameToStep1 = function(val) {
   const nameField = document.getElementById('inp-name');
   if (nameField) nameField.value = val;
 };
 
-// ─── GENERATE RESULT ───────────────────────────────────────
+// ── GENERATE RESULT ──
 function generateResult() {
   if(!validate()){ document.querySelector('.has-error')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
 
@@ -1725,38 +1235,33 @@ function generateResult() {
   const neck     = parseFloat(document.getElementById('inp-neck').value)  || 0;
   const hip      = parseFloat(document.getElementById('inp-hip').value)   || 0;
 
-  // BMI calcs
   const h        = ht / 100;
   const bmiNum   = wt / (h * h);
   const bmi      = bmiNum.toFixed(1);
   const cat      = bmiCategory(bmiNum);
   const color    = bmiColor(bmiNum);
 
-  // Ideal weight
   const minWeight   = 18.5 * h * h;
   const maxWeight   = 24.9 * h * h;
   const idealWeight = (minWeight + maxWeight) / 2;
   const kgDiff      = Math.abs(wt - idealWeight);
-  const direction   = Math.abs(wt - idealWeight) < 0.5 ? 'maintain'
-                    : wt > idealWeight ? 'loss' : 'gain';
+  const direction   = Math.abs(wt - idealWeight) < 0.5 ? 'maintain' : wt > idealWeight ? 'loss' : 'gain';
   const targetWeight = direction === 'maintain' ? wt : idealWeight;
 
-  // BMR & Maintenance
   const bmr = gender === 'Female'
     ? (10 * wt) + (6.25 * ht) - (5 * age) - 161
     : (10 * wt) + (6.25 * ht) - (5 * age) + 5;
   const maintenance = Math.round(bmr * (parseFloat(activity) || 1.2));
 
-  // Body fat
   const fat = (waist > 0 && neck > 0 && (gender !== 'Female' || hip > 0))
-    ? calcBodyFat(gender, waist, neck, hip, ht)
-    : '—';
+    ? calcBodyFat(gender, waist, neck, hip, ht) : '—';
 
-  // Store for re-renders
   _lastCalcData = { wt, ht, age, gender, activity, idealWeight, kgDiff, direction, bmr: Math.round(bmr), maintenance };
+  _currentDirection = direction;
 
-  // ── Section 1: BMI ──
   const g = id => document.getElementById(id);
+
+  // Section 1
   g('r-present-wt').textContent  = wt.toFixed(1);
   g('r-ideal-wt').textContent    = idealWeight.toFixed(1);
   g('r-ideal-range').textContent = `${minWeight.toFixed(1)} – ${maxWeight.toFixed(1)}`;
@@ -1766,72 +1271,74 @@ function generateResult() {
   g('r-wl-direction').textContent= direction === 'maintain' ? 'Already ideal! 🎉' : (direction === 'loss' ? 'Weight loss needed' : 'Weight gain needed');
 
   const bmiEl = g('r-bmi');
-  bmiEl.textContent      = bmi;
-  bmiEl.style.color      = color;
-  g('r-bmi-cat').textContent = cat;
-  g('r-bmi-cat').style.color = color;
-  g('bmi-marker').style.left        = bmiToBarPct(bmiNum);
+  bmiEl.textContent = bmi; bmiEl.style.color = color;
+  g('r-bmi-cat').textContent = cat; g('r-bmi-cat').style.color = color;
+  g('bmi-marker').style.left = bmiToBarPct(bmiNum);
   g('bmi-marker').style.borderColor = color;
 
-  // ── Section 2: Goal ──
+  // Section 2
   g('goal-maintain-block').style.display = direction === 'maintain' ? 'block' : 'none';
   g('goal-change-block').style.display   = direction !== 'maintain' ? 'block' : 'none';
   if (direction === 'maintain') {
     g('goal-maintain-cal').textContent = maintenance;
   } else {
-    g('goal-change-desc').textContent = direction === 'loss'
-      ? `You need to lose ${kgDiff.toFixed(1)} kg to reach your ideal weight. Select your weekly rate:`
-      : `You need to gain ${kgDiff.toFixed(1)} kg to reach your ideal weight. Select your weekly rate:`;
-    // Reset to default Standard selection
+    // Big goal statement banner
+    const stmtIcon = g('goal-stmt-icon');
+    const stmtText = g('goal-stmt-text');
+    const stmtSub  = g('goal-stmt-sub');
+    if (direction === 'loss') {
+      stmtIcon.textContent = '🎯';
+      stmtText.textContent = `Lose ${kgDiff.toFixed(1)} kg to reach your ideal weight`;
+      stmtSub.textContent  = `Target: ${targetWeight.toFixed(1)} kg — currently ${wt.toFixed(1)} kg`;
+    } else {
+      stmtIcon.textContent = '💪';
+      stmtText.textContent = `Gain ${kgDiff.toFixed(1)} kg to reach your ideal weight`;
+      stmtSub.textContent  = `Target: ${targetWeight.toFixed(1)} kg — currently ${wt.toFixed(1)} kg`;
+    }
+
+    // Update button labels
+    updateGoalRateButtonLabels(direction);
+
+    // Reset to Standard
     _currentGoalRate = 0.5;
     document.querySelectorAll('.goal-rate-btn').forEach(b => {
       const isDefault = parseFloat(b.dataset.rate) === 0.5;
       b.classList.toggle('active-goal', isDefault);
       b.style.border = isDefault ? '2px solid var(--teal)' : '2px solid var(--border)';
       b.style.background = isDefault ? 'var(--teal)' : 'var(--bg)';
-      b.querySelectorAll('div').forEach(d => d.style.color = isDefault ? '#fff' : '');
+      b.querySelector('.grb-title').style.color = isDefault ? '#fff' : 'var(--text)';
+      b.querySelector('.grb-rate').style.color  = isDefault ? 'rgba(255,255,255,0.85)' : 'var(--muted)';
     });
     g('extreme-warning').style.display = 'none';
   }
 
-  // ── Section 3: Calories ──
-  g('r-bmr').textContent         = Math.round(bmr);
+  // Section 3
+  g('r-bmr').textContent = Math.round(bmr);
   g('r-maintenance').textContent = maintenance;
   updateGoalCalSection(_lastCalcData);
 
-  // ── Section 4: Body Fat ──
-  g('r-fat').textContent   = fat !== '—' ? fat + '%' : '—';
+  // Section 4
+  g('r-fat').textContent = fat !== '—' ? fat + '%' : '—';
   const fatNum = parseFloat(fat);
   let fatCat = '';
   if (!isNaN(fatNum)) {
-    if (gender === 'Female') {
-      fatCat = fatNum < 14 ? 'Essential fat' : fatNum < 21 ? 'Athletic' : fatNum < 25 ? 'Fit' : fatNum < 32 ? 'Average' : 'Obese';
-    } else {
-      fatCat = fatNum < 6 ? 'Essential fat' : fatNum < 14 ? 'Athletic' : fatNum < 18 ? 'Fit' : fatNum < 25 ? 'Average' : 'Obese';
-    }
-  } else {
-    fatCat = 'Enter waist, neck' + (gender === 'Female' ? ' & hip' : '');
-  }
+    if (gender === 'Female') fatCat = fatNum<14?'Essential fat':fatNum<21?'Athletic':fatNum<25?'Fit':fatNum<32?'Average':'Obese';
+    else fatCat = fatNum<6?'Essential fat':fatNum<14?'Athletic':fatNum<18?'Fit':fatNum<25?'Average':'Obese';
+  } else { fatCat = 'Enter waist, neck' + (gender === 'Female' ? ' & hip' : ''); }
   g('r-fat-cat').textContent = fatCat;
 
-  // Show inline results
   const inlineRes = g('inline-results');
   inlineRes.style.display = 'block';
   setTimeout(() => inlineRes.scrollIntoView({behavior:'smooth', block:'start'}), 200);
 
-  // Show downstream steps
   ['health-section','prefs-section','symptoms-section'].forEach((id,i)=>{
-    setTimeout(()=>{
-      const el=document.getElementById(id);
-      el.style.display='block';
-      setTimeout(()=>el.classList.add('revealed'),20);
-    },400 + i*160);
+    setTimeout(()=>{ const el=document.getElementById(id); el.style.display='block'; setTimeout(()=>el.classList.add('revealed'),20); }, 400 + i*160);
   });
 
   setProgress(2);
 }
 
-// ─── ACCORDION / CHIPS ─────────────────────────────────────
+// ── ACCORDION / CHIPS ──
 function toggleAccordion(h){ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
 function toggleChip(el){ el.classList.toggle('active'); }
 function ynToggle(btn,type){ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; }
@@ -1844,14 +1351,13 @@ function handleCondition(cb){ if(cb.value==='Other') return; cb.checked?selected
 function renderTags(){ const c=document.getElementById('conditions-tags'); c.innerHTML=''; selectedConditions.forEach(v=>{ const t=document.createElement('div'); t.className='tag'; t.innerHTML=`${v}<span class="tag-x" onclick="removeCondition('${v.replace(/'/g,"\\'")}')">x</span>`; c.appendChild(t); }); }
 function removeCondition(v){ selectedConditions.delete(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=false; renderTags(); }
 
-// ─── GENDER TOGGLE ─────────────────────────────────────────
 document.getElementById('inp-gender').addEventListener('change', function () {
   const femaleRow = document.getElementById('female-extra-row');
   femaleRow.style.display = this.value === 'Female' ? 'grid' : 'none';
   if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; document.getElementById('inp-preg').value=''; }
 });
 
-// ─── SUBMIT FORM ───────────────────────────────────────────
+// ── SUBMIT ──
 async function submitForm() {
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Submitting…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed';
@@ -1860,9 +1366,6 @@ async function submitForm() {
   const chips = sel => [...document.querySelectorAll(sel+'.active')].map(c=>c.textContent.trim());
 
   const userId = generateUserId();
-  const userName = g('inp-name').value.trim();
-
-  // Read "who is this for" from the form
   const planOtherFields = document.getElementById('plan-for-other-fields');
   const planForSelf = !planOtherFields || planOtherFields.style.display === 'none';
   const planOtherName = (g('plan-other-name')?.value||'').trim();
@@ -1871,7 +1374,7 @@ async function submitForm() {
   const formData = {
     userId,
     timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
-    name: userName,
+    name: g('inp-name').value.trim(),
     plan_for_self: planForSelf,
     plan_other_name: planOtherName,
     plan_other_relation: planOtherRelation,
@@ -1907,32 +1410,25 @@ async function submitForm() {
     whatsapp_consent: g('consent-wa').checked ? 'Yes' : 'No'
   };
 
-  // Send to Google Sheets
   await sendToSheet(formData);
 
-  // Hide symptoms section
   g('symptoms-section').classList.remove('revealed');
   setTimeout(()=>{ g('symptoms-section').style.display='none'; }, 300);
 
-  // Show success section
   const ss = g('success-section');
   ss.style.display = 'block';
   setTimeout(()=>ss.classList.add('revealed'), 20);
   setProgress(4);
   ss.scrollIntoView({behavior:'smooth'});
 
-  clearForm();
-  // Mark as submitted BEFORE clearing, so coming back from profile page stays clean
   try { sessionStorage.setItem('nutriplan_submitted', '1'); } catch(e){}
-  
   clearForm();
   btn.disabled=false; btn.textContent='Submit My Plan Request'; btn.style.opacity='1'; btn.style.cursor='pointer';
 
-  // Open account modal after short delay
   setTimeout(() => openAccountModal(formData), 600);
 }
 
-// ─── CLEAR FORM ────────────────────────────────────────────
+// ── CLEAR FORM ──
 function clearForm() {
   document.querySelectorAll('input,textarea').forEach(el=>{ if(el.type!=='checkbox') el.value=''; else el.checked=false; });
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
@@ -1940,41 +1436,23 @@ function clearForm() {
   document.getElementById('eat-window-val').value='';
   selectedConditions.clear();
   document.getElementById('conditions-tags').innerHTML='';
-
-  // Hide inline results
   const inlineRes = document.getElementById('inline-results');
   if (inlineRes) inlineRes.style.display = 'none';
   _lastCalcData = null;
   _currentGoalRate = 0.5;
-
-  ['health-section','prefs-section','symptoms-section'].forEach(id=>{
-    const el=document.getElementById(id);
-    el.classList.remove('revealed');
-    el.style.display='none';
-  });
+  ['health-section','prefs-section','symptoms-section'].forEach(id=>{ const el=document.getElementById(id); el.classList.remove('revealed'); el.style.display='none'; });
   setProgress(1);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ─── ACCORDION / CHIPS ─────────────────────────────────────
+// ── EXPOSE GLOBALS ──
 window.toggleAccordion = h=>{ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); };
 window.toggleChip = el=>el.classList.toggle('active');
 window.ynToggle = (btn,type)=>{ btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('drink-opts'); if(d) d.style.display=type==='yes'?'block':'none'; };
-
-// ─── PLAN FOR SELF / OTHER ─────────────────────────────────
 window.setPlanFor = function(type) {
-  const selfBtn  = document.getElementById('plan-for-self');
-  const otherBtn = document.getElementById('plan-for-other');
-  const fields   = document.getElementById('plan-for-other-fields');
-  if (type === 'self') {
-    selfBtn.style.cssText  += ';border-color:var(--teal);background:var(--teal);color:#fff;';
-    otherBtn.style.cssText += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
-    fields.style.display = 'none';
-  } else {
-    otherBtn.style.cssText += ';border-color:var(--teal);background:var(--teal);color:#fff;';
-    selfBtn.style.cssText  += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
-    fields.style.display = 'block';
-  }
+  const selfBtn=document.getElementById('plan-for-self'),otherBtn=document.getElementById('plan-for-other'),fields=document.getElementById('plan-for-other-fields');
+  if (type==='self') { selfBtn.style.cssText+=';border-color:var(--teal);background:var(--teal);color:#fff;'; otherBtn.style.cssText+=';border-color:var(--border);background:var(--bg);color:var(--muted);'; fields.style.display='none'; }
+  else { otherBtn.style.cssText+=';border-color:var(--teal);background:var(--teal);color:#fff;'; selfBtn.style.cssText+=';border-color:var(--border);background:var(--bg);color:var(--muted);'; fields.style.display='block'; }
 };
 window.toggleHealthDD = ()=>{ const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow'); l.classList.toggle('open'); a.textContent=l.classList.contains('open')?'▴':'▾'; };
 window.toggleOtherInput = cb=>{ const inp=document.getElementById('other-condition-input'); inp.style.display=cb.checked?'block':'none'; if(!cb.checked){ inp.value=''; selectedConditions.delete('Other'); selectedConditions.delete(inp.dataset.val||''); renderTags(); } };
@@ -1997,102 +1475,46 @@ window.openMeasureModal = openMeasureModal;
 window.closeMeasureModal = closeMeasureModal;
 window.convertMeasureInch = convertMeasureInch;
 window.applyMeasure = applyMeasure;
-window.selectGoalRate = window.selectGoalRate; // already set above
-window.syncOtherNameToStep1 = window.syncOtherNameToStep1; // already set above
 
-// ─── SESSION PERSISTENCE ────────────────────────────────────
-// Saves/restores all form state in sessionStorage so a refresh
-// or navigating away and back doesn't wipe what the user typed.
-
+// ── SESSION PERSISTENCE ──
 const SS_KEY = 'nutriplan_draft';
 
 function saveDraft() {
   const g = id => document.getElementById(id);
   const activeChips = sel => [...document.querySelectorAll(sel)].filter(c=>c.classList.contains('active')).map(c=>c.textContent.trim());
-
   const draft = {
-    name:        g('inp-name')?.value,
-    age:         g('inp-age')?.value,
-    gender:      g('inp-gender')?.value,
-    height:      g('inp-height')?.value,
-    weight:      g('inp-weight')?.value,
-    activity:    g('inp-activity')?.value,
-    waist:       g('inp-waist')?.value,
-    hip:         g('inp-hip')?.value,
-    neck:        g('inp-neck')?.value,
-    preg:        g('inp-preg')?.value,
-    phone:       g('inp-phone')?.value,
-    email:       g('inp-email')?.value,
-    allergies:   g('inp-allergies')?.value,
-    conditions:  [...selectedConditions],
-    meals:       g('inp-meals')?.value,
-    curries:     g('inp-curries')?.value,
-    diet:        g('inp-diet')?.value,
-    eatWindow:   g('eat-window-val')?.value,
-    dislikes:    g('inp-dislikes')?.value,
-    comments:    g('inp-comments')?.value,
-    waConsent:   g('consent-wa')?.checked,
-    // chips
-    mealTypes:   activeChips('#meal-types .chip'),
-    drinks:      activeChips('#drink-opts .sub-chip'),
-    nuts:        activeChips('#nuts-section .sub-chip'),
-    fruits:      activeChips('#fruits-section .sub-chip'),
-    veggies:     activeChips('#veggies-section .sub-chip'),
-    symptoms:    activeChips('#symptoms-group .chip'),
-    // section visibility
-    sectionsOpen: ['health-section','prefs-section','symptoms-section']
-                    .filter(id=>{ const el=g(id); return el && el.style.display!=='none' && el.style.display!==''; }),
-    // drink yes/no toggle
-    drinkYes:    document.querySelector('.yn-btn.yes')?.classList.contains('active'),
-    // plan for self/other
+    name: g('inp-name')?.value, age: g('inp-age')?.value, gender: g('inp-gender')?.value, height: g('inp-height')?.value, weight: g('inp-weight')?.value,
+    activity: g('inp-activity')?.value, waist: g('inp-waist')?.value, hip: g('inp-hip')?.value, neck: g('inp-neck')?.value, preg: g('inp-preg')?.value,
+    phone: g('inp-phone')?.value, email: g('inp-email')?.value, allergies: g('inp-allergies')?.value, conditions: [...selectedConditions],
+    meals: g('inp-meals')?.value, curries: g('inp-curries')?.value, diet: g('inp-diet')?.value, eatWindow: g('eat-window-val')?.value,
+    dislikes: g('inp-dislikes')?.value, comments: g('inp-comments')?.value, waConsent: g('consent-wa')?.checked,
+    mealTypes: activeChips('#meal-types .chip'), drinks: activeChips('#drink-opts .sub-chip'), nuts: activeChips('#nuts-section .sub-chip'),
+    fruits: activeChips('#fruits-section .sub-chip'), veggies: activeChips('#veggies-section .sub-chip'), symptoms: activeChips('#symptoms-group .chip'),
+    sectionsOpen: ['health-section','prefs-section','symptoms-section'].filter(id=>{ const el=g(id); return el && el.style.display!=='none' && el.style.display!==''; }),
+    drinkYes: document.querySelector('.yn-btn.yes')?.classList.contains('active'),
     planForOther: g('plan-for-other-fields')?.style.display === 'block',
-    planOtherName: g('plan-other-name')?.value,
-    planOtherRelation: g('plan-other-relation')?.value,
+    planOtherName: g('plan-other-name')?.value, planOtherRelation: g('plan-other-relation')?.value,
   };
   try { sessionStorage.setItem(SS_KEY, JSON.stringify(draft)); } catch(e){}
 }
 
 function restoreDraft() {
-// If form was already submitted, don't restore — wipe everything and start fresh
-  try {
-    if (sessionStorage.getItem('nutriplan_submitted') === '1') {
-      sessionStorage.removeItem(SS_KEY);
-      sessionStorage.removeItem('nutriplan_submitted');
-      return;
-    }
-  } catch(e){}
-  
-  
-  let draft;
-  try { draft = JSON.parse(sessionStorage.getItem(SS_KEY)||'null'); } catch(e){}
+  try { if (sessionStorage.getItem('nutriplan_submitted') === '1') { sessionStorage.removeItem(SS_KEY); sessionStorage.removeItem('nutriplan_submitted'); return; } } catch(e){}
+  let draft; try { draft = JSON.parse(sessionStorage.getItem(SS_KEY)||'null'); } catch(e){}
   if (!draft) return;
 
   const g = id => document.getElementById(id);
   const setVal = (id, v) => { if(g(id) && v !== undefined && v !== null) g(id).value = v; };
-
-  setVal('inp-name', draft.name);
-  setVal('inp-age', draft.age);
-  setVal('inp-height', draft.height);
-  setVal('inp-weight', draft.weight);
-  setVal('inp-waist', draft.waist);
-  setVal('inp-hip', draft.hip);
-  setVal('inp-neck', draft.neck);
-  setVal('inp-phone', draft.phone);
-  setVal('inp-email', draft.email);
-  setVal('inp-allergies', draft.allergies);
-  setVal('inp-dislikes', draft.dislikes);
-  setVal('inp-comments', draft.comments);
-  setVal('eat-window-val', draft.eatWindow);
-  setVal('plan-other-name', draft.planOtherName);
-  setVal('plan-other-relation', draft.planOtherRelation);
+  setVal('inp-name', draft.name); setVal('inp-age', draft.age); setVal('inp-height', draft.height); setVal('inp-weight', draft.weight);
+  setVal('inp-waist', draft.waist); setVal('inp-hip', draft.hip); setVal('inp-neck', draft.neck); setVal('inp-phone', draft.phone);
+  setVal('inp-email', draft.email); setVal('inp-allergies', draft.allergies); setVal('inp-dislikes', draft.dislikes); setVal('inp-comments', draft.comments);
+  setVal('eat-window-val', draft.eatWindow); setVal('plan-other-name', draft.planOtherName); setVal('plan-other-relation', draft.planOtherRelation);
 
   if (g('inp-gender') && draft.gender) {
     g('inp-gender').value = draft.gender;
     const femaleRow = document.getElementById('female-extra-row');
     if (femaleRow) femaleRow.style.display = draft.gender === 'Female' ? 'grid' : 'none';
-    if (draft.gender === 'Female') {
-      setVal('inp-preg', draft.preg);
-    }
+    if (draft.gender === 'Female') setVal('inp-preg', draft.preg);
   }
   if (g('inp-activity') && draft.activity) g('inp-activity').value = draft.activity;
   if (g('inp-meals') && draft.meals) g('inp-meals').value = draft.meals;
@@ -2100,97 +1522,36 @@ function restoreDraft() {
   if (g('inp-diet') && draft.diet) g('inp-diet').value = draft.diet;
   if (g('consent-wa')) g('consent-wa').checked = !!draft.waConsent;
 
-  // Restore health conditions
   if (draft.conditions && draft.conditions.length) {
-    draft.conditions.forEach(v => {
-      selectedConditions.add(v);
-      const cb = document.querySelector(`#health-dd-list input[value="${v}"]`);
-      if (cb) cb.checked = true;
-    });
+    draft.conditions.forEach(v => { selectedConditions.add(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=true; });
     renderTags();
   }
 
-  // Restore chips helper
-  const restoreChips = (selector, activeList) => {
-    if (!activeList || !activeList.length) return;
-    document.querySelectorAll(selector).forEach(chip => {
-      if (activeList.includes(chip.textContent.trim())) chip.classList.add('active');
-    });
-  };
-  restoreChips('#meal-types .chip', draft.mealTypes);
-  restoreChips('#drink-opts .sub-chip', draft.drinks);
-  restoreChips('#nuts-section .sub-chip', draft.nuts);
-  restoreChips('#fruits-section .sub-chip', draft.fruits);
-  restoreChips('#veggies-section .sub-chip', draft.veggies);
-  restoreChips('#symptoms-group .chip', draft.symptoms);
+  const restoreChips = (selector, activeList) => { if (!activeList || !activeList.length) return; document.querySelectorAll(selector).forEach(chip => { if (activeList.includes(chip.textContent.trim())) chip.classList.add('active'); }); };
+  restoreChips('#meal-types .chip', draft.mealTypes); restoreChips('#drink-opts .sub-chip', draft.drinks); restoreChips('#nuts-section .sub-chip', draft.nuts);
+  restoreChips('#fruits-section .sub-chip', draft.fruits); restoreChips('#veggies-section .sub-chip', draft.veggies); restoreChips('#symptoms-group .chip', draft.symptoms);
 
-  // Restore eating window chip highlight
-  if (draft.eatWindow) {
-    document.querySelectorAll('#time-window-chips .time-chip').forEach(tc => {
-      if (tc.dataset.value === draft.eatWindow) tc.classList.add('active');
-    });
-  }
+  if (draft.eatWindow) { document.querySelectorAll('#time-window-chips .time-chip').forEach(tc => { if (tc.dataset.value === draft.eatWindow) tc.classList.add('active'); }); }
+  if (draft.drinkYes === false) { const noBtn=document.querySelector('.yn-btn.no'); if(noBtn){ noBtn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); noBtn.classList.add('active'); } const d=g('drink-opts'); if(d) d.style.display='none'; }
+  if (draft.planForOther) { const fields=g('plan-for-other-fields'),selfBtn=g('plan-for-self'),otherBtn=g('plan-for-other'); if(fields) fields.style.display='block'; if(selfBtn) selfBtn.style.cssText+=';border-color:var(--border);background:var(--bg);color:var(--muted);'; if(otherBtn) otherBtn.style.cssText+=';border-color:var(--teal);background:var(--teal);color:#fff;'; }
 
-  // Restore drink yes/no toggle
-  if (draft.drinkYes === false) {
-    const noBtn = document.querySelector('.yn-btn.no');
-    if (noBtn) { noBtn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); noBtn.classList.add('active'); }
-    const d = g('drink-opts'); if(d) d.style.display = 'none';
-  }
-
-  // Restore plan for other
-  if (draft.planForOther) {
-    const fields = g('plan-for-other-fields');
-    const selfBtn = g('plan-for-self');
-    const otherBtn = g('plan-for-other');
-    if (fields) fields.style.display = 'block';
-    if (selfBtn) selfBtn.style.cssText += ';border-color:var(--border);background:var(--bg);color:var(--muted);';
-    if (otherBtn) otherBtn.style.cssText += ';border-color:var(--teal);background:var(--teal);color:#fff;';
-  }
-
-  // Re-show sections that were visible
   if (draft.sectionsOpen && draft.sectionsOpen.length) {
-    draft.sectionsOpen.forEach((id, i) => {
-      setTimeout(() => {
-        const el = g(id);
-        if (el) { el.style.display = 'block'; setTimeout(()=>el.classList.add('revealed'), 20); }
-      }, i * 80);
-    });
-    // Restore progress bar
-    const stepMap = { 'health-section': 2, 'prefs-section': 3, 'symptoms-section': 4 };
-    const maxStep = Math.max(...draft.sectionsOpen.map(id => stepMap[id] || 1));
+    draft.sectionsOpen.forEach((id, i) => { setTimeout(() => { const el=g(id); if(el){ el.style.display='block'; setTimeout(()=>el.classList.add('revealed'),20); } }, i*80); });
+    const stepMap={'health-section':2,'prefs-section':3,'symptoms-section':4};
+    const maxStep = Math.max(...draft.sectionsOpen.map(id=>stepMap[id]||1));
     setProgress(maxStep);
   }
 }
 
-// Attach save-on-change listeners to all inputs/selects/textareas
 function attachPersistenceListeners() {
-  document.querySelectorAll('input, select, textarea').forEach(el => {
-    el.addEventListener('change', saveDraft);
-    el.addEventListener('input', saveDraft);
-  });
-  // Also save when chips are toggled (chips use onclick)
-  document.querySelectorAll('.chip, .sub-chip, .time-chip, .yn-btn').forEach(el => {
-    const orig = el.getAttribute('onclick') || '';
-    el.addEventListener('click', () => setTimeout(saveDraft, 50));
-  });
+  document.querySelectorAll('input, select, textarea').forEach(el => { el.addEventListener('change', saveDraft); el.addEventListener('input', saveDraft); });
+  document.querySelectorAll('.chip, .sub-chip, .time-chip, .yn-btn').forEach(el => { el.addEventListener('click', () => setTimeout(saveDraft, 50)); });
 }
 
-// Clear draft when form is submitted successfully
 const _origClearForm = clearForm;
-window.clearForm = function() {
-  _origClearForm();
-    try { 
-    sessionStorage.removeItem(SS_KEY);
-    sessionStorage.removeItem('nutriplan_submitted');
-  } catch(e){}
-};
+window.clearForm = function() { _origClearForm(); try { sessionStorage.removeItem(SS_KEY); sessionStorage.removeItem('nutriplan_submitted'); } catch(e){} };
 
-// Run on page load
-document.addEventListener('DOMContentLoaded', () => {
-  attachPersistenceListeners();
-  restoreDraft();
-});
+document.addEventListener('DOMContentLoaded', () => { attachPersistenceListeners(); restoreDraft(); });
 </script>
 </body>
 </html>
