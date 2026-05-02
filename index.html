@@ -125,7 +125,7 @@
   .accordion-header .chevron { transition: transform 0.3s; font-size: 12px; color: var(--muted); }
   .accordion-header.open .chevron { transform: rotate(180deg); }
   .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 20px; background: var(--white); }
-  .accordion-body.open { max-height: 500px; padding: 18px 20px; }
+  .accordion-body.open { max-height: 1200px; padding: 18px 20px; overflow: visible; }
 
   .yn-toggle { display: flex; gap: 10px; margin: 10px 0 14px; }
   .yn-btn { padding: 7px 22px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
@@ -145,6 +145,33 @@
   .selected-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .tag { background: var(--teal-light); color: var(--teal-dark); border-radius: 20px; padding: 3px 10px 3px 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
   .tag-x { cursor: pointer; font-weight: 700; color: var(--teal); }
+
+  /* Searchable health dropdown */
+  .health-search-input { width: 100%; border: none; border-bottom: 1.5px solid var(--border); padding: 9px 14px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: #f8fafb; outline: none; transition: border-color 0.2s; }
+  .health-search-input:focus { border-color: var(--teal); background: #fff; }
+  .health-option.hidden { display: none; }
+
+  /* Searchable multi-select dropdown */
+  .msdd-wrap { position: relative; }
+  .msdd-trigger { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 9px 14px; background: var(--bg); font-size: 14px; color: var(--muted); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: border-color 0.2s; }
+  .msdd-trigger:hover, .msdd-trigger.open { border-color: var(--teal); background: var(--white); }
+  .msdd-trigger.has-selection { color: var(--text); }
+  .msdd-panel { display: none; border: 1.5px solid var(--teal); border-top: none; border-radius: 0 0 var(--radius-sm) var(--radius-sm); background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.10); overflow: hidden; margin-bottom: 4px; }
+  .msdd-panel.open { display: block; }
+  .msdd-panel.open { display: block; }
+  .msdd-search { width: 100%; border: none; border-bottom: 1.5px solid var(--border); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); outline: none; background: #f8fafb; }
+  .msdd-search:focus { background: #fff; }
+  .msdd-list { max-height: 240px; overflow-y: auto; padding: 4px 0; }
+  .msdd-option { padding: 10px 14px; font-size: 13.5px; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; transition: background 0.15s; line-height: 1.4; }
+  .msdd-option:hover { background: var(--teal-light); }
+  .msdd-option input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+  .msdd-option-name { font-weight: 600; color: var(--text); }
+  .msdd-option-nutrients { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .msdd-option.hidden { display: none; }
+  .msdd-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .msdd-empty { padding: 14px; font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* Additional note hint (static) — styling now uses .time-chip-hint */
 
   .error-msg { font-size: 11.5px; color: #e74c3c; margin-top: 3px; display: none; }
   .form-group.has-error input, .form-group.has-error select { border-color: #e74c3c; }
@@ -546,12 +573,13 @@
             <div class="metric-card" style="border-left:4px solid #f4a742;">
               <div class="metric-label">Timeline to Goal</div>
               <div class="metric-value" id="r-timeline" style="font-size:1.5rem; color:#f4a742;">—</div>
-              <div class="metric-sub" id="r-timeline-desc">—</div>
+              <div class="metric-sub" id="r-timeline-desc">-</div>
+          
             </div>
             <div class="metric-card" style="border-left:4px solid #a78bfa;">
               <div class="metric-label">After-Goal Maintenance</div>
               <div class="metric-value" id="r-after-goal-cal" style="font-size:1.8rem; color:#a78bfa;">—</div>
-              <div class="metric-sub">kcal/day at ideal weight</div>
+              <div class="metric-sub" id="r-after-goal-sub">kcal/day at ideal weight</div>
             </div>
           </div>
         </div>
@@ -584,6 +612,7 @@
         <div class="health-conditions-wrap">
           <div class="health-dd-trigger" onclick="toggleHealthDD()"><span id="health-dd-placeholder">Select conditions (click to expand)</span><span id="health-dd-arrow">▾</span></div>
           <div class="health-dd-list" id="health-dd-list">
+            <input type="text" class="health-search-input" id="health-search" placeholder="🔍 Search conditions…" oninput="filterHealthOptions(this.value)" autocomplete="off"/>
             <label class="health-option"><input type="checkbox" value="Diabetes" onchange="handleCondition(this)"/><span>Diabetes</span></label>
             <label class="health-option"><input type="checkbox" value="Hypertension" onchange="handleCondition(this)"/><span>Hypertension</span></label>
             <label class="health-option"><input type="checkbox" value="PCOS/PCOD" onchange="handleCondition(this)"/><span>PCOS/PCOD</span></label>
@@ -591,6 +620,11 @@
             <label class="health-option"><input type="checkbox" value="High Cholesterol" onchange="handleCondition(this)"/><span>High Cholesterol</span></label>
             <label class="health-option"><input type="checkbox" value="Anemia" onchange="handleCondition(this)"/><span>Anemia</span></label>
             <label class="health-option"><input type="checkbox" value="IBS" onchange="handleCondition(this)"/><span>IBS / Gut Issues</span></label>
+            <label class="health-option"><input type="checkbox" value="Kidney Disease" onchange="handleCondition(this)"/><span>Kidney Disease</span></label>
+            <label class="health-option"><input type="checkbox" value="Fatty Liver" onchange="handleCondition(this)"/><span>Fatty Liver</span></label>
+            <label class="health-option"><input type="checkbox" value="Heart Disease" onchange="handleCondition(this)"/><span>Heart Disease</span></label>
+            <label class="health-option"><input type="checkbox" value="Arthritis" onchange="handleCondition(this)"/><span>Arthritis</span></label>
+            <label class="health-option"><input type="checkbox" value="Osteoporosis" onchange="handleCondition(this)"/><span>Osteoporosis</span></label>
             <label class="health-option"><input type="checkbox" value="None" onchange="handleCondition(this)"/><span>None</span></label>
             <label class="health-option" id="other-condition-option"><input type="checkbox" value="Other" onchange="handleCondition(this); toggleOtherInput(this)"/><span>Other (specify below)</span></label>
             <input type="text" class="health-option-other-input" id="other-condition-input" placeholder="e.g. Kidney stones, Migraine..." oninput="updateOtherCondition(this)"/>
@@ -605,9 +639,16 @@
     <div class="card hidden-section wide-card" id="prefs-section">
       <div class="step-label">Step 3</div>
       <div class="section-title">Your Diet Preferences</div>
-      <div class="form-group" style="margin-top:18px;"><label>Diet Preferences</label><select class="diet-select" id="inp-diet"><option value="">Select type of Diet</option><option>Vegetarian</option><option>Non Vegetarian</option><option>Eggetarian</option></select></div>
-      <div class="form-group" style="margin-top:18px;"><label>Meals Per Day</label><select class="meals-select" id="inp-meals"><option value="">Select number</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="form-group" style="margin-top:18px;"><label>Type of Meal</label><div class="chip-group" id="meal-types"><div class="chip" onclick="toggleChip(this)">Breakfast</div><div class="chip" onclick="toggleChip(this)">Mid Morning</div><div class="chip" onclick="toggleChip(this)">Lunch</div><div class="chip" onclick="toggleChip(this)">Evening Snacks</div><div class="chip" onclick="toggleChip(this)">Dinner</div></div></div>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Diet Preferences</label>
+        <select class="diet-select" id="inp-diet"><option value="">Select type of Diet</option><option>Vegetarian</option><option>Non Vegetarian</option><option>Eggetarian</option></select>
+        <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Choose a diet type that matches your lifestyle and food habits</div>
+      </div>
+      <div class="form-group" style="margin-top:18px;">
+        <label>Type of Meal</label>
+        <div class="chip-group" id="meal-types"><div class="chip" onclick="toggleChip(this)">Breakfast</div><div class="chip" onclick="toggleChip(this)">Mid Morning</div><div class="chip" onclick="toggleChip(this)">Lunch</div><div class="chip" onclick="toggleChip(this)">Evening Snacks</div><div class="chip" onclick="toggleChip(this)">Dinner</div></div>
+        <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Select all meals you have in a typical day</div>
+      </div>
       <div class="form-group" style="margin-top:18px;">
         <label>Eating Time Window</label>
         <div class="time-chip-group" id="time-window-chips">
@@ -620,10 +661,16 @@
         <input type="hidden" id="eat-window-val" value=""/>
       </div>
       <div class="section-divider"></div>
-      <div class="form-group" style="margin-top:4px; margin-bottom:18px;"><label>Number of Curries Per Day</label><select id="inp-curries"><option value="">Select number</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="form-group" style="margin-top:4px; margin-bottom:18px;">
+        <label>Number of Curries Per Day</label>
+        <select id="inp-curries"><option value="">Select number</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+        <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Include both veg and non-veg curries or gravies you have in a day</div>
+      </div>
       <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Preferred Food</div>
       <div class="section-title" style="margin-bottom:18px;">Food Preferences</div>
+
+      <!-- Morning Drinks -->
       <div class="accordion-item" id="drinks-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Morning Drinks</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
@@ -631,25 +678,114 @@
           <div class="yn-toggle"><button class="yn-btn yes active" onclick="ynToggle(this,'yes')">Yes</button><button class="yn-btn no" onclick="ynToggle(this,'no')">No</button></div>
           <div class="drink-options" id="drink-opts">
             <div class="sub-label">Choose your drinks</div>
-            <div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Warm Water</div><div class="sub-chip" onclick="toggleChip(this)">Lemon & Honey</div><div class="sub-chip" onclick="toggleChip(this)">Green Tea</div><div class="sub-chip" onclick="toggleChip(this)">Black Coffee</div><div class="sub-chip" onclick="toggleChip(this)">Herbal Tea</div><div class="sub-chip" onclick="toggleChip(this)">Milk</div><div class="sub-chip" onclick="toggleChip(this)">Detox Water</div></div>
-          </div>
+            <div class="msdd-wrap" id="msdd-drinks">
+              <div class="msdd-trigger" onclick="toggleMsdd('msdd-drinks')"><span id="msdd-drinks-label">Select drinks…</span><span>▾</span></div>
+              <div class="msdd-panel" id="msdd-drinks-panel">
+                <input type="text" class="msdd-search" placeholder="🔍 Search drinks…" oninput="filterMsdd('msdd-drinks',this.value)" autocomplete="off"/>
+                <div class="msdd-list" id="msdd-drinks-list">
+                  <label class="msdd-option"><input type="checkbox" value="Warm Water" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Warm Water</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Lemon & Honey" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Lemon &amp; Honey</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Green Tea" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Green Tea</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Black Coffee" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Black Coffee</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Herbal Tea" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Herbal Tea</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Milk" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Milk</div></div></label>
+                  <label class="msdd-option"><input type="checkbox" value="Detox Water" onchange="msddChange('msdd-drinks')"/><div><div class="msdd-option-name">Detox Water</div></div></label>
+                </div>
+              </div>
+              <div class="msdd-tags" id="msdd-drinks-tags"></div>
+            </div>
+            <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Select drinks you take each morning on an empty stomach or with breakfast</div>          </div>
         </div>
       </div>
+
+      <!-- Nuts & Seeds -->
       <div class="accordion-item" id="nuts-section">
-        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Nuts & Seeds</span><span class="chevron">▾</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)"><span>Nuts &amp; Seeds</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-          <div class="sub-label">Nuts</div><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Almonds</div><div class="sub-chip" onclick="toggleChip(this)">Walnuts</div><div class="sub-chip" onclick="toggleChip(this)">Cashews</div><div class="sub-chip" onclick="toggleChip(this)">Pistachios</div><div class="sub-chip" onclick="toggleChip(this)">Peanuts</div></div>
-          <div class="sub-label">Seeds</div><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Sunflower Seeds</div><div class="sub-chip" onclick="toggleChip(this)">Chia Seeds</div><div class="sub-chip" onclick="toggleChip(this)">Flaxseeds</div><div class="sub-chip" onclick="toggleChip(this)">Pumpkin Seeds</div></div>
+          <div class="sub-label">Nuts</div>
+          <div class="msdd-wrap" id="msdd-nuts">
+            <div class="msdd-trigger" onclick="toggleMsdd('msdd-nuts')"><span id="msdd-nuts-label">Select nuts…</span><span>▾</span></div>
+            <div class="msdd-panel" id="msdd-nuts-panel">
+              <input type="text" class="msdd-search" placeholder="🔍 Search nuts…" oninput="filterMsdd('msdd-nuts',this.value)" autocomplete="off"/>
+              <div class="msdd-list" id="msdd-nuts-list">
+                <label class="msdd-option"><input type="checkbox" value="Almonds" onchange="msddChange('msdd-nuts')"/><div><div class="msdd-option-name">Almonds</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Walnuts" onchange="msddChange('msdd-nuts')"/><div><div class="msdd-option-name">Walnuts</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Cashews" onchange="msddChange('msdd-nuts')"/><div><div class="msdd-option-name">Cashews</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Pistachios" onchange="msddChange('msdd-nuts')"/><div><div class="msdd-option-name">Pistachios</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Peanuts" onchange="msddChange('msdd-nuts')"/><div><div class="msdd-option-name">Peanuts</div></div></label>
+              </div>
+            </div>
+            <div class="msdd-tags" id="msdd-nuts-tags"></div>
+          </div>
+          <div class="sub-label" style="margin-top:14px;">Seeds</div>
+          <div class="msdd-wrap" id="msdd-seeds">
+            <div class="msdd-trigger" onclick="toggleMsdd('msdd-seeds')"><span id="msdd-seeds-label">Select seeds…</span><span>▾</span></div>
+            <div class="msdd-panel" id="msdd-seeds-panel">
+              <input type="text" class="msdd-search" placeholder="🔍 Search seeds…" oninput="filterMsdd('msdd-seeds',this.value)" autocomplete="off"/>
+              <div class="msdd-list" id="msdd-seeds-list">
+                <label class="msdd-option"><input type="checkbox" value="Sunflower Seeds" onchange="msddChange('msdd-seeds')"/><div><div class="msdd-option-name">Sunflower Seeds</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Chia Seeds" onchange="msddChange('msdd-seeds')"/><div><div class="msdd-option-name">Chia Seeds</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Flaxseeds" onchange="msddChange('msdd-seeds')"/><div><div class="msdd-option-name">Flaxseeds</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Pumpkin Seeds" onchange="msddChange('msdd-seeds')"/><div><div class="msdd-option-name">Pumpkin Seeds</div></div></label>
+              </div>
+            </div>
+            <div class="msdd-tags" id="msdd-seeds-tags"></div>
+          </div>
+          <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Nuts and seeds are great for healthy fats, protein, and micronutrients</div>
         </div>
       </div>
+
+      <!-- Fruits -->
       <div class="accordion-item" id="fruits-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Fruits</span><span class="chevron">▾</span></div>
-        <div class="accordion-body"><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Apple</div><div class="sub-chip" onclick="toggleChip(this)">Banana</div><div class="sub-chip" onclick="toggleChip(this)">Orange</div><div class="sub-chip" onclick="toggleChip(this)">Papaya</div><div class="sub-chip" onclick="toggleChip(this)">Pomegranate</div><div class="sub-chip" onclick="toggleChip(this)">Guava</div><div class="sub-chip" onclick="toggleChip(this)">Mango</div><div class="sub-chip" onclick="toggleChip(this)">Berries</div><div class="sub-chip" onclick="toggleChip(this)">Grapes</div></div></div>
+        <div class="accordion-body">
+          <div class="msdd-wrap" id="msdd-fruits">
+            <div class="msdd-trigger" onclick="toggleMsdd('msdd-fruits')"><span id="msdd-fruits-label">Select fruits…</span><span>▾</span></div>
+            <div class="msdd-panel" id="msdd-fruits-panel">
+              <input type="text" class="msdd-search" placeholder="🔍 Search fruits…" oninput="filterMsdd('msdd-fruits',this.value)" autocomplete="off"/>
+              <div class="msdd-list" id="msdd-fruits-list">
+                <label class="msdd-option"><input type="checkbox" value="Apple" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Apple</div><div class="msdd-option-nutrients">Good source of Dietary Fiber, Vitamin C</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Banana" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Banana</div><div class="msdd-option-nutrients">Good source of Vitamin B6, Manganese, Copper, Vitamin C, Potassium</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Papaya" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Papaya</div><div class="msdd-option-nutrients">Good source of Vitamin C, Vitamin B9, Selenium, Vitamin B7, Vitamin A</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Orange" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Orange</div><div class="msdd-option-nutrients">Good source of Vitamin C, Vitamin B7, Vitamin B9</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Pomegranate" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Pomegranate</div><div class="msdd-option-nutrients">Good source of Vitamin K, Vitamin C, Vitamin B9, Vitamin B6, Copper</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Guava" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Guava</div><div class="msdd-option-nutrients">Good source of Vitamin C, Dietary Fiber, Copper, Vitamin B9, Manganese</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Mango" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Mango</div><div class="msdd-option-nutrients">Good source of Vitamin C, Vitamin B9, Manganese, Vitamin A, Copper</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Berries" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Berries</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Grapes" onchange="msddChange('msdd-fruits')"/><div><div class="msdd-option-name">Grapes</div></div></label>
+              </div>
+            </div>
+            <div class="msdd-tags" id="msdd-fruits-tags"></div>
+          </div>
+          <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Select fruits you enjoy — they will be included in your daily plan</div>
+        </div>
       </div>
+
+      <!-- Vegetables -->
       <div class="accordion-item" id="veggies-section">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Vegetables</span><span class="chevron">▾</span></div>
-        <div class="accordion-body"><div class="sub-chip-group"><div class="sub-chip" onclick="toggleChip(this)">Spinach</div><div class="sub-chip" onclick="toggleChip(this)">Broccoli</div><div class="sub-chip" onclick="toggleChip(this)">Carrot</div><div class="sub-chip" onclick="toggleChip(this)">Cucumber</div><div class="sub-chip" onclick="toggleChip(this)">Tomato</div><div class="sub-chip" onclick="toggleChip(this)">Capsicum</div><div class="sub-chip" onclick="toggleChip(this)">Beetroot</div><div class="sub-chip" onclick="toggleChip(this)">Zucchini</div></div></div>
+        <div class="accordion-body">
+          <div class="msdd-wrap" id="msdd-veggies">
+            <div class="msdd-trigger" onclick="toggleMsdd('msdd-veggies')"><span id="msdd-veggies-label">Select vegetables…</span><span>▾</span></div>
+            <div class="msdd-panel" id="msdd-veggies-panel">
+              <input type="text" class="msdd-search" placeholder="🔍 Search vegetables…" oninput="filterMsdd('msdd-veggies',this.value)" autocomplete="off"/>
+              <div class="msdd-list" id="msdd-veggies-list">
+                <label class="msdd-option"><input type="checkbox" value="Spinach" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Spinach</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Broccoli" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Broccoli</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Carrot" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Carrot</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Cucumber" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Cucumber</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Tomato" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Tomato</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Capsicum" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Capsicum</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Beetroot" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Beetroot</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Zucchini" onchange="msddChange('msdd-veggies')"/><div><div class="msdd-option-name">Zucchini</div></div></label>
+              </div>
+            </div>
+            <div class="msdd-tags" id="msdd-veggies-tags"></div>
+          </div>
+          <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Choose vegetables you like — we will build your meals around these</div>
+        </div>
       </div>
+
       <div class="section-divider"></div>
       <div class="step-label" style="margin-bottom:8px;">Step 3 · Dislikes</div>
       <div class="section-title" style="margin-bottom:10px;">Food Dislikes</div>
@@ -1209,14 +1345,16 @@ function updateGoalCalSection(d) {
   if (badge) badge.textContent = direction === 'maintain' ? '🎯 Maintenance' : `${rateName} ${dirLabel}`;
 
   // Timeline with months
-  if (daysToGoal > 0) {
-    g('r-timeline').textContent = daysToGoal;
-    g('r-timeline-desc').textContent = formatDuration(daysToGoal);
+if (daysToGoal > 0) {
+    g('r-timeline').textContent = daysToGoal + ' days';
+    g('r-timeline-desc').textContent = '≈ ' + formatDuration(daysToGoal);
   } else {
     g('r-timeline').textContent = '—';
     g('r-timeline-desc').textContent = 'Already at ideal weight';
   }
   g('r-after-goal-cal').textContent = afterGoalCal;
+  const afterGoalSub = g('r-after-goal-sub');
+  if (afterGoalSub) afterGoalSub.textContent = `kcal/day at goal weight (${idealWeight.toFixed(1)} kg)`;
 }
 
 window.syncOtherNameToStep1 = function(val) {
@@ -1397,15 +1535,22 @@ async function submitForm() {
     daily_calories: g('r-cal').textContent,
     health_conditions: [...selectedConditions].join(', '),
     allergies: g('inp-allergies').value,
-    meals_per_day: g('inp-meals').value,
     diet_preference: g('inp-diet').value,
+    note_diet: g('note-diet')?.value||'',
     meal_types: chips('#meal-types .chip').join(', '),
+    note_meal_types: g('note-mealtypes')?.value||'',
     eating_window: g('eat-window-val').value,
+    note_eating_window: g('note-eatwindow')?.value||'',
     num_curries: g('inp-curries').value,
-    morning_drinks: chips('#drink-opts .sub-chip').join(', '),
-    nuts_seeds: chips('#nuts-section .sub-chip').join(', '),
-    fruits: chips('#fruits-section .sub-chip').join(', '),
-    vegetables: chips('#veggies-section .sub-chip').join(', '),
+    note_curries: g('note-curries')?.value||'',
+    morning_drinks: (msddState['msdd-drinks']||[]).join(', '),
+    note_drinks: g('note-drinks')?.value||'',
+    nuts_seeds: [...(msddState['msdd-nuts']||[]), ...(msddState['msdd-seeds']||[])].join(', '),
+    note_nuts: g('note-nuts')?.value||'',
+    fruits: (msddState['msdd-fruits']||[]).join(', '),
+    note_fruits: g('note-fruits')?.value||'',
+    vegetables: (msddState['msdd-veggies']||[]).join(', '),
+    note_veggies: g('note-veggies')?.value||'',
     food_dislikes: g('inp-dislikes').value,
     symptoms: chips('#symptoms-group .chip').join(', '),
     comments: g('inp-comments').value,
@@ -1434,8 +1579,14 @@ async function submitForm() {
 function clearForm() {
   document.querySelectorAll('input,textarea').forEach(el=>{ if(el.type!=='checkbox') el.value=''; else el.checked=false; });
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
-  document.querySelectorAll('.chip,.sub-chip,.time-chip').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.chip,.time-chip').forEach(el=>el.classList.remove('active'));
   document.getElementById('eat-window-val').value='';
+  // Reset all msdd dropdowns
+  ['msdd-drinks','msdd-nuts','msdd-seeds','msdd-fruits','msdd-veggies'].forEach(id=>{
+    document.querySelectorAll('#'+id+'-list input[type="checkbox"]').forEach(cb=>cb.checked=false);
+    delete msddState[id];
+    msddChange(id);
+  });
   selectedConditions.clear();
   document.getElementById('conditions-tags').innerHTML='';
   const inlineRes = document.getElementById('inline-results');
@@ -1456,7 +1607,93 @@ window.setPlanFor = function(type) {
   if (type==='self') { selfBtn.style.cssText+=';border-color:var(--teal);background:var(--teal);color:#fff;'; otherBtn.style.cssText+=';border-color:var(--border);background:var(--bg);color:var(--muted);'; fields.style.display='none'; }
   else { otherBtn.style.cssText+=';border-color:var(--teal);background:var(--teal);color:#fff;'; selfBtn.style.cssText+=';border-color:var(--border);background:var(--bg);color:var(--muted);'; fields.style.display='block'; }
 };
-window.toggleHealthDD = ()=>{ const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow'); l.classList.toggle('open'); a.textContent=l.classList.contains('open')?'▴':'▾'; };
+window.toggleHealthDD = ()=>{
+  const l=document.getElementById('health-dd-list'),a=document.getElementById('health-dd-arrow');
+  l.classList.toggle('open');
+  a.textContent=l.classList.contains('open')?'▴':'▾';
+  if(l.classList.contains('open')) setTimeout(()=>document.getElementById('health-search')?.focus(),60);
+};
+
+window.filterHealthOptions = function(q) {
+  const term = q.toLowerCase();
+  document.querySelectorAll('#health-dd-list .health-option').forEach(opt => {
+    const text = opt.textContent.toLowerCase();
+    opt.classList.toggle('hidden', term.length > 0 && !text.includes(term));
+  });
+};
+
+// ── MULTI-SELECT SEARCHABLE DROPDOWNS ──
+const msddState = {};
+
+window.toggleMsdd = function(id) {
+  const panel = document.getElementById(id+'-panel');
+  const trigger = document.querySelector('#'+id+' .msdd-trigger');
+  const isOpen = panel.classList.contains('open');
+  // Close all other panels
+  document.querySelectorAll('.msdd-panel.open').forEach(p => {
+    p.classList.remove('open');
+    const t = p.closest('.msdd-wrap')?.querySelector('.msdd-trigger');
+    if (t) { t.classList.remove('open'); t.style.borderRadius = ''; t.style.borderBottomColor = ''; }
+  });
+  if (!isOpen) {
+    panel.classList.add('open');
+    trigger.classList.add('open');
+    trigger.style.borderRadius = 'var(--radius-sm) var(--radius-sm) 0 0';
+    trigger.style.borderBottomColor = 'var(--teal)';
+    setTimeout(() => panel.querySelector('.msdd-search')?.focus(), 60);
+  }
+};
+
+window.filterMsdd = function(id, q) {
+  const term = q.toLowerCase();
+  document.querySelectorAll('#'+id+'-list .msdd-option').forEach(opt => {
+    const text = opt.textContent.toLowerCase();
+    opt.classList.toggle('hidden', term.length > 0 && !text.includes(term));
+  });
+};
+
+window.msddChange = function(id) {
+  const checked = [...document.querySelectorAll('#'+id+'-list input:checked')].map(c=>c.value);
+  msddState[id] = checked;
+  const labelEl = document.getElementById(id+'-label');
+  const trigger = document.querySelector('#'+id+' .msdd-trigger');
+  if (checked.length === 0) {
+    const placeholders = {
+      'msdd-drinks':'Select drinks…','msdd-nuts':'Select nuts…','msdd-seeds':'Select seeds…',
+      'msdd-fruits':'Select fruits…','msdd-veggies':'Select vegetables…'
+    };
+    labelEl.textContent = placeholders[id] || 'Select…';
+    trigger.classList.remove('has-selection');
+  } else {
+    labelEl.textContent = checked.join(', ');
+    trigger.classList.add('has-selection');
+  }
+  renderMsddTags(id, checked);
+};
+
+function renderMsddTags(id, items) {
+  const container = document.getElementById(id+'-tags');
+  if (!container) return;
+  container.innerHTML = items.map(v =>
+    `<div class="tag">${v}<span class="tag-x" onclick="removeMsddTag('${id}','${v.replace(/'/g,"\\'")}')">×</span></div>`
+  ).join('');
+}
+
+window.removeMsddTag = function(id, value) {
+  const cb = document.querySelector('#'+id+'-list input[value="'+value+'"]');
+  if (cb) { cb.checked = false; msddChange(id); }
+};
+
+// Close msdd panels when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.msdd-wrap')) {
+    document.querySelectorAll('.msdd-panel.open').forEach(p => {
+      p.classList.remove('open');
+      const t = p.closest('.msdd-wrap')?.querySelector('.msdd-trigger');
+      if (t) { t.classList.remove('open'); t.style.borderRadius = ''; t.style.borderBottomColor = ''; }
+    });
+  }
+});
 window.toggleOtherInput = cb=>{ const inp=document.getElementById('other-condition-input'); inp.style.display=cb.checked?'block':'none'; if(!cb.checked){ inp.value=''; selectedConditions.delete('Other'); selectedConditions.delete(inp.dataset.val||''); renderTags(); } };
 window.updateOtherCondition = inp=>{ const prev=inp.dataset.val; if(prev) selectedConditions.delete(prev); if(inp.value.trim()){ const v=inp.value.trim(); inp.dataset.val=v; selectedConditions.add(v); } renderTags(); };
 window.handleCondition = cb=>{ if(cb.value==='Other') return; cb.checked?selectedConditions.add(cb.value):selectedConditions.delete(cb.value); renderTags(); };
@@ -1488,10 +1725,14 @@ function saveDraft() {
     name: g('inp-name')?.value, age: g('inp-age')?.value, gender: g('inp-gender')?.value, height: g('inp-height')?.value, weight: g('inp-weight')?.value,
     activity: g('inp-activity')?.value, waist: g('inp-waist')?.value, hip: g('inp-hip')?.value, neck: g('inp-neck')?.value, preg: g('inp-preg')?.value,
     phone: g('inp-phone')?.value, email: g('inp-email')?.value, allergies: g('inp-allergies')?.value, conditions: [...selectedConditions],
-    meals: g('inp-meals')?.value, curries: g('inp-curries')?.value, diet: g('inp-diet')?.value, eatWindow: g('eat-window-val')?.value,
+    curries: g('inp-curries')?.value, diet: g('inp-diet')?.value, eatWindow: g('eat-window-val')?.value,
     dislikes: g('inp-dislikes')?.value, comments: g('inp-comments')?.value, waConsent: g('consent-wa')?.checked,
-    mealTypes: activeChips('#meal-types .chip'), drinks: activeChips('#drink-opts .sub-chip'), nuts: activeChips('#nuts-section .sub-chip'),
-    fruits: activeChips('#fruits-section .sub-chip'), veggies: activeChips('#veggies-section .sub-chip'), symptoms: activeChips('#symptoms-group .chip'),
+    mealTypes: activeChips('#meal-types .chip'), drinks: msddState['msdd-drinks']||[], nuts: msddState['msdd-nuts']||[],
+    seeds: msddState['msdd-seeds']||[], fruits: msddState['msdd-fruits']||[], veggies: msddState['msdd-veggies']||[],
+    symptoms: activeChips('#symptoms-group .chip'),
+    noteDiet: g('note-diet')?.value, noteMealTypes: g('note-mealtypes')?.value, noteEatWindow: g('note-eatwindow')?.value,
+    noteCurries: g('note-curries')?.value, noteDrinks: g('note-drinks')?.value, noteNuts: g('note-nuts')?.value,
+    noteFruits: g('note-fruits')?.value, noteVeggies: g('note-veggies')?.value,
     sectionsOpen: ['health-section','prefs-section','symptoms-section'].filter(id=>{ const el=g(id); return el && el.style.display!=='none' && el.style.display!==''; }),
     drinkYes: document.querySelector('.yn-btn.yes')?.classList.contains('active'),
     planForOther: g('plan-for-other-fields')?.style.display === 'block',
@@ -1519,10 +1760,25 @@ function restoreDraft() {
     if (draft.gender === 'Female') setVal('inp-preg', draft.preg);
   }
   if (g('inp-activity') && draft.activity) g('inp-activity').value = draft.activity;
-  if (g('inp-meals') && draft.meals) g('inp-meals').value = draft.meals;
   if (g('inp-curries') && draft.curries) g('inp-curries').value = draft.curries;
   if (g('inp-diet') && draft.diet) g('inp-diet').value = draft.diet;
   if (g('consent-wa')) g('consent-wa').checked = !!draft.waConsent;
+
+  // Restore notes
+  const noteMap = {noteDiet:'note-diet',noteMealTypes:'note-mealtypes',noteEatWindow:'note-eatwindow',noteCurries:'note-curries',noteDrinks:'note-drinks',noteNuts:'note-nuts',noteFruits:'note-fruits',noteVeggies:'note-veggies'};
+  Object.entries(noteMap).forEach(([k,id])=>{ if(g(id) && draft[k]) g(id).value=draft[k]; });
+
+  // Restore msdd
+  const msddMap = {drinks:'msdd-drinks',nuts:'msdd-nuts',seeds:'msdd-seeds',fruits:'msdd-fruits',veggies:'msdd-veggies'};
+  Object.entries(msddMap).forEach(([k,id])=>{
+    const vals = draft[k];
+    if (!vals || !vals.length) return;
+    vals.forEach(v=>{
+      const cb=document.querySelector('#'+id+'-list input[value="'+v+'"]');
+      if(cb){ cb.checked=true; }
+    });
+    msddChange(id);
+  });
 
   if (draft.conditions && draft.conditions.length) {
     draft.conditions.forEach(v => { selectedConditions.add(v); const cb=document.querySelector(`#health-dd-list input[value="${v}"]`); if(cb) cb.checked=true; });
@@ -1530,8 +1786,8 @@ function restoreDraft() {
   }
 
   const restoreChips = (selector, activeList) => { if (!activeList || !activeList.length) return; document.querySelectorAll(selector).forEach(chip => { if (activeList.includes(chip.textContent.trim())) chip.classList.add('active'); }); };
-  restoreChips('#meal-types .chip', draft.mealTypes); restoreChips('#drink-opts .sub-chip', draft.drinks); restoreChips('#nuts-section .sub-chip', draft.nuts);
-  restoreChips('#fruits-section .sub-chip', draft.fruits); restoreChips('#veggies-section .sub-chip', draft.veggies); restoreChips('#symptoms-group .chip', draft.symptoms);
+  restoreChips('#meal-types .chip', draft.mealTypes);
+  restoreChips('#symptoms-group .chip', draft.symptoms);
 
   if (draft.eatWindow) { document.querySelectorAll('#time-window-chips .time-chip').forEach(tc => { if (tc.dataset.value === draft.eatWindow) tc.classList.add('active'); }); }
   if (draft.drinkYes === false) { const noBtn=document.querySelector('.yn-btn.no'); if(noBtn){ noBtn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('active')); noBtn.classList.add('active'); } const d=g('drink-opts'); if(d) d.style.display='none'; }
