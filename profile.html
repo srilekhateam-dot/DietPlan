@@ -13,6 +13,7 @@
     --muted:#6b7280; --border:#e2e5ea;
     --card-shadow:0 2px 16px rgba(0,0,0,0.07);
     --radius:16px; --radius-sm:10px;
+    --red:#dc2626;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -25,6 +26,12 @@
   .nav-links::-webkit-scrollbar{display:none;}
   .nav-links a{flex:0 0 auto;white-space:nowrap;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;padding:6px 14px;border-radius:20px;transition:all 0.2s;}
   .nav-links a:hover,.nav-links a.active{background:var(--teal-light);color:var(--teal);}
+  .nav-profile-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Fraunces',serif;font-size:0.95rem;font-weight:600;cursor:pointer;border:none;flex-shrink:0;transition:background 0.2s;}
+  .nav-profile-btn:hover{background:var(--teal-dark);}
+  .nav-profile-btn.show{display:flex;}
+  .nav-signin-btn{display:none;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;text-decoration:none;}
+  .nav-signin-btn:hover{background:var(--teal-dark);}
+  .nav-signin-btn.show{display:flex;}
 
   .page-hero{background:linear-gradient(160deg,#f0faf9 0%,#f5f6f8 70%);border-bottom:1px solid var(--border);padding:36px 24px 28px;text-align:center;}
   .page-hero h1{font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2rem);font-weight:600;color:var(--text);margin-bottom:6px;}
@@ -33,7 +40,7 @@
 
   .page-outer{max-width:900px;margin:0 auto;padding:28px 20px 80px;}
 
-  /* Auth card */
+  /* AUTH CARD */
   .auth-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:30px;margin-bottom:22px;animation:fadeUp 0.4s ease both;}
   .card-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:4px;}
   .card-sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
@@ -44,10 +51,11 @@
   .fg label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
   .fg input{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border-color 0.2s,box-shadow 0.2s;width:100%;}
   .fg input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,143,0.12);background:var(--white);}
-  .ph-row{display:flex;border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--bg);transition:border-color 0.2s,box-shadow 0.2s;}
-  .ph-row:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,158,143,0.12);}
-  .ph-pfx{display:flex;align-items:center;gap:5px;padding:10px 12px;background:#f0f2f4;border-right:1.5px solid var(--border);font-size:13px;font-weight:600;white-space:nowrap;}
-  .ph-row input{border:none!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;flex:1;}
+  .pw-wrap{position:relative;}
+  .pw-wrap input{padding-right:40px!important;width:100%;}
+  .pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:0;line-height:1;}
+  .pw-eye:hover{color:var(--teal);}
+  .forgot-link{font-size:12px;color:var(--teal);text-decoration:none;display:inline-block;margin-top:4px;font-weight:600;background:none;border:none;cursor:pointer;padding:0;}
   .err-box{display:none;font-size:12px;color:#dc2626;background:#fef2f2;padding:8px 12px;border-radius:8px;margin-bottom:10px;}
   .btn{display:block;width:100%;border:none;border-radius:var(--radius-sm);padding:12px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;margin-top:6px;}
   .btn-p{background:var(--teal);color:#fff;}
@@ -55,20 +63,35 @@
   .btn-s{background:var(--bg);color:var(--muted);border:1.5px solid var(--border);}
   .btn-s:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
 
-  /* Account bar */
-  .acct-bar{display:none;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;flex-wrap:wrap;gap:10px;animation:fadeUp 0.3s ease;}
+  /* ACCOUNT BAR */
+  .acct-bar{display:none;background:var(--teal-light);border:1.5px solid #c8ede9;border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
   .acct-bar.show{display:flex;align-items:center;justify-content:space-between;}
   .acct-info{display:flex;align-items:center;gap:10px;}
   .acct-avatar{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1rem;font-weight:600;flex-shrink:0;}
   .acct-label{font-weight:700;color:var(--teal-dark);font-size:14px;}
-  .acct-phone{font-size:12px;color:var(--teal);}
+  .acct-email{font-size:12px;color:var(--teal);}
   .btn-so{padding:7px 18px;border:1.5px solid var(--teal);border-radius:20px;background:transparent;color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
   .btn-so:hover{background:var(--teal);color:#fff;}
 
-  /* Profiles section */
-  .profiles-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;animation:fadeUp 0.4s ease both;}
+  /* PAGE TABS */
+  .page-tabs{display:flex;gap:4px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:6px;margin-bottom:20px;box-shadow:var(--card-shadow);}
+  .page-tab{flex:1;padding:10px 16px;border-radius:var(--radius-sm);border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;text-align:center;}
+  .page-tab.active{background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(26,158,143,0.25);}
+  .page-tab:hover:not(.active){background:var(--teal-light);color:var(--teal);}
+
+  .tab-content{display:none;}
+  .tab-content.active{display:block;animation:fadeUp 0.35s ease both;}
+
+  /* PROFILES SECTION */
+  .profiles-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;}
+  .sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .sec-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
-  .sec-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:14px;}
+  .sec-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);}
+  .btn-edit-mode{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+  .btn-edit-mode:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+  .btn-edit-mode.active-edit{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+  /* CHIPS — NO X BUTTON */
   .chips-wrap{display:flex;flex-wrap:wrap;gap:10px;}
   .chip{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;user-select:none;}
   .chip:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
@@ -76,16 +99,26 @@
   .chip-av{width:28px;height:28px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
   .chip.active .chip-av{background:rgba(255,255,255,0.25);color:#fff;}
   .chip-rel{font-size:10.5px;opacity:0.7;font-style:italic;}
-  .chip-del{margin-left:4px;opacity:0.5;font-size:13px;cursor:pointer;padding:0 2px;transition:opacity 0.2s;}
-  .chip-del:hover{opacity:1;}
-  .empty-state{text-align:center;padding:34px 20px;color:var(--muted);width:100%;}
-  .empty-state .ei{font-size:2.8rem;margin-bottom:12px;}
-  .empty-state p{font-size:14px;margin-bottom:14px;}
-  .empty-state a{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:10px 22px;border-radius:var(--radius-sm);font-weight:600;font-size:14px;}
 
-  /* Detail panel */
-  .detail-panel{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:28px;display:none;animation:fadeUp 0.4s ease both;}
-  .detail-panel.visible{display:block;}
+  /* EDIT MODE LIST */
+  .edit-list{display:none;flex-direction:column;gap:10px;}
+  .edit-list.visible{display:flex;}
+  .edit-list-item{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--bg);border-radius:var(--radius-sm);border:1.5px solid var(--border);transition:border-color 0.2s;gap:12px;}
+  .edit-list-item:hover{border-color:var(--teal);}
+  .eli-info{display:flex;align-items:center;gap:12px;min-width:0;flex:1;}
+  .eli-av{width:36px;height:36px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+  .eli-name{font-weight:600;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .eli-sub{font-size:12px;color:var(--muted);}
+  .eli-actions{display:flex;gap:8px;flex-shrink:0;}
+  .eli-btn{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+  .eli-btn.edit-btn{color:var(--teal);border-color:var(--teal);}
+  .eli-btn.edit-btn:hover{background:var(--teal);color:#fff;}
+  .eli-btn.del-btn{color:var(--red);border-color:#fca5a5;}
+  .eli-btn.del-btn:hover{background:var(--red);color:#fff;border-color:var(--red);}
+
+  /* ── DETAIL PANEL ── shown ABOVE profiles section */
+  .detail-panel{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:28px;display:none;margin-bottom:22px;}
+  .detail-panel.visible{display:block;animation:fadeUp 0.4s ease both;}
   .dh{display:flex;align-items:center;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:22px;}
   .dh-av{width:54px;height:54px;border-radius:50%;background:var(--teal-light);color:var(--teal);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;flex-shrink:0;}
   .dh-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--text);}
@@ -108,41 +141,59 @@
   .tag{background:var(--teal-light);color:var(--teal-dark);border-radius:20px;padding:4px 12px;font-size:12.5px;font-weight:600;}
   .tag.red{background:#fef2f2;color:#dc2626;}
   .tag.amber{background:#fffbeb;color:#92400e;}
-  .err-panel{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--radius-sm);padding:14px 18px;color:#dc2626;font-size:14px;text-align:center;}
+  .err-panel{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--radius-sm);padding:14px 18px;color:#dc2626;font-size:14px;}
+  .detail-footer{display:flex;justify-content:flex-end;padding-top:18px;border-top:1px solid var(--border);margin-top:20px;}
+  .btn-update{display:flex;align-items:center;gap:6px;padding:10px 24px;border-radius:var(--radius-sm);border:none;background:var(--teal);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+  .btn-update:hover{background:var(--teal-dark);transform:translateY(-1px);}
 
-  /* Nav profile avatar & dropdown */
-  .nav-profile-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Fraunces',serif;font-size:0.95rem;font-weight:600;cursor:pointer;border:none;flex-shrink:0;position:relative;transition:background 0.2s;}
-  .nav-profile-btn:hover{background:var(--teal-dark);}
-  .nav-profile-btn.show{display:flex;}
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:34px 20px;color:var(--muted);width:100%;}
+  .empty-state .ei{font-size:2.8rem;margin-bottom:12px;}
+  .empty-state p{font-size:14px;margin-bottom:14px;}
+  .empty-state a{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:10px 22px;border-radius:var(--radius-sm);font-weight:600;font-size:14px;}
 
-  .nav-signin-btn{display:none;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;text-decoration:none;}
-  .nav-signin-btn:hover{background:var(--teal-dark);}
-  .nav-signin-btn.show{display:flex;}
+  /* DIET PLAN TAB */
+  .diet-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;}
+  .diet-profile-select{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+  .diet-chip{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;}
+  .diet-chip:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+  .diet-chip.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .diet-chip-av{width:24px;height:24px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+  .diet-chip.active .diet-chip-av{background:rgba(255,255,255,0.25);color:#fff;}
+  .diet-day{margin-bottom:20px;}
+  .diet-day-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--teal-light);}
+  .diet-meal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+  .diet-meal-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;}
+  .dmc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:5px;}
+  .dmc-time{font-size:11px;color:var(--teal);font-weight:600;margin-bottom:8px;}
+  .dmc-items{display:flex;flex-direction:column;gap:3px;}
+  .dmc-item{font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:5px;}
+  .dmc-item::before{content:"•";color:var(--teal);flex-shrink:0;margin-top:2px;}
+  .dmc-cal{display:inline-flex;align-items:center;gap:4px;background:var(--teal-light);color:var(--teal-dark);border-radius:10px;padding:3px 9px;font-size:11px;font-weight:700;margin-top:8px;}
+  .diet-total-bar{background:linear-gradient(135deg,var(--teal-light),#f0faf9);border:1.5px solid #c8ede9;border-radius:var(--radius-sm);padding:16px 20px;margin-top:18px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;}
+  .dtb-item{text-align:center;}
+  .dtb-val{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;color:var(--teal);}
+  .dtb-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
 
-  /* Delete confirmation popup */
-  .del-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1200;}
-  .del-popup-overlay.open{display:flex;}
-  .del-popup{background:#fff;border-radius:16px;padding:28px 26px;max-width:360px;width:90%;box-shadow:0 16px 40px rgba(0,0,0,0.18);animation:fadeUp 0.25s ease;}
-  .del-popup-icon{font-size:2.2rem;text-align:center;margin-bottom:10px;}
-  .del-popup-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:6px;}
-  .del-popup-msg{font-size:13px;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:22px;}
-  .del-popup-btns{display:flex;gap:10px;}
-  .del-popup-btns button{flex:1;padding:11px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;}
-  .del-cancel{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)!important;}
-  .del-cancel:hover{border-color:var(--teal)!important;color:var(--teal);background:var(--teal-light);}
-  .del-confirm{background:#dc2626;color:#fff;}
-  .del-confirm:hover{background:#b91c1c;}
+  /* POPUPS */
+  .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1200;}
+  .overlay.open{display:flex;}
+  .popup{background:#fff;border-radius:var(--radius);padding:28px 26px;max-width:380px;width:90%;box-shadow:0 16px 40px rgba(0,0,0,0.18);animation:fadeUp 0.25s ease;}
+  .popup-icon{font-size:2.2rem;text-align:center;margin-bottom:10px;}
+  .popup-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:6px;}
+  .popup-msg{font-size:13px;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:22px;}
+  .popup-btns{display:flex;gap:10px;}
+  .popup-btns button{flex:1;padding:11px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;}
+  .pop-cancel{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)!important;}
+  .pop-cancel:hover{border-color:var(--teal)!important;color:var(--teal);background:var(--teal-light);}
+  .pop-confirm-del{background:#dc2626;color:#fff;}
+  .pop-confirm-del:hover{background:#b91c1c;}
+  .pop-confirm-ok{background:var(--teal);color:#fff;}
+  .pop-confirm-ok:hover{background:var(--teal-dark);}
 
-  /* Password show/hide toggle */
-  .pw-wrap{position:relative;}
-  .pw-wrap input{padding-right:40px !important;width:100%;}
-  .pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:0;line-height:1;}
-  .pw-eye:hover{color:var(--teal);}
-  .forgot-link{font-size:12px;color:var(--teal);text-decoration:none;display:inline-block;margin-top:4px;font-weight:600;background:none;border:none;cursor:pointer;padding:0;}
-  .forgot-link:hover{text-decoration:underline;}
-  /* Forgot password modal */
+  /* FORGOT PASSWORD MODAL */
   .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:999;}
-  .modal-box{background:#fff;width:90%;max-width:380px;border-radius:16px;padding:24px;animation:fadeUp 0.3s ease;}
+  .modal-box{background:#fff;width:90%;max-width:380px;border-radius:var(--radius);padding:24px;animation:fadeUp 0.3s ease;}
   .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
   .modal-header h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);}
   .close-btn{cursor:pointer;font-size:18px;color:var(--muted);}
@@ -150,38 +201,22 @@
   .fp-suc{display:none;font-size:13px;color:#065f46;background:#ecfdf5;padding:10px 14px;border-radius:8px;margin-bottom:10px;font-weight:600;}
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-  @media(max-width:640px){nav{padding:0 16px;}.nav-signin-btn,.nav-profile-btn{flex-shrink:0;}.d-grid{grid-template-columns:1fr 1fr;}.dk{min-width:120px;}.auth-tabs{gap:4px;}.auth-tab{font-size:11.5px;}}
-
-  /* ─── Messages Inbox ─── */
-  .inbox-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--border);padding:26px;margin-bottom:22px;display:none;animation:fadeUp 0.4s ease both;}
-  .inbox-section.visible{display:block;}
-  .inbox-empty{text-align:center;padding:30px;color:var(--muted);font-size:13.5px;}
-  .inbox-empty .ei{font-size:2.5rem;margin-bottom:10px;}
-  .inbox-msg{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;background:var(--bg);transition:all 0.15s;cursor:pointer;}
-  .inbox-msg.unread{background:#fff;border-color:var(--teal);box-shadow:0 2px 8px rgba(26,158,143,0.10);}
-  .inbox-msg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px;}
-  .inbox-msg-subject{font-weight:700;font-size:14px;color:var(--text);flex:1;}
-  .inbox-msg-subject.unread::before{content:"● ";color:var(--teal);font-size:9px;vertical-align:middle;margin-right:3px;}
-  .inbox-msg-time{font-size:11.5px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
-  .inbox-msg-from{font-size:12px;color:var(--teal-dark);font-weight:600;margin-bottom:6px;}
-  .inbox-msg-profile-tag{display:inline-flex;align-items:center;gap:4px;background:var(--teal-light);color:var(--teal-dark);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:700;margin-bottom:6px;}
-  .inbox-msg-body{font-size:13.5px;color:#374151;line-height:1.6;white-space:pre-wrap;display:none;}
-  .inbox-msg-body.open{display:block;}
-  .inbox-unread-badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle;}
+  @media(max-width:640px){
+    nav{padding:0 16px;}
+    .d-grid{grid-template-columns:1fr 1fr;}
+    .dk{min-width:110px;}
+    .eli-actions{gap:5px;}
+    .diet-meal-grid{grid-template-columns:1fr 1fr;}
+  }
 </style>
 
 <script>
-// ── Instant nav auth: read cached state before first paint ──
 (function(){
-  var cached = localStorage.getItem('np_auth'); // 'signed-in' or null
-  var style = document.createElement('style');
-  if (cached === 'signed-in') {
-    // Show avatar, hide sign-in immediately
-    style.textContent = '#nav-signin-btn{display:none!important}#nav-profile-btn{display:flex!important}';
-  } else {
-    // Show sign-in, hide avatar immediately
-    style.textContent = '#nav-profile-btn{display:none!important}#nav-signin-btn{display:flex!important}';
-  }
+  var cached=localStorage.getItem('np_auth');
+  var style=document.createElement('style');
+  style.textContent=cached==='signed-in'
+    ?'#nav-signin-btn{display:none!important}#nav-profile-btn{display:flex!important}'
+    :'#nav-profile-btn{display:none!important}#nav-signin-btn{display:flex!important}';
   document.head.appendChild(style);
 })();
 </script>
@@ -196,14 +231,10 @@
       <a href="education.html">Education</a>
       <a href="comments.html">Comments</a>
       <a href="profile.html" class="active">My Profile</a>
-      <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages<span id="nav-msg-dot" style="display:none;position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#dc2626;border:2px solid #fff;"></span></a>
+      <a href="messages.html" id="nav-msg-link" style="position:relative;">Messages</a>
     </div>
-
-    <!-- NOT signed in: simple Sign In button -->
-    <a href="#" class="nav-signin-btn show" id="nav-signin-btn" onclick="event.preventDefault();scrollToAuth()">Sign In</a>
-
-    <!-- Signed in: avatar + dropdown -->
-    <div style="position:relative;flex-shrink:0;z-index:101;" id="nav-profile-wrap">
+    <a href="#" class="nav-signin-btn show" id="nav-signin-btn" onclick="event.preventDefault();document.getElementById('auth-card')?.scrollIntoView({behavior:'smooth'})">Sign In</a>
+    <div style="position:relative;flex-shrink:0;z-index:101;">
       <button class="nav-profile-btn" id="nav-profile-btn" onclick="window.location.href='profile.html'" title="My Profile">?</button>
     </div>
   </div>
@@ -211,38 +242,33 @@
 
 <section class="page-hero">
   <h1>My <em>Saved</em> Profiles</h1>
-  <p>Sign in to view all profiles linked to your account from any device.</p>
+  <p>Sign in to view and manage all profiles linked to your account.</p>
 </section>
 
 <div class="page-outer">
 
-  <!-- Signed-in bar -->
+  <!-- 1. Account bar — always at top -->
   <div id="acct-bar" class="acct-bar">
     <div class="acct-info">
-      <div class="acct-avatar">👤</div>
+      <div class="acct-avatar" id="acct-avatar-initials">👤</div>
       <div>
         <div class="acct-label">My NutriPlan Account</div>
-        <div class="acct-phone" id="bar-phone"></div>
+        <div class="acct-email" id="bar-email"></div>
       </div>
     </div>
     <button class="btn-so" onclick="doSignOut()">Sign Out</button>
   </div>
 
-  <!-- Auth Card -->
+  <!-- 2. Auth card — shown when logged out -->
   <div id="auth-card" class="auth-card">
     <div class="card-title">Sign In or Create Account</div>
-    <div class="card-sub">Your email is your username. Access all your saved profiles from any device.</div>
+    <div class="card-sub">Access all your saved profiles from any device.</div>
     <div class="auth-tabs">
       <div class="auth-tab active" id="ptab-login" onclick="switchTab('login')">Sign In</div>
       <div class="auth-tab" id="ptab-create" onclick="switchTab('create')">Create Account</div>
     </div>
-
-    <!-- Sign In -->
     <div id="form-login">
-      <div class="fg">
-        <label>Email</label>
-        <input type="email" id="li-email" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doSignIn()"/>
-      </div>
+      <div class="fg"><label>Email</label><input type="email" id="li-email" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doSignIn()"/></div>
       <div class="fg">
         <label>Password</label>
         <div class="pw-wrap">
@@ -254,100 +280,117 @@
       <div class="err-box" id="li-err"></div>
       <button class="btn btn-p" onclick="doSignIn()">Sign In →</button>
     </div>
-
-    <!-- Create Account -->
     <div id="form-create" style="display:none;">
-      <div class="fg">
-        <label>Email (Username)</label>
-        <input type="email" id="cr-email" placeholder="you@example.com" autocomplete="email"/>
-      </div>
+      <div class="fg"><label>Email (Username)</label><input type="email" id="cr-email" placeholder="you@example.com" autocomplete="email"/></div>
       <div class="fg">
         <label>Create Password</label>
         <div class="pw-wrap">
-          <input type="password" id="cr-pass" placeholder="Min 6 characters"/>
+          <input type="password" id="cr-pass" placeholder="At least 6 characters"/>
           <button type="button" class="pw-eye" onclick="togglePw('cr-pass',this)" tabindex="-1">👁</button>
         </div>
       </div>
-      <div class="fg">
-        <label>Confirm Password</label>
-        <div class="pw-wrap">
-          <input type="password" id="cr-pass2" placeholder="Re-enter password" onkeydown="if(event.key==='Enter')doCreateAccount()"/>
-          <button type="button" class="pw-eye" onclick="togglePw('cr-pass2',this)" tabindex="-1">👁</button>
-        </div>
-      </div>
+      <div class="fg"><label>Confirm Password</label><input type="password" id="cr-pass2" placeholder="Repeat password" onkeydown="if(event.key==='Enter')doCreateAccount()"/></div>
       <div class="err-box" id="cr-err"></div>
       <button class="btn btn-p" onclick="doCreateAccount()">Create Account →</button>
     </div>
+  </div>
 
-    <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px;">
-      <p class="card-sub" style="margin-bottom:8px;">Or view profiles saved on this device only:</p>
-      <button class="btn btn-s" onclick="showLocalProfiles()">Browse Local Profiles</button>
+  <!-- 3. Main area — shown when logged in -->
+  <div id="main-tabs-area" style="display:none;">
+
+    <div class="page-tabs">
+      <button class="page-tab active" id="tab-btn-profiles" onclick="switchPageTab('profiles')">💾 Saved Profiles</button>
+      <button class="page-tab" id="tab-btn-diet" onclick="switchPageTab('diet')">🥗 Diet Plan</button>
     </div>
-  </div>
 
-  <!-- Profiles List -->
-  <div id="profiles-section" class="profiles-section" style="display:none;">
-    <div class="sec-label" id="sec-label">Your Profiles</div>
-    <div class="sec-title" id="sec-title">Choose a Profile to View</div>
-    <div class="chips-wrap" id="chips-wrap"></div>
-  </div>
+    <!-- ── SAVED PROFILES TAB ── -->
+    <div class="tab-content active" id="tab-profiles">
 
-  <!-- Messages Inbox -->
-  <div id="inbox-section" class="inbox-section">
-    <div class="sec-label">📨 Messages from Admin</div>
-    <div class="sec-title" style="margin-bottom:14px;">Your Inbox <span id="inbox-unread-badge"></span></div>
-    <div id="inbox-list">
-      <div class="inbox-empty"><div class="ei">📭</div><p>No messages yet.</p></div>
-    </div>
-  </div>
+      <!-- ★ EDIT BLOCK: always first, shown when profiles loaded -->
+      <div class="profiles-section" id="profiles-section" style="display:none;">
+        <div class="sec-header">
+          <div>
+            <div class="sec-label" id="sec-label">Profiles</div>
+            <div class="sec-title" id="sec-title">Tap a Profile to View Details</div>
+          </div>
+          <button class="btn-edit-mode" id="btn-edit-mode" onclick="toggleEditMode()">✏️ Edit</button>
+        </div>
+        <!-- Chip view (default) -->
+        <div class="chips-wrap" id="chips-wrap"></div>
+        <!-- Edit mode list -->
+        <div class="edit-list" id="edit-list"></div>
+      </div>
 
-  <!-- Detail Panel -->
-  <div class="detail-panel" id="detail-panel"></div>
+      <!-- ★ DETAIL PANEL: below the profiles/edit block, shown when a chip is clicked -->
+      <div class="detail-panel" id="detail-panel"></div>
+
+    </div><!-- end tab-profiles -->
+
+    <!-- ── DIET PLAN TAB ── -->
+    <div class="tab-content" id="tab-diet">
+      <div class="diet-section">
+        <div class="sec-label">Diet Plans</div>
+        <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:16px;">Select a Profile to View Diet Plan</div>
+        <div class="diet-profile-select" id="diet-profile-select">
+          <div style="color:var(--muted);font-size:13.5px;padding:4px 0;">Loading profiles…</div>
+        </div>
+        <div id="diet-plan-content">
+          <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+            <div style="font-size:2.5rem;margin-bottom:12px;">👆</div>
+            <p style="font-size:14px;">Select a profile above to view their diet plan.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- end tab-diet -->
+
+  </div><!-- end main-tabs-area -->
 
 </div><!-- end page-outer -->
 
-<!-- ─── Forgot Password Modal ─── -->
+<!-- Forgot Password Modal -->
 <div id="forgotModal" class="modal-overlay">
   <div class="modal-box">
-    <div class="modal-header">
-      <h3>Reset Password</h3>
-      <span class="close-btn" onclick="closeForgotModal()">✕</span>
-    </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">
-      📧 Enter your email and we'll send you a link to reset your password.
-    </p>
-    <div class="fg">
-      <label>Email</label>
-      <input type="email" id="fp-email" placeholder="you@example.com" autocomplete="off" onkeydown="if(event.key==='Enter')doResetPassword()"/>
-    </div>
+    <div class="modal-header"><h3>Reset Password</h3><span class="close-btn" onclick="closeForgotModal()">✕</span></div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;background:#fef9ec;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;">📧 Enter your email and we'll send a password reset link.</p>
+    <div class="fg"><label>Email</label><input type="email" id="fp-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doResetPassword()"/></div>
     <div class="fp-err" id="fp-err"></div>
     <div class="fp-suc" id="fp-suc"></div>
     <button class="btn btn-p" onclick="doResetPassword()">Send Reset Link</button>
   </div>
 </div>
 
-<!-- ─── Delete Confirmation Popup ─── -->
-<div class="del-popup-overlay" id="del-popup-overlay">
-  <div class="del-popup">
-    <div class="del-popup-icon">🗑️</div>
-    <div class="del-popup-title">Remove Profile?</div>
-    <div class="del-popup-msg" id="del-popup-msg">Are you sure you want to remove this profile? Your data in Google Sheets is kept.</div>
-    <div class="del-popup-btns">
-      <button class="del-cancel" onclick="closeDelPopup()">Cancel</button>
-      <button class="del-confirm" id="del-confirm-btn">Yes, Remove</button>
+<!-- Delete Confirmation Popup -->
+<div class="overlay" id="del-overlay">
+  <div class="popup">
+    <div class="popup-icon">🗑️</div>
+    <div class="popup-title">Remove Profile?</div>
+    <div class="popup-msg" id="del-popup-msg">Are you sure you want to remove this profile?</div>
+    <div class="popup-btns">
+      <button class="pop-cancel" onclick="closeDelPopup()">Cancel</button>
+      <button class="pop-confirm-del" id="del-confirm-btn">Yes, Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- Update/Edit Confirmation Popup -->
+<div class="overlay" id="update-overlay">
+  <div class="popup">
+    <div class="popup-icon">✏️</div>
+    <div class="popup-title">Edit Profile?</div>
+    <div class="popup-msg" id="update-popup-msg">Load this profile's data into the form for editing?</div>
+    <div class="popup-btns">
+      <button class="pop-cancel" onclick="closeUpdatePopup()">Cancel</button>
+      <button class="pop-confirm-ok" id="update-confirm-btn">Yes, Edit</button>
     </div>
   </div>
 </div>
 
 <script type="module">
-// ─── FIREBASE ──────────────────────────────────────────────
-// 🔧 Replace with YOUR Firebase project config
-// Get it at: console.firebase.google.com → Project Settings → Web app
 import { initializeApp }               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
          signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp, query, orderBy, where }
+import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, setDoc, serverTimestamp }
                                         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -356,580 +399,646 @@ const firebaseConfig = {
   projectId: "nutriplan-65582",
   storageBucket: "nutriplan-65582.firebasestorage.app",
   messagingSenderId: "851509980462",
-  appId: "1:851509980462:web:b18af741addba334ca1ebf",
-  measurementId: "G-2XZZ9YW5FJ"
+  appId: "1:851509980462:web:b18af741addba334ca1ebf"
 };
-
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// Google Sheets fallback URL
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwwrNauZmqZe6jXml0xr4wYkJY6R17pZDYpXDHNYmIkYIYVR0Vk7HJ5LrQ7yU9kb5i6Xg/exec";
 
-let activeId   = null;
-let usingLocal = false;
+// ── Activity text → select value map (must match index.html <option value="..."> exactly) ──
+const ACTIVITY_TEXT_TO_VALUE = {
+  'sedentary: little or no exercise': '1.2',
+  'sedentary: exercise 1–3 times/week': '1.375',
+  'moderate: exercise 4–5 times/week': '1.46',
+  'moderate: daily exercise or intense 3–4 times/week': '1.55',
+  'heavy: intense exercise 6–7 times/week': '1.72',
+  'heavy: very intense exercise daily, or physical job': '1.9',
+};
+function activityTextToValue(text) {
+  if (!text) return '';
+  const key = text.toLowerCase().trim();
+  // Direct value match (already a number string)
+  if (['1.2','1.375','1.46','1.55','1.72','1.9'].includes(key)) return key;
+  return ACTIVITY_TEXT_TO_VALUE[key] || '';
+}
 
-// ─── TAB SWITCH ───────────────────────────────────────────
+let allProfiles  = [];
+let activeId     = null;
+let activeDietId = null;
+let editMode     = false;
+// Store uid for delete (captured at popup open time, not closure)
+let _pendingDeleteUid  = null;
+let _pendingDeleteName = null;
+
+// ── PAGE TAB SWITCH ──────────────────────────────────────
+window.switchPageTab = function(tab) {
+  ['profiles','diet'].forEach(t => {
+    document.getElementById('tab-btn-'+t).classList.toggle('active', t===tab);
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+  });
+  if (tab === 'diet') renderDietProfileSelect();
+};
+
+// ── EDIT MODE TOGGLE ─────────────────────────────────────
+window.toggleEditMode = function() {
+  editMode = !editMode;
+  const btn   = document.getElementById('btn-edit-mode');
+  const chips = document.getElementById('chips-wrap');
+  const list  = document.getElementById('edit-list');
+  if (editMode) {
+    btn.textContent = '✕ Done';
+    btn.classList.add('active-edit');
+    chips.style.display = 'none';
+    list.classList.add('visible');
+    renderEditList(allProfiles);
+  } else {
+    btn.textContent = '✏️ Edit';
+    btn.classList.remove('active-edit');
+    chips.style.display = 'flex';
+    list.classList.remove('visible');
+  }
+};
+
+// ── RENDER EDIT LIST ──────────────────────────────────────
+function renderEditList(list) {
+  const el = document.getElementById('edit-list');
+  if (!list || !list.length) {
+    el.innerHTML = '<div style="color:var(--muted);font-size:13.5px;padding:10px 0;">No profiles to edit.</div>';
+    return;
+  }
+  el.innerHTML = list.map(p => {
+    const uid         = p.userId || p._docId;
+    const isForOther  = p.forSelf === false;
+    const displayName = isForOther ? (p.relName || p.name) : (p.name || p.relName);
+    const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const relSub      = isForOther ? `${p.relation||'Family Member'}${p.relName?' · '+p.relName:''}` : 'For Self';
+    const safeName    = (displayName||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `
+      <div class="edit-list-item">
+        <div class="eli-info">
+          <div class="eli-av">${initials}</div>
+          <div>
+            <div class="eli-name">${displayName||'—'}</div>
+            <div class="eli-sub">${relSub}</div>
+          </div>
+        </div>
+        <div class="eli-actions">
+          <button class="eli-btn edit-btn" onclick="triggerEditProfile('${uid}','${safeName}')">✏️ Edit</button>
+          <button class="eli-btn del-btn"  onclick="confirmDelete('${uid}','${safeName}')">🗑 Delete</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── TRIGGER EDIT (with confirmation popup) ───────────────
+window.triggerEditProfile = function(uid, name) {
+  document.getElementById('update-popup-msg').textContent = `Load "${name}"'s data into the form for editing?`;
+  document.getElementById('update-overlay').classList.add('open');
+  // Store uid in button's data attribute to avoid stale closure
+  document.getElementById('update-confirm-btn').dataset.uid  = uid;
+  document.getElementById('update-confirm-btn').dataset.name = name;
+};
+window.closeUpdatePopup = function() {
+  document.getElementById('update-overlay').classList.remove('open');
+};
+document.getElementById('update-confirm-btn').addEventListener('click', async function() {
+  const uid  = this.dataset.uid;
+  const name = this.dataset.name;
+  closeUpdatePopup();
+  if (uid) await loadProfileToForm(uid, name);
+});
+
+// ── LOAD PROFILE DATA → sessionStorage → redirect to form ──
+// BUG FIX: Map Firestore field names → exactly the draft keys restoreDraft() reads
+async function loadProfileToForm(uid, name) {
+  try {
+    let data = null;
+
+    // 1. Try Firestore submissions first
+    try {
+      const snap = await getDoc(doc(db, "submissions", uid));
+      if (snap.exists()) data = snap.data();
+    } catch(_) {}
+
+    // 2. Fallback: Google Sheets
+    if (!data) {
+      try {
+        const res = await fetch(`${SHEET_URL}?userId=${encodeURIComponent(uid)}`);
+        if (res.ok) { const j = await res.json(); if (j && !j.error) data = j; }
+      } catch(_) {}
+    }
+
+    if (!data) {
+      alert(`Could not load profile data for "${name}". Please try again.`);
+      return;
+    }
+
+    // ── Map Firestore field names to restoreDraft() expected keys ──
+    // restoreDraft reads: name, age, height, weight, waist, hip, neck, phone,
+    // email, allergies, dislikes, comments, eatWindow, planOtherName, planOtherRelation,
+    // gender, preg, activity (VALUE not text), curries, diet, waConsent,
+    // conditions (array), mealTypes (array), symptoms (array), planForOther (bool),
+    // drinks, nuts, seeds, fruits, veggies, sprouts, milkshakes, smoothies,
+    // porridge, breakfast, chutney, powders, nonveg, rice, millets (arrays)
+
+    const splitCSV = v => v ? v.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+    const draft = {
+      name:             data.name        || '',
+      age:              data.age         || '',
+      gender:           data.gender      || '',
+      height:           data.height_cm   || '',
+      weight:           data.weight_kg   || '',
+      waist:            data.waist_cm    || '',
+      neck:             data.neck_cm     || '',
+      hip:              data.hip_cm      || '',
+      preg:             data.pregnant_lactating || '',
+      // activity stored as text in Firestore → convert back to select value
+      activity:         activityTextToValue(data.activity || ''),
+      phone:            data.phone       || '',
+      email:            data.email       || '',
+      allergies:        data.allergies   || '',
+      conditions:       splitCSV(data.health_conditions),
+      curries:          data.num_curries || '',
+      diet:             data.diet_preference || '',
+      eatWindow:        data.eating_window   || '',
+      dislikes:         data.food_dislikes   || '',
+      comments:         data.comments        || '',
+      waConsent:        data.whatsapp_consent === 'Yes',
+      mealTypes:        splitCSV(data.meal_types),
+      symptoms:         splitCSV(data.symptoms),
+      // Plan for other
+      planForOther:     data.plan_for_self === false || data.forSelf === false,
+      planOtherName:    data.plan_other_name  || data.relName  || '',
+      planOtherRelation:data.plan_other_relation || data.relation || '',
+      // Multi-select dropdowns
+      drinks:           splitCSV(data.morning_drinks),
+      nuts:             splitCSV(data.nuts_seeds).filter(v => ['Almonds','Cashews','Walnuts','Peanuts','Pistachios','Chia seeds','Flax seeds','Sunflower seeds','Pumpkin seeds'].some(n => v.toLowerCase().includes(n.toLowerCase().split(' ')[0]))),
+      seeds:            splitCSV(data.nuts_seeds).filter(v => ['Chia','Flax','Sunflower','Pumpkin','Sesame'].some(n => v.toLowerCase().includes(n.toLowerCase()))),
+      fruits:           splitCSV(data.fruits),
+      veggies:          splitCSV(data.vegetables),
+      sprouts:          splitCSV(data.sprouts),
+      milkshakes:       splitCSV(data.milkshakes),
+      smoothies:        splitCSV(data.smoothies),
+      porridge:         splitCSV(data.porridge_malt),
+      breakfast:        splitCSV(data.breakfast),
+      chutney:          splitCSV(data.chutney),
+      powders:          splitCSV(data.powders_ghee),
+      nonveg:           splitCSV(data.non_veg),
+      rice:             splitCSV(data.rice),
+      millets:          splitCSV(data.millets_grains),
+      // Keep all sections open when editing
+      sectionsOpen:     ['health-section','prefs-section','symptoms-section'],
+      drinkYes:         true,
+      // Editing UID for reference
+      _editUid:         uid,
+    };
+
+    // Write to the exact sessionStorage key restoreDraft() reads
+    sessionStorage.setItem('nutriplan_draft', JSON.stringify(draft));
+    // Clear "submitted" flag so restoreDraft doesn't skip it
+    sessionStorage.removeItem('nutriplan_submitted');
+
+    // Redirect to form, scroll to form section
+    window.location.href = 'index.html#form-section';
+
+  } catch(e) {
+    alert('Error loading profile: ' + e.message);
+  }
+}
+
+// ── DELETE PROFILE ────────────────────────────────────────
+window.confirmDelete = function(uid, name) {
+  _pendingDeleteUid  = uid;
+  _pendingDeleteName = name;
+  document.getElementById('del-popup-msg').textContent = `Remove "${name}" from your profiles? Your submitted data is kept.`;
+  document.getElementById('del-overlay').classList.add('open');
+};
+window.closeDelPopup = function() {
+  document.getElementById('del-overlay').classList.remove('open');
+  _pendingDeleteUid  = null;
+  _pendingDeleteName = null;
+};
+// BUG FIX: Bind delete button once, read uid from module-level var (not stale closure)
+document.getElementById('del-confirm-btn').addEventListener('click', async function() {
+  const uid = _pendingDeleteUid;
+  if (!uid) return;
+  closeDelPopup();
+  await doDelete(uid);
+});
+
+async function doDelete(uid) {
+  const user = auth.currentUser;
+  if (!user) {
+    alert('You must be signed in to delete a profile.');
+    return;
+  }
+  try {
+    // 1. Remove from the account's profiles sub-collection (hides from user)
+    await deleteDoc(doc(db, "accounts", user.uid, "profiles", uid));
+
+    // 2. Mark the submission as deleted so admin sees it in "Deleted by User" tab
+    try {
+      await setDoc(doc(db, "submissions", uid), {
+        deletedByUser: true,
+        deletedAt: serverTimestamp(),
+        deletedByEmail: user.email || 'unknown',
+        deletedByAdmin: false
+      }, { merge: true });
+    } catch(e) { console.warn('Could not mark submission deleted:', e); }
+
+    // Update local list
+    allProfiles = allProfiles.filter(p => (p.userId || p._docId) !== uid);
+
+    // Re-render chips
+    if (!editMode) {
+      renderChips(allProfiles, false);
+    } else {
+      renderEditList(allProfiles);
+      // also refresh chip data in background
+      rebuildChipsData();
+    }
+
+    // Update count label
+    if (allProfiles.length > 0) {
+      document.getElementById('sec-label').textContent = `Account Profiles (${allProfiles.length})`;
+    } else {
+      document.getElementById('sec-label').textContent = 'Your Profiles';
+      document.getElementById('sec-title').textContent = 'No Profiles Yet';
+      document.getElementById('chips-wrap').innerHTML = `<div class="empty-state">
+        <div class="ei">🥗</div><p>No profiles linked to this account.</p>
+        <a href="index.html">Go to Diet Planner →</a></div>`;
+      document.getElementById('edit-list').innerHTML = '';
+    }
+
+    // Hide detail panel if it was showing the deleted profile
+    if (activeId === uid) {
+      activeId = null;
+      const dp = document.getElementById('detail-panel');
+      dp.classList.remove('visible');
+      dp.innerHTML = '';
+    }
+
+    // Refresh diet chips
+    renderDietProfileSelect();
+
+  } catch(e) {
+    alert('Delete failed: ' + e.message + '\n\nMake sure you are signed in and have permission.');
+  }
+}
+
+function rebuildChipsData() {
+  // Rebuild chips-wrap from allProfiles without switching modes
+  const wrap = document.getElementById('chips-wrap');
+  if (!allProfiles.length) return;
+  wrap.innerHTML = allProfiles.map(p => {
+    const uid         = p.userId || p._docId;
+    const isForOther  = p.forSelf === false;
+    const displayName = isForOther ? (p.relName || p.name) : (p.name || p.relName);
+    const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const relTag      = isForOther ? `<span class="chip-rel">(${p.relation||'Family'})</span>` : '';
+    const isActive    = uid === activeId;
+    return `<div class="chip ${isActive?'active':''}" data-uid="${uid}" onclick="selectProfile('${uid}',this)">
+      <div class="chip-av">${initials}</div>
+      <span>${displayName||'—'}</span>
+      ${relTag}
+    </div>`;
+  }).join('');
+}
+
+// ── AUTH TABS ─────────────────────────────────────────────
 window.switchTab = tab => {
   ['login','create'].forEach(t => {
     document.getElementById('ptab-'+t).classList.toggle('active', t===tab);
     document.getElementById('form-'+t).style.display = t===tab ? 'block' : 'none';
   });
 };
-
-// ─── SHOW PASSWORD TOGGLE ─────────────────────────────────
 window.togglePw = function(inputId, btn) {
   const inp = document.getElementById(inputId);
-  const isText = inp.type === 'text';
-  inp.type = isText ? 'password' : 'text';
-  btn.textContent = isText ? '👁' : '🙈';
+  inp.type  = inp.type === 'text' ? 'password' : 'text';
+  btn.textContent = inp.type === 'text' ? '🙈' : '👁';
 };
 
-// ─── FORGOT PASSWORD MODAL ────────────────────────────────
+// ── FORGOT PASSWORD ───────────────────────────────────────
 window.openForgotModal = function() {
-  const el = document.getElementById('fp-email'); if(el) el.value = '';
+  document.getElementById('fp-email').value = '';
   document.getElementById('fp-err').style.display = 'none';
   document.getElementById('fp-suc').style.display = 'none';
   document.getElementById('forgotModal').style.display = 'flex';
 };
-window.closeForgotModal = function() {
-  document.getElementById('forgotModal').style.display = 'none';
-};
-document.getElementById('forgotModal').addEventListener('click', function(e) {
-  if (e.target === this) closeForgotModal();
-});
+window.closeForgotModal = function() { document.getElementById('forgotModal').style.display = 'none'; };
+document.getElementById('forgotModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeForgotModal(); });
 
 window.doResetPassword = async function() {
   const email = document.getElementById('fp-email').value.trim();
-  const errEl = document.getElementById('fp-err');
-  const sucEl = document.getElementById('fp-suc');
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
-
-  if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display = 'block'; return; }
-
+  const errEl = document.getElementById('fp-err'), sucEl = document.getElementById('fp-suc');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent='Enter a valid email address'; errEl.style.display='block'; return; }
   try {
     await sendPasswordResetEmail(auth, email);
-    sucEl.innerHTML = '✅ Reset link sent!<br><span style="font-weight:400;font-size:12px;">Check your inbox — <strong>and your spam/junk folder</strong> if you don\'t see it within a minute.</span>';
+    sucEl.innerHTML = '✅ Reset link sent! Check your inbox and spam folder.';
     sucEl.style.display = 'block';
     setTimeout(() => closeForgotModal(), 4000);
   } catch(e) {
-    if (e.code === 'auth/user-not-found') {
-      errEl.textContent = 'No account found with this email.';
-    } else {
-      errEl.textContent = e.message;
-    }
+    errEl.textContent = e.code==='auth/user-not-found' ? 'No account found with this email.' : e.message;
     errEl.style.display = 'block';
   }
 };
 
-// ─── ACCESS CHECK HELPERS ─────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────
 async function checkUserNotRestricted(email) {
-  const docId = email.toLowerCase().replace(/[@.]/g, '_');
-  try {
-    const snap = await getDoc(doc(db, "restrictedUsers", docId));
-    if (snap.exists()) return false;
-  } catch(e) { /* allow by default */ }
+  const docId = email.toLowerCase().replace(/[@.]/g,'_');
+  try { const snap=await getDoc(doc(db,"restrictedUsers",docId)); if(snap.exists()) return false; } catch(_){}
   return true;
 }
-
 async function checkRegistrationOpen() {
-  try {
-    const snap = await getDoc(doc(db, "settings", "global"));
-    if (snap.exists() && snap.data().registrationClosed === true) return false;
-  } catch(e) { /* allow by default */ }
+  try { const snap=await getDoc(doc(db,"settings","global")); if(snap.exists()&&snap.data().registrationClosed===true) return false; } catch(_){}
   return true;
 }
 
-// ─── SIGN IN ──────────────────────────────────────────────
+// ── SIGN IN ───────────────────────────────────────────────
 window.doSignIn = async () => {
-  const email = document.getElementById('li-email').value.trim();
-  const pass  = document.getElementById('li-pass').value;
-  const err   = document.getElementById('li-err');
-  err.style.display = 'none';
-  if (!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Enter a valid email address'; err.style.display='block'; return; }
-  if (!pass)                   { err.textContent='Enter your password'; err.style.display='block'; return; }
+  const email=document.getElementById('li-email').value.trim();
+  const pass =document.getElementById('li-pass').value;
+  const err  =document.getElementById('li-err');
+  err.style.display='none';
+  if (!email||!/\S+@\S+\.\S+/.test(email)){err.textContent='Enter a valid email address';err.style.display='block';return;}
+  if (!pass){err.textContent='Enter your password';err.style.display='block';return;}
   try {
-    // ── Check if this email is restricted ──
-    const notRestricted = await checkUserNotRestricted(email);
-    if (!notRestricted) {
-      err.textContent = 'Your account has been restricted. Please contact support for assistance.';
-      err.style.display = 'block';
-      return;
-    }
+    const ok=await checkUserNotRestricted(email);
+    if(!ok){err.textContent='Your account has been restricted. Contact support.';err.style.display='block';return;}
     await signInWithEmailAndPassword(auth, email, pass);
   } catch(e) {
-    err.textContent = (e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')
-      ? 'Incorrect email or password.' : e.message;
-    err.style.display = 'block';
+    err.textContent=(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')
+      ?'Incorrect email or password.':e.message;
+    err.style.display='block';
   }
 };
 
-// ─── CREATE ACCOUNT ───────────────────────────────────────
+// ── CREATE ACCOUNT ────────────────────────────────────────
 window.doCreateAccount = async () => {
-  const email = document.getElementById('cr-email').value.trim();
-  const pass  = document.getElementById('cr-pass').value;
-  const pass2 = document.getElementById('cr-pass2').value;
-  const err   = document.getElementById('cr-err');
-  err.style.display = 'none';
-  if (!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Enter a valid email address'; err.style.display='block'; return; }
-  if (pass.length < 6)         { err.textContent='Password must be at least 6 characters'; err.style.display='block'; return; }
-  if (pass !== pass2)          { err.textContent='Passwords do not match'; err.style.display='block'; return; }
+  const email=document.getElementById('cr-email').value.trim();
+  const pass =document.getElementById('cr-pass').value;
+  const pass2=document.getElementById('cr-pass2').value;
+  const err  =document.getElementById('cr-err');
+  err.style.display='none';
+  if (!email||!/\S+@\S+\.\S+/.test(email)){err.textContent='Enter a valid email address';err.style.display='block';return;}
+  if (pass.length<6){err.textContent='Password must be at least 6 characters';err.style.display='block';return;}
+  if (pass!==pass2){err.textContent='Passwords do not match';err.style.display='block';return;}
   try {
-    // ── Check if registrations are open ──
-    const regOpen = await checkRegistrationOpen();
-    if (!regOpen) {
-      err.textContent = 'New registrations are currently closed. Please contact us if you need access.';
-      err.style.display = 'block';
-      return;
-    }
-    // ── Check if this email is restricted ──
-    const notRestricted = await checkUserNotRestricted(email);
-    if (!notRestricted) {
-      err.textContent = 'This email address is not allowed to register. Please contact support.';
-      err.style.display = 'block';
-      return;
-    }
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    // ── Write account doc so admin panel can see this user ──
-    await setDoc(doc(db, "accounts", cred.user.uid), { email: email, createdAt: serverTimestamp() });
+    const regOpen=await checkRegistrationOpen();
+    if(!regOpen){err.textContent='New registrations are currently closed.';err.style.display='block';return;}
+    const ok=await checkUserNotRestricted(email);
+    if(!ok){err.textContent='This email address is not allowed to register.';err.style.display='block';return;}
+    const cred=await createUserWithEmailAndPassword(auth,email,pass);
+    await setDoc(doc(db,"accounts",cred.user.uid),{email,createdAt:serverTimestamp()});
   } catch(e) {
-    err.textContent = e.code==='auth/email-already-in-use'
-      ? 'This email already has an account. Use Sign In.' : e.message;
-    err.style.display = 'block';
+    err.textContent=e.code==='auth/email-already-in-use'?'This email already has an account. Use Sign In.':e.message;
+    err.style.display='block';
   }
 };
 
-// ─── SIGN OUT ─────────────────────────────────────────────
+// ── SIGN OUT ──────────────────────────────────────────────
 window.doSignOut = async () => {
   await fbSignOut(auth);
-  // Clear cached auth state so ALL pages update their nav immediately
   localStorage.removeItem('np_auth');
-  usingLocal = false;
+  allProfiles=[]; activeId=null; editMode=false;
   document.getElementById('acct-bar').classList.remove('show');
-  document.getElementById('auth-card').style.display = 'block';
-  document.getElementById('profiles-section').style.display = 'none';
-  const dp = document.getElementById('detail-panel');
-  dp.classList.remove('visible');
-  dp.innerHTML = '';
-  // Update nav buttons on this page right away
+  document.getElementById('auth-card').style.display='block';
+  document.getElementById('main-tabs-area').style.display='none';
   document.getElementById('nav-profile-btn').classList.remove('show');
   document.getElementById('nav-signin-btn').classList.add('show');
 };
 
-// ─── AUTH STATE ───────────────────────────────────────────
+// ── AUTH STATE ────────────────────────────────────────────
 onAuthStateChanged(auth, async user => {
   if (user) {
-    // ── Always check restriction on every session restore ──
-    const allowed = await checkUserNotRestricted(user.email || '');
+    const allowed=await checkUserNotRestricted(user.email||'');
     if (!allowed) {
-      await fbSignOut(auth);
-      localStorage.removeItem('np_auth');
-      // Show error on the sign-in form
-      const errEl = document.getElementById('li-err');
-      if (errEl) {
-        errEl.textContent = 'Your account has been restricted. Please contact support for assistance.';
-        errEl.style.display = 'block';
-      }
+      await fbSignOut(auth); localStorage.removeItem('np_auth');
+      const e=document.getElementById('li-err');
+      if(e){e.textContent='Your account has been restricted.';e.style.display='block';}
       document.getElementById('nav-profile-btn').classList.remove('show');
       document.getElementById('nav-signin-btn').classList.add('show');
       return;
     }
-
-    usingLocal = false;
-    // Cache signed-in state for instant nav on other pages
-    localStorage.setItem('np_auth', 'signed-in');
-    const email = user.email;
-    const initials = email ? email[0].toUpperCase() : '?';
-    document.getElementById('nav-profile-btn').textContent = initials;
+    localStorage.setItem('np_auth','signed-in');
+    const email=user.email, initials=email?email[0].toUpperCase():'?';
+    document.getElementById('nav-profile-btn').textContent=initials;
     document.getElementById('nav-profile-btn').classList.add('show');
     document.getElementById('nav-signin-btn').classList.remove('show');
-    document.getElementById('bar-phone').textContent = email;
+    document.getElementById('bar-email').textContent=email;
+    document.getElementById('acct-avatar-initials').textContent=initials;
     document.getElementById('acct-bar').classList.add('show');
-    document.getElementById('auth-card').style.display = 'none';
+    document.getElementById('auth-card').style.display='none';
+    document.getElementById('main-tabs-area').style.display='block';
     await loadAccountProfiles(user.uid);
-    await loadInbox(user.uid);
-    // Nav dot
-    try {
-      const unreadSnap = await getDocs(query(collection(db,"messages",user.uid,"inbox"), where("read","==",false)));
-      if (!unreadSnap.empty) { const d=document.getElementById('nav-msg-dot'); if(d) d.style.display='block'; }
-    } catch(_){}
   } else {
-    // User is signed out — clear cache and update nav
     localStorage.removeItem('np_auth');
     document.getElementById('nav-profile-btn').classList.remove('show');
     document.getElementById('nav-signin-btn').classList.add('show');
+    document.getElementById('main-tabs-area').style.display='none';
   }
 });
 
-// ─── LOCAL PROFILES ───────────────────────────────────────
-function getLocalProfiles() {
-  try { return JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); }
-  catch { return []; }
-}
-
-window.showLocalProfiles = () => {
-  usingLocal = true;
-  document.getElementById('auth-card').style.display = 'none';
-  const profiles = getLocalProfiles();
-  renderChips(profiles, true);
-};
-
-// ─── LOAD ACCOUNT PROFILES ────────────────────────────────
+// ── LOAD PROFILES ─────────────────────────────────────────
 async function loadAccountProfiles(uid) {
-  const section = document.getElementById('profiles-section');
-  const wrap    = document.getElementById('chips-wrap');
-  section.style.display = 'block';
-  wrap.innerHTML = `<div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13.5px;padding:10px 0;">
+  const section=document.getElementById('profiles-section');
+  const wrap   =document.getElementById('chips-wrap');
+  section.style.display='block';
+  wrap.innerHTML=`<div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13.5px;padding:10px 0;">
     <div style="width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
     Loading your profiles…</div>`;
-
   try {
-    const snap = await getDocs(collection(db, "accounts", uid, "profiles"));
+    const snap=await getDocs(collection(db,"accounts",uid,"profiles"));
     if (snap.empty) {
-      document.getElementById('sec-label').textContent = 'Your Profiles';
-      document.getElementById('sec-title').textContent = 'No Profiles Yet';
-      wrap.innerHTML = `<div class="empty-state">
+      document.getElementById('sec-label').textContent='Your Profiles';
+      document.getElementById('sec-title').textContent='No Profiles Yet';
+      wrap.innerHTML=`<div class="empty-state">
         <div class="ei">🥗</div>
-        <p>No profiles linked to this account yet.<br/>Submit the diet form and create an account to save them here.</p>
-        <a href="index.html">Go to Diet Planner →</a>
-      </div>`;
+        <p>No profiles linked to this account yet.<br/>Submit the diet form to create your first profile.</p>
+        <a href="index.html">Go to Diet Planner →</a></div>`;
+      allProfiles=[];
       return;
     }
-    const list = [];
-    snap.forEach(d => list.push(d.data()));
-    list.sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
-    renderChips(list, false);
+    const list=[];
+    // BUG FIX: store _docId = Firestore document ID (= userId string) for correct deleteDoc path
+    snap.forEach(d => list.push({ ...d.data(), _docId: d.id }));
+    // Deduplicate by userId (in case edit created a second entry with same userId)
+    const seen = new Set();
+    const deduped = list.filter(p => {
+      const key = p.userId || p._docId;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    deduped.sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+    allProfiles=deduped;
+    renderChips(deduped, false);
   } catch(e) {
-    wrap.innerHTML = `<div class="err-panel">Could not load profiles: ${e.message}</div>`;
+    wrap.innerHTML=`<div class="err-panel">Could not load profiles: ${e.message}</div>`;
   }
 }
 
-// ─── RENDER CHIPS ─────────────────────────────────────────
+// ── RENDER CHIPS (NO X BUTTON) ────────────────────────────
 function renderChips(list, isLocal) {
-  const section = document.getElementById('profiles-section');
-  const wrap    = document.getElementById('chips-wrap');
-  section.style.display = 'block';
+  const section=document.getElementById('profiles-section');
+  const wrap   =document.getElementById('chips-wrap');
+  section.style.display='block';
+  if (!list||!list.length) return; // empty state already set by loadAccountProfiles
 
-  if (!list || list.length === 0) {
-    document.getElementById('sec-label').textContent = 'Profiles';
-    document.getElementById('sec-title').textContent = 'No Profiles Saved';
-    wrap.innerHTML = `<div class="empty-state">
-      <div class="ei">🥗</div>
-      <p>No profiles saved yet. Submit the form to create your first profile.</p>
-      <a href="index.html">Go to Diet Planner →</a>
-    </div>`;
-    return;
-  }
+  document.getElementById('sec-label').textContent=`${isLocal?'Local':'Account'} Profiles (${list.length})`;
+  document.getElementById('sec-title').textContent='Tap a Profile to View Details';
 
-  document.getElementById('sec-label').textContent = `${isLocal ? 'Local' : 'Account'} Profiles (${list.length})`;
-  document.getElementById('sec-title').textContent  = 'Tap a Profile to View Details';
-
-  wrap.innerHTML = list.map(p => {
-    const uid         = p.userId || p.id;
-    const isForOther  = p.forSelf === false;
-    const displayName = isForOther ? (p.relName || p.name) : (p.name || p.relName);
+  wrap.innerHTML=list.map(p => {
+    // BUG FIX: use userId (data field) OR _docId (Firestore doc ID) consistently
+    const uid         = p.userId || p._docId;
+    const isForOther  = p.forSelf===false;
+    const displayName = isForOther?(p.relName||p.name):(p.name||p.relName);
     const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-    const relTag      = isForOther ? `<span class="chip-rel">(${p.relation||'Family'})</span>` : '';
-    const isActive    = uid === activeId;
-    return `<div class="chip ${isActive?'active':''}" onclick="selectProfile('${uid}',this,${isLocal})">
+    const relTag      = isForOther?`<span class="chip-rel">(${p.relation||'Family'})</span>`:'';
+    const isActive    = uid===activeId;
+    const adminDot    = p.adminUpdatedAt ? `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;" title="Admin updated"></span>` : '';
+    return `<div class="chip ${isActive?'active':''}" data-uid="${uid}" onclick="selectProfile('${uid}',this)">
       <div class="chip-av">${initials}</div>
       <span>${displayName||'—'}</span>
       ${relTag}
-      <span class="chip-del" onclick="event.stopPropagation();confirmDelete('${uid}','${(displayName||'').replace(/'/g,"\\'")}',${isLocal})">✕</span>
+      ${adminDot}
     </div>`;
   }).join('');
 }
 
-// ─── SELECT + FETCH PROFILE ───────────────────────────────
-window.selectProfile = async (userId, chipEl, isLocal) => {
-  activeId = userId;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+// ── SELECT PROFILE (chip click) ───────────────────────────
+// BUG FIX: detail panel is placed ABOVE .profiles-section in DOM,
+// so it naturally appears above chips without any DOM manipulation.
+// No scrollIntoView hack needed — just show it.
+window.selectProfile = async (userId, chipEl) => {
+  activeId=userId;
+  document.querySelectorAll('#chips-wrap .chip').forEach(c=>c.classList.remove('active'));
   chipEl.classList.add('active');
 
-  const panel = document.getElementById('detail-panel');
+  const panel=document.getElementById('detail-panel');
   panel.classList.add('visible');
-  panel.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Fetching profile data…</p></div>`;
-  panel.scrollIntoView({behavior:'smooth',block:'start'});
+  panel.innerHTML=`<div class="loading-state"><div class="spinner"></div><p>Fetching profile data…</p></div>`;
 
   try {
-    // 1. Try Firestore first
-    let data = null;
+    let data=null;
     try {
-      const snap = await getDoc(doc(db, "submissions", userId));
-      if (snap.exists()) data = snap.data();
+      const snap=await getDoc(doc(db,"submissions",userId));
+      if(snap.exists()) data=snap.data();
     } catch(_){}
-
-    // 2. Fallback to Google Sheets
     if (!data) {
-      const res = await fetch(`${SHEET_URL}?userId=${encodeURIComponent(userId)}`);
-      if (res.ok) {
-        const j = await res.json();
-        if (j && !j.error) data = j;
-      }
+      const res=await fetch(`${SHEET_URL}?userId=${encodeURIComponent(userId)}`);
+      if(res.ok){const j=await res.json();if(j&&!j.error) data=j;}
     }
-
     if (!data) throw new Error('Profile data not found. It may still be syncing — try again in a moment.');
 
-    // Get relation info
-    let relInfo = null;
-    if (isLocal) {
-      relInfo = getLocalProfiles().find(p=>(p.id||p.userId)===userId)||null;
-    } else {
-      const user = auth.currentUser;
-      if (user) {
-        const ps = await getDoc(doc(db,"accounts",user.uid,"profiles",userId));
-        if (ps.exists()) relInfo = ps.data();
-      }
+    let relInfo=null;
+    const user=auth.currentUser;
+    if(user){
+      try{const ps=await getDoc(doc(db,"accounts",user.uid,"profiles",userId));if(ps.exists()) relInfo=ps.data();}catch(_){}
     }
-
-    renderDetail(panel, data, relInfo);
+    renderDetail(panel, data, relInfo, userId);
   } catch(e) {
-    panel.innerHTML = `<div class="err-panel">⚠️ ${e.message}<br/>
-      <small style="opacity:0.7;margin-top:6px;display:block;">Make sure Firebase is configured and Apps Script is deployed with Anyone access.</small></div>`;
+    panel.innerHTML=`<div class="err-panel">⚠️ ${e.message}</div>`;
   }
 };
 
-// ─── NAV AUTH STATE ───────────────────────────────────────
-onAuthStateChanged(auth, user => {
-  const profileBtn = document.getElementById('nav-profile-btn');
-  const signinBtn  = document.getElementById('nav-signin-btn');
-  if (user) {
-    localStorage.setItem('np_auth', 'signed-in');
-    const initials = (user.email||'?').slice(0,2).toUpperCase();
-    profileBtn.textContent = initials;
-    profileBtn.classList.add('show');
-    signinBtn.classList.remove('show');
-  } else {
-    localStorage.removeItem('np_auth');
-    profileBtn.classList.remove('show');
-    signinBtn.classList.add('show');
-  }
-});
-window.scrollToAuth = function() {
-  document.getElementById('auth-card').scrollIntoView({behavior:'smooth'});
-  return false;
-};
-window.scrollToInbox = function(e) {
-  e.preventDefault();
-  const el = document.getElementById('inbox-section');
-  if (el && el.classList.contains('visible')) {
-    el.scrollIntoView({behavior:'smooth', block:'start'});
-  } else {
-    document.getElementById('auth-card')?.scrollIntoView({behavior:'smooth'});
-  }
-};
-
-// ─── DELETE POPUP ─────────────────────────────────────────
-let _pendingDelete = null;
-window.closeDelPopup = function() {
-  document.getElementById('del-popup-overlay').classList.remove('open');
-  _pendingDelete = null;
-};
-document.getElementById('del-popup-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeDelPopup();
-});
-
-// ─── CONFIRM DELETE ───────────────────────────────────────
-// window.confirmDelete = async (userId, name, isLocal) => {
-//   _pendingDelete = { userId, name, isLocal };
-//   document.getElementById('del-popup-msg').textContent =
-//     `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data in Google Sheets is kept.`;
-//   document.getElementById('del-popup-overlay').classList.add('open');
-//   document.getElementById('del-confirm-btn').onclick = async () => {
-//     closeDelPopup();
-//     if (isLocal) {
-//       try { const p=JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]'); localStorage.setItem('nutriplan_profiles',JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId))); } catch(_){}
-//       showLocalProfiles();
-//     } else {
-//       const user = auth.currentUser;
-//       if (user) { try { await deleteDoc(doc(db,"accounts",user.uid,"profiles",userId)); await loadAccountProfiles(user.uid); } catch(e){alert('Delete failed: '+e.message);} }
-//     }
-//     if (activeId===userId) {
-//       activeId=null;
-//       const dp=document.getElementById('detail-panel');
-//       dp.classList.remove('visible'); dp.innerHTML='';
-//     }
-//   };
-// };
-
-
-
-
-
-window.confirmDelete = async (userId, name, isLocal) => {
-  _pendingDelete = { userId, name, isLocal };
-  document.getElementById('del-popup-msg').textContent =
-    `Remove "${name}" from ${isLocal ? 'this browser' : 'your account'}? Your data is kept for records.`;
-  document.getElementById('del-popup-overlay').classList.add('open');
-  document.getElementById('del-confirm-btn').onclick = async () => {
-    closeDelPopup();
-    if (isLocal) {
-      try {
-        const p = JSON.parse(localStorage.getItem('nutriplan_profiles')||'[]');
-        localStorage.setItem('nutriplan_profiles', JSON.stringify(p.filter(x=>(x.id||x.userId)!==userId)));
-      } catch(_){}
-      showLocalProfiles();
-    } else {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          // 1. Remove from user's account profiles list
-          await deleteDoc(doc(db, "accounts", user.uid, "profiles", userId));
-          
-          // 2. Mark the submission as deleted by user (soft delete for admin visibility)
-          await setDoc(doc(db, "submissions", userId), {
-            deletedByUser: true,
-            deletedAt: serverTimestamp(),
-            deletedByUid: user.uid,
-            deletedByEmail: user.email
-          }, { merge: true });
-          
-          await loadAccountProfiles(user.uid);
-        } catch(e){
-          alert('Delete failed: '+e.message);
-        }
-      }
-    }
-    if (activeId === userId) {
-      activeId = null;
-      const dp = document.getElementById('detail-panel');
-      dp.classList.remove('visible');
-      dp.innerHTML = '';
-    }
-  };
-};
-
-
-
-
-
-
-
-
-
-
-
-// ─── INBOX (ADMIN MESSAGES) ────────────────────────────────
-async function loadInbox(uid) {
-  const section = document.getElementById('inbox-section');
-  const listEl  = document.getElementById('inbox-list');
-  section.classList.add('visible');
-  listEl.innerHTML = `<div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13.5px;padding:10px 0;"><div style="width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite;"></div>Loading messages…</div>`;
-  
-  try {
-    const snap = await getDocs(query(collection(db, "messages", uid, "inbox"), orderBy("sentAt", "desc")));
-    const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderInbox(msgs, uid);
-  } catch(e) {
-    // try without ordering
-    try {
-      const snap2 = await getDocs(collection(db, "messages", uid, "inbox"));
-      const msgs = snap2.docs.map(d => ({ id: d.id, ...d.data() }));
-      msgs.sort((a,b)=>(b.sentAt?.seconds||0)-(a.sentAt?.seconds||0));
-      renderInbox(msgs, uid);
-    } catch(e2) {
-      listEl.innerHTML = `<div class="inbox-empty"><div class="ei">📭</div><p>No messages yet.</p></div>`;
-    }
-  }
-}
-
-function formatMsgTime(ts) {
-  if (!ts) return '';
-  try {
-    const d = ts.toDate ? ts.toDate() : new Date(ts.seconds * 1000);
-    return d.toLocaleString('en-IN', {timeZone:'Asia/Kolkata', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
-  } catch { return ''; }
-}
-
-function renderInbox(msgs, uid) {
-  const listEl = document.getElementById('inbox-list');
-  const badge  = document.getElementById('inbox-unread-badge');
-  const unreadCount = msgs.filter(m => !m.read).length;
-  badge.innerHTML = unreadCount > 0 ? `<span class="inbox-unread-badge">${unreadCount}</span>` : '';
-  
-  if (msgs.length === 0) {
-    listEl.innerHTML = `<div class="inbox-empty"><div class="ei">📭</div><p>No messages from admin yet. We'll notify you here when the team sends you something.</p></div>`;
-    return;
-  }
-  
-  listEl.innerHTML = msgs.map((m, i) => `
-    <div class="inbox-msg ${m.read?'':'unread'}" id="imsg-${m.id}" onclick="toggleInboxMsg('${m.id}','${uid}')">
-      <div class="inbox-msg-head">
-        <div class="inbox-msg-subject ${m.read?'':'unread'}">${escapeHtmlInline(m.subject||'(no subject)')}</div>
-        <div class="inbox-msg-time">${formatMsgTime(m.sentAt)}</div>
-      </div>
-      <div class="inbox-msg-from">From: NutriPlan Team</div>
-      ${m.profileName ? `<div class="inbox-msg-profile-tag">👤 Re: ${escapeHtmlInline(m.profileName)}</div>` : ''}
-      <div class="inbox-msg-body" id="ibody-${m.id}">${escapeHtmlInline(m.body||'')}</div>
-    </div>
-  `).join('');
-}
-
-// Track which message docs have already been marked read
-const _markedRead = new Set();
-
-window.toggleInboxMsg = async function(msgId, uid) {
-  const bodyEl = document.getElementById(`ibody-${msgId}`);
-  const msgEl  = document.getElementById(`imsg-${msgId}`);
-  if (!bodyEl) return;
-  const isOpen = bodyEl.classList.toggle('open');
-  // Mark as read when opened
-  if (isOpen && !_markedRead.has(msgId)) {
-    _markedRead.add(msgId);
-    msgEl.classList.remove('unread');
-    msgEl.querySelector('.inbox-msg-subject')?.classList.remove('unread');
-    try {
-      await setDoc(doc(db, "messages", uid, "inbox", msgId), { read: true }, { merge: true });
-      // Update unread badge count
-      const remaining = document.querySelectorAll('.inbox-msg.unread').length;
-      const badge = document.getElementById('inbox-unread-badge');
-      badge.innerHTML = remaining > 0 ? `<span class="inbox-unread-badge">${remaining}</span>` : '';
-    } catch(_) {}
-  }
-};
-
-function escapeHtmlInline(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ─── RENDER DETAIL ────────────────────────────────────────
-function renderDetail(panel, d, relInfo) {
-  const isForOther  = relInfo && relInfo.forSelf===false;
-  const displayName = isForOther ? (relInfo.relName||d.name) : d.name;
+// ── RENDER DETAIL ─────────────────────────────────────────
+function renderDetail(panel, d, relInfo, uid) {
+  const isForOther  = relInfo&&relInfo.forSelf===false;
+  const displayName = isForOther?(relInfo.relName||d.name):d.name;
   const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const relBadge    = isForOther
+    ?`<div class="rel-badge">👥 ${relInfo.relation||'Family'}${relInfo.relName?' · '+relInfo.relName:''}</div>`
+    :`<div class="rel-badge">👤 For Self</div>`;
 
-  const relBadge = isForOther
-    ? `<div class="rel-badge">👥 ${relInfo.relation||'Family Member'}${relInfo.relName?' · '+relInfo.relName:''}</div>`
-    : `<div class="rel-badge">👤 For Self</div>`;
-
-  const tl = (str, cls='') => {
+  // Admin-updated badge
+  let adminBadge = '';
+  if (d.adminUpdatedAt) {
+    let adminTs = '';
+    try {
+      if (d.adminUpdatedAt.toDate) adminTs = d.adminUpdatedAt.toDate().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+      else if (d.adminUpdatedAt.seconds) adminTs = new Date(d.adminUpdatedAt.seconds*1000).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+    } catch(e){}
+    adminBadge = `<div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:18px;font-size:13px;color:#92400e;display:flex;align-items:center;gap:8px;">
+      ⚙️ <strong>Admin updated this profile</strong>${adminTs?' on '+adminTs:''}. Your data may have been updated by our dietitian team.
+    </div>`;
+  }
+  const tl=(str,cls='')=>{
     if(!str) return '<span style="color:var(--muted);font-size:13px;">—</span>';
     return str.split(',').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="tag ${cls}">${s}</span>`).join('');
   };
-  const row = (k,v) => `<div class="dr"><span class="dk">${k}</span><span class="dv">${v||'—'}</span></div>`;
+  const row=(k,v)=>`<div class="dr"><span class="dk">${k}</span><span class="dv">${v||'—'}</span></div>`;
+  const safeName=(displayName||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
 
-  panel.innerHTML = `
+  panel.innerHTML=`
     <div class="dh">
       <div class="dh-av">${initials}</div>
       <div>
         <div class="dh-name">${displayName||'—'}</div>
-        <div class="dh-sub">Submitted on ${d.timestamp||'—'}</div>
+        <div class="dh-sub">Submitted on ${d.timestamp||'—'}${d.updatedAt?` · Updated`:''}${d.adminUpdatedAt?' · Admin updated':''}</div>
         ${relBadge}
       </div>
     </div>
+    ${adminBadge}
 
-    <div class="d-grid">
-      <div class="mc"><div class="mc-l">BMI</div><div class="mc-v">${d.bmi||'—'}</div><div class="mc-s">${d.bmi_category||''}</div></div>
-      <div class="mc"><div class="mc-l">Body Fat</div><div class="mc-v">${d.body_fat||'—'}</div><div class="mc-s">percent</div></div>
-      <div class="mc"><div class="mc-l">Daily Calories</div><div class="mc-v">${d.daily_calories||'—'}</div><div class="mc-s">kcal / day</div></div>
+    <!-- ── Section 1: BMI Results ── -->
+    <div class="ds">
+      <div class="dst">📊 BMI Results</div>
+      <div class="d-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="mc"><div class="mc-l">BMI</div><div class="mc-v">${d.bmi||'—'}</div><div class="mc-s">${d.bmi_category||''}</div></div>
+        <div class="mc"><div class="mc-l">Present Weight</div><div class="mc-v">${d.weight_kg?d.weight_kg+' kg':'—'}</div><div class="mc-s">Current body weight</div></div>
+        <div class="mc"><div class="mc-l">Ideal Weight</div><div class="mc-v" style="color:#60d394;">${d.ideal_weight||'—'}</div><div class="mc-s">Range: ${d.ideal_range||'—'}</div></div>
+      </div>
+      <div class="d-grid" style="grid-template-columns:1fr 1fr;margin-top:10px;">
+        <div class="mc"><div class="mc-l">Target Weight</div><div class="mc-v">${d.target_weight||'—'}</div><div class="mc-s">Goal to reach</div></div>
+        <div class="mc"><div class="mc-l">${d.weight_direction==='loss'?'To Lose':d.weight_direction==='gain'?'To Gain':'Status'}</div><div class="mc-v">${d.weight_change||'—'}</div><div class="mc-s">${d.weight_direction==='maintain'?'Already ideal! 🎉':d.weight_direction==='loss'?'Weight loss needed':'Weight gain needed'}</div></div>
+      </div>
     </div>
 
+    <!-- ── Section 2: Goal ── -->
+    ${d.goal_rate?`<div class="ds"><div class="dst">🎯 Your Goal</div>
+      <div style="background:linear-gradient(135deg,#1a9e8f,#14786c);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:10px;">
+        <div style="font-size:1rem;font-weight:700;color:#fff;">${d.goal_statement||'—'}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:4px;">${d.goal_rate||''} kg/week · ${d.goal_rate_label||''}</div>
+      </div>
+    </div>`:''}
+
+    <!-- ── Section 3: Calories ── -->
+    <div class="ds">
+      <div class="dst">🔥 Calorie Breakdown</div>
+      <div class="d-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="mc" style="border-left:4px solid #5bc8f5;"><div class="mc-l">BMR</div><div class="mc-v" style="color:#5bc8f5;">${d.bmr||'—'}</div><div class="mc-s">kcal/day (at rest)</div></div>
+        <div class="mc" style="border-left:4px solid var(--teal);"><div class="mc-l">Maintenance</div><div class="mc-v">${d.maintenance_calories||'—'}</div><div class="mc-s">kcal/day</div></div>
+      </div>
+      <div class="mc" style="background:linear-gradient(135deg,var(--teal),var(--teal-dark));border:none;margin:10px 0;border-radius:var(--radius-sm);padding:18px;text-align:center;">
+        <div class="mc-l" style="color:rgba(255,255,255,0.75);">⭐ Daily Calorie Target</div>
+        <div class="mc-v" style="color:#fff;font-size:2rem;">${d.daily_calories||'—'}</div>
+        <div class="mc-s" style="color:rgba(255,255,255,0.75);">kcal/day</div>
+      </div>
+      <div class="d-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="mc" style="border-left:4px solid #f4a742;"><div class="mc-l">Timeline to Goal</div><div class="mc-v" style="color:#f4a742;font-size:1.2rem;">${d.timeline_days?d.timeline_days+' days':'—'}</div><div class="mc-s">${d.timeline_label||'—'}</div></div>
+        <div class="mc" style="border-left:4px solid #a78bfa;"><div class="mc-l">After-Goal Maintenance</div><div class="mc-v" style="color:#a78bfa;">${d.after_goal_calories||'—'}</div><div class="mc-s">kcal/day at goal weight</div></div>
+      </div>
+    </div>
+
+    <!-- ── Section 4: Body Fat ── -->
+    <div class="ds">
+      <div class="dst">🧬 Body Fat Analysis</div>
+      <div class="d-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="mc"><div class="mc-l">Body Fat %</div><div class="mc-v">${d.body_fat||'—'}</div><div class="mc-s">${d.body_fat_category||'percent'}</div></div>
+        <div class="mc"><div class="mc-l">Daily Calories (Goal)</div><div class="mc-v">${d.daily_calories||'—'}</div><div class="mc-s">kcal / day</div></div>
+      </div>
+    </div>
+
+    <!-- ── Personal Info ── -->
     <div class="ds">
       <div class="dst">Personal Info</div>
-      ${row('Name (Form)',d.name)}
+      ${row('Name',d.name)}
       ${row('Age',d.age?d.age+' yrs':null)}
       ${row('Gender',d.gender)}
       ${row('Height',d.height_cm?d.height_cm+' cm':null)}
@@ -942,36 +1051,166 @@ function renderDetail(panel, d, relInfo) {
       ${d.phone?row('Phone',d.phone):''}
       ${d.email?row('Email',d.email):''}
     </div>
-
     <div class="ds">
       <div class="dst">Health Info</div>
       <div class="dr"><span class="dk">Health Conditions</span><span class="dv"><div class="tw">${tl(d.health_conditions,'amber')}</div></span></div>
       ${d.allergies?`<div class="dr" style="margin-top:8px;"><span class="dk">Allergies</span><span class="dv"><div class="tw">${tl(d.allergies,'red')}</div></span></div>`:''}
     </div>
-
     <div class="ds">
       <div class="dst">Diet Preferences</div>
       ${row('Diet Type',d.diet_preference)}
-      ${row('Meals Per Day',d.meals_per_day)}
       ${d.num_curries?row('Curries Per Day',d.num_curries):''}
       ${row('Eating Window',d.eating_window)}
       <div class="dr"><span class="dk">Meal Types</span><span class="dv"><div class="tw">${tl(d.meal_types)}</div></span></div>
     </div>
-
     <div class="ds">
       <div class="dst">Food Preferences</div>
       ${d.morning_drinks?`<div class="dr"><span class="dk">Morning Drinks</span><span class="dv"><div class="tw">${tl(d.morning_drinks)}</div></span></div>`:''}
-      ${d.fruits?`<div class="dr" style="margin-top:8px;"><span class="dk">Fruits</span><span class="dv"><div class="tw">${tl(d.fruits)}</div></span></div>`:''}
-      ${d.vegetables?`<div class="dr" style="margin-top:8px;"><span class="dk">Vegetables</span><span class="dv"><div class="tw">${tl(d.vegetables)}</div></span></div>`:''}
-      ${d.nuts_seeds?`<div class="dr" style="margin-top:8px;"><span class="dk">Nuts & Seeds</span><span class="dv"><div class="tw">${tl(d.nuts_seeds)}</div></span></div>`:''}
-      ${d.food_dislikes?`<div class="dr" style="margin-top:8px;"><span class="dk">Food Dislikes</span><span class="dv" style="color:var(--text);white-space:pre-wrap;">${d.food_dislikes}</span></div>`:''}
+      ${d.nuts_seeds?`<div class="dr" style="margin-top:6px;"><span class="dk">Nuts &amp; Seeds</span><span class="dv"><div class="tw">${tl(d.nuts_seeds)}</div></span></div>`:''}
+      ${d.fruits?`<div class="dr" style="margin-top:6px;"><span class="dk">Fruits</span><span class="dv"><div class="tw">${tl(d.fruits)}</div></span></div>`:''}
+      ${d.vegetables?`<div class="dr" style="margin-top:6px;"><span class="dk">Vegetables</span><span class="dv"><div class="tw">${tl(d.vegetables)}</div></span></div>`:''}
+      ${d.sprouts?`<div class="dr" style="margin-top:6px;"><span class="dk">Sprouts</span><span class="dv"><div class="tw">${tl(d.sprouts)}</div></span></div>`:''}
+      ${d.milkshakes?`<div class="dr" style="margin-top:6px;"><span class="dk">Milkshakes</span><span class="dv"><div class="tw">${tl(d.milkshakes)}</div></span></div>`:''}
+      ${d.smoothies?`<div class="dr" style="margin-top:6px;"><span class="dk">Smoothies</span><span class="dv"><div class="tw">${tl(d.smoothies)}</div></span></div>`:''}
+      ${d.porridge_malt?`<div class="dr" style="margin-top:6px;"><span class="dk">Porridge &amp; Malts</span><span class="dv"><div class="tw">${tl(d.porridge_malt)}</div></span></div>`:''}
+      ${d.breakfast?`<div class="dr" style="margin-top:6px;"><span class="dk">Breakfast</span><span class="dv"><div class="tw">${tl(d.breakfast)}</div></span></div>`:''}
+      ${d.chutney?`<div class="dr" style="margin-top:6px;"><span class="dk">Chutney</span><span class="dv"><div class="tw">${tl(d.chutney)}</div></span></div>`:''}
+      ${d.powders_ghee?`<div class="dr" style="margin-top:6px;"><span class="dk">Powders &amp; Ghee</span><span class="dv"><div class="tw">${tl(d.powders_ghee)}</div></span></div>`:''}
+      ${d.non_veg?`<div class="dr" style="margin-top:6px;"><span class="dk">Non-Veg</span><span class="dv"><div class="tw">${tl(d.non_veg)}</div></span></div>`:''}
+      ${d.rice?`<div class="dr" style="margin-top:6px;"><span class="dk">Rice</span><span class="dv"><div class="tw">${tl(d.rice)}</div></span></div>`:''}
+      ${d.millets_grains?`<div class="dr" style="margin-top:6px;"><span class="dk">Millets &amp; Grains</span><span class="dv"><div class="tw">${tl(d.millets_grains)}</div></span></div>`:''}
+      ${d.food_dislikes?`<div class="dr" style="margin-top:8px;"><span class="dk">Food Dislikes</span><span class="dv" style="white-space:pre-wrap;color:#dc2626;">${d.food_dislikes}</span></div>`:''}
     </div>
-
     ${d.symptoms?`<div class="ds"><div class="dst">Symptoms</div><div class="tw">${tl(d.symptoms,'amber')}</div></div>`:''}
-    ${d.comments?`<div class="ds"><div class="dst">Notes & Comments</div>
+    ${d.comments?`<div class="ds"><div class="dst">Notes &amp; Comments</div>
       <p style="font-size:14px;color:var(--muted);background:var(--bg);padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);line-height:1.7;">${d.comments}</p></div>`:''}
-  `;
+    <div class="detail-footer" style="justify-content:space-between;">
+      <button onclick="confirmDelete('${uid}','${safeName}')" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid #dc2626;color:#dc2626;background:transparent;font-family:'DM Sans',sans-serif;transition:all 0.2s;">🗑️ Delete</button>
+      <button class="btn-update" onclick="triggerEditProfile('${uid}','${safeName}')">✏️ Update Profile</button>
+    </div>`;
 }
+
+// ── DIET PLAN TAB ─────────────────────────────────────────
+function renderDietProfileSelect() {
+  const wrap=document.getElementById('diet-profile-select');
+  if (!allProfiles||!allProfiles.length) {
+    wrap.innerHTML=`<div style="color:var(--muted);font-size:13.5px;">Sign in and save a profile first.</div>`;
+    return;
+  }
+  wrap.innerHTML=allProfiles.map(p=>{
+    const uid         = p.userId||p._docId;
+    const isForOther  = p.forSelf===false;
+    const displayName = isForOther?(p.relName||p.name):(p.name||p.relName);
+    const initials    = (displayName||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const isActive    = uid===activeDietId;
+    const safeName    = (displayName||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="diet-chip ${isActive?'active':''}" onclick="selectDietProfile('${uid}',this,'${safeName}')">
+      <div class="diet-chip-av">${initials}</div>
+      <span>${displayName||'—'}</span>
+    </div>`;
+  }).join('');
+}
+
+window.selectDietProfile = async function(uid, chipEl, name) {
+  activeDietId=uid;
+  document.querySelectorAll('.diet-chip').forEach(c=>c.classList.remove('active'));
+  chipEl.classList.add('active');
+  await loadDietPlan(uid, name);
+};
+
+async function loadDietPlan(uid, name) {
+  const content=document.getElementById('diet-plan-content');
+  content.innerHTML=`<div class="loading-state"><div class="spinner"></div><p>Loading plan for ${name}…</p></div>`;
+  try {
+    let dietData=null;
+    // Check Firestore for a dietPlan field
+    try {
+      const user=auth.currentUser;
+      if(user){const snap=await getDoc(doc(db,"accounts",user.uid,"profiles",uid));if(snap.exists()){const d=snap.data();if(d.dietPlan) dietData=d.dietPlan;}}
+    }catch(_){}
+    if(!dietData){
+      try{const snap=await getDoc(doc(db,"submissions",uid));if(snap.exists()){const d=snap.data();if(d.diet_plan) dietData=d.diet_plan;}}catch(_){}
+    }
+    if (dietData) {
+      renderDietPlan(content, dietData);
+    } else {
+      await renderSampleDietPlan(content, uid, name);
+    }
+  } catch(e) {
+    content.innerHTML=`<div class="err-panel">⚠️ ${e.message}</div>`;
+  }
+}
+
+async function renderSampleDietPlan(content, uid, name) {
+  let profileData=null;
+  try{const snap=await getDoc(doc(db,"submissions",uid));if(snap.exists()) profileData=snap.data();}catch(_){}
+  const calories=parseInt(profileData?.daily_calories)||1800;
+  const diet    =profileData?.diet_preference||'Balanced';
+  const meals   =parseInt(profileData?.meals_per_day)||3;
+  const isVeg   =diet.toLowerCase().includes('veg')||diet.toLowerCase().includes('plant');
+  const mealCal =Math.round(calories/meals);
+
+  const vegMeals=[
+    {name:'🌅 Breakfast',time:'7:00 – 8:00 AM',items:['Oats with milk & nuts','Banana or seasonal fruit','Green tea / warm water'],cal:mealCal},
+    {name:'☀️ Mid-Morning',time:'10:00 AM',items:['Mixed fruit bowl','5–6 Almonds','Buttermilk (optional)'],cal:Math.round(mealCal*0.35)},
+    {name:'🍽️ Lunch',time:'1:00 – 1:30 PM',items:['2 chapatis or 1 cup rice','Dal or rajma','Sabzi (seasonal veg)','Salad & curd'],cal:mealCal},
+    {name:'🌤️ Evening Snack',time:'4:00 – 5:00 PM',items:['Sprout chaat or roasted chana','Lemon water or herbal tea'],cal:Math.round(mealCal*0.3)},
+    {name:'🌙 Dinner',time:'7:00 – 8:00 PM',items:['2 chapatis','Sabzi or vegetable soup','Curd or raita'],cal:mealCal},
+  ];
+  const nonVegMeals=[
+    {name:'🌅 Breakfast',time:'7:00 – 8:00 AM',items:['2 boiled / scrambled eggs','Brown bread toast','Orange juice or milk'],cal:mealCal},
+    {name:'☀️ Mid-Morning',time:'10:00 AM',items:['Greek yogurt with honey','A handful of walnuts'],cal:Math.round(mealCal*0.35)},
+    {name:'🍽️ Lunch',time:'1:00 – 1:30 PM',items:['Chicken/fish (100–120 g)','1 cup rice or 2 chapatis','Dal & sabzi','Salad'],cal:mealCal},
+    {name:'🌤️ Evening Snack',time:'4:00 – 5:00 PM',items:['Boiled egg or paneer 50 g','Green tea / black coffee'],cal:Math.round(mealCal*0.3)},
+    {name:'🌙 Dinner',time:'7:00 – 8:00 PM',items:['Lean protein 80–100 g','Steamed vegetables','Clear soup or salad'],cal:mealCal},
+  ];
+  const selected=(isVeg?vegMeals:nonVegMeals).slice(0, Math.min(meals+1, 5));
+
+  content.innerHTML=`
+    <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:18px;font-size:13px;color:#92400e;">
+      📋 <strong>Sample plan</strong> based on ${name}'s profile (${calories} kcal/day · ${diet}). A personalised plan from your dietitian will appear here once assigned.
+    </div>
+    <div class="diet-day">
+      <div class="diet-day-title">📅 Daily Meal Plan</div>
+      <div class="diet-meal-grid">
+        ${selected.map(meal=>`
+          <div class="diet-meal-card">
+            <div class="dmc-label">${meal.name}</div>
+            <div class="dmc-time">🕐 ${meal.time}</div>
+            <div class="dmc-items">${meal.items.map(i=>`<div class="dmc-item">${i}</div>`).join('')}</div>
+            <div class="dmc-cal">🔥 ~${meal.cal} kcal</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="diet-total-bar">
+      <div class="dtb-item"><div class="dtb-val">${calories}</div><div class="dtb-label">Calories / day</div></div>
+      <div class="dtb-item"><div class="dtb-val">${Math.round(calories*0.3/4)}g</div><div class="dtb-label">Protein</div></div>
+      <div class="dtb-item"><div class="dtb-val">${Math.round(calories*0.5/4)}g</div><div class="dtb-label">Carbs</div></div>
+      <div class="dtb-item"><div class="dtb-val">${Math.round(calories*0.2/9)}g</div><div class="dtb-label">Fats</div></div>
+      <div class="dtb-item"><div class="dtb-val">${diet}</div><div class="dtb-label">Diet Type</div></div>
+    </div>`;
+}
+
+function renderDietPlan(content, dietData) {
+  if (Array.isArray(dietData)) {
+    content.innerHTML=`<div>${dietData.map(day=>`
+      <div class="diet-day">
+        <div class="diet-day-title">${day.title||day.day||'Day'}</div>
+        <div class="diet-meal-grid">
+          ${(day.meals||[]).map(meal=>`
+            <div class="diet-meal-card">
+              <div class="dmc-label">${meal.name||''}</div>
+              ${meal.time?`<div class="dmc-time">🕐 ${meal.time}</div>`:''}
+              <div class="dmc-items">${(meal.items||meal.foods||[]).map(i=>`<div class="dmc-item">${i}</div>`).join('')}</div>
+              ${meal.calories||meal.cal?`<div class="dmc-cal">🔥 ~${meal.calories||meal.cal} kcal</div>`:''}
+            </div>`).join('')}
+        </div>
+      </div>`).join('')}</div>`;
+  } else {
+    content.innerHTML=`<pre style="font-size:13px;color:var(--muted);background:var(--bg);padding:14px;border-radius:var(--radius-sm);overflow:auto;">${JSON.stringify(dietData,null,2)}</pre>`;
+  }
+}
+
 </script>
 </body>
 </html>
