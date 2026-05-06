@@ -93,12 +93,29 @@
 
   /* CHIPS — NO X BUTTON */
   .chips-wrap{display:flex;flex-wrap:wrap;gap:10px;}
-  .chip{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;user-select:none;}
+  .chip{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;transition:all 0.2s;user-select:none;position:relative;}
   .chip:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
   .chip.active{background:var(--teal);border-color:var(--teal);color:#fff;}
   .chip-av{width:28px;height:28px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
   .chip.active .chip-av{background:rgba(255,255,255,0.25);color:#fff;}
   .chip-rel{font-size:10.5px;opacity:0.7;font-style:italic;}
+
+  /* CHIP INFO ICON + TOOLTIP */
+  .chip-info-btn{width:18px;height:18px;border-radius:50%;background:rgba(26,158,143,0.15);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;cursor:pointer;border:1px solid rgba(26,158,143,0.3);line-height:1;transition:all 0.2s;position:relative;z-index:2;}
+  .chip-info-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .chip.active .chip-info-btn{background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.4);}
+  .chip.active .chip-info-btn:hover{background:rgba(255,255,255,0.35);}
+  .chip-tooltip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#1c2230;color:#fff;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:400;line-height:1.6;white-space:nowrap;min-width:180px;max-width:260px;white-space:normal;box-shadow:0 8px 24px rgba(0,0,0,0.22);pointer-events:none;opacity:0;visibility:hidden;transition:opacity 0.18s,visibility 0.18s,transform 0.18s;transform:translateX(-50%) translateY(4px);z-index:200;}
+  .chip-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1c2230;}
+  .chip-info-btn:hover .chip-tooltip,.chip-info-btn.tt-open .chip-tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+  .chip-tooltip-row{display:flex;gap:6px;margin-bottom:3px;font-size:11.5px;}
+  .chip-tooltip-row:last-child{margin-bottom:0;}
+  .chip-tooltip-key{color:rgba(255,255,255,0.55);min-width:54px;flex-shrink:0;}
+  .chip-tooltip-val{color:#fff;font-weight:500;}
+
+  /* REGISTRATION CLOSED BANNER */
+  .reg-closed-notice{display:none;background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:#92400e;margin-bottom:12px;align-items:center;gap:8px;}
+  .reg-closed-notice.show{display:flex;}
 
   /* EDIT MODE LIST */
   .edit-list{display:none;flex-direction:column;gap:10px;}
@@ -266,6 +283,9 @@
     <div class="auth-tabs">
       <div class="auth-tab active" id="ptab-login" onclick="switchTab('login')">Sign In</div>
       <div class="auth-tab" id="ptab-create" onclick="switchTab('create')">Create Account</div>
+    </div>
+    <div class="reg-closed-notice" id="reg-closed-notice">
+      🔒 <span><strong>Registrations are currently closed.</strong> New account creation is temporarily unavailable. Please check back later or contact support.</span>
     </div>
     <div id="form-login">
       <div class="fg"><label>Email</label><input type="email" id="li-email" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doSignIn()"/></div>
@@ -711,11 +731,36 @@ function rebuildChipsData() {
 
 // ── AUTH TABS ─────────────────────────────────────────────
 window.switchTab = tab => {
+  // Block switching to "create" tab if registrations are closed
+  if (tab === 'create' && window._regClosed) return;
   ['login','create'].forEach(t => {
     document.getElementById('ptab-'+t).classList.toggle('active', t===tab);
     document.getElementById('form-'+t).style.display = t===tab ? 'block' : 'none';
   });
 };
+
+// Check registration status on load and update UI accordingly
+(async function initRegCheck() {
+  const open = await checkRegistrationOpen();
+  window._regClosed = !open;
+  const tab    = document.getElementById('ptab-create');
+  const notice = document.getElementById('reg-closed-notice');
+  if (!open) {
+    tab.style.opacity = '0.45';
+    tab.style.cursor  = 'not-allowed';
+    tab.title = 'Registrations are currently closed';
+    notice.classList.add('show');
+    // If user somehow already on create tab, switch to login
+    if (document.getElementById('form-create').style.display !== 'none') {
+      switchTab('login');
+    }
+  } else {
+    tab.style.opacity = '';
+    tab.style.cursor  = '';
+    tab.title = '';
+    notice.classList.remove('show');
+  }
+})();
 window.togglePw = function(inputId, btn) {
   const inp = document.getElementById(inputId);
   inp.type  = inp.type === 'text' ? 'password' : 'text';
@@ -790,7 +835,7 @@ window.doCreateAccount = async () => {
   if (pass!==pass2){err.textContent='Passwords do not match';err.style.display='block';return;}
   try {
     const regOpen=await checkRegistrationOpen();
-    if(!regOpen){err.textContent='New registrations are currently closed.';err.style.display='block';return;}
+    if(!regOpen){err.textContent='New registrations are currently closed. Please try again later.';err.style.display='block';window._regClosed=true;const t=document.getElementById('ptab-create');if(t){t.style.opacity='0.45';t.style.cursor='not-allowed';}const n=document.getElementById('reg-closed-notice');if(n)n.classList.add('show');return;}
     const ok=await checkUserNotRestricted(email);
     if(!ok){err.textContent='This email address is not allowed to register.';err.style.display='block';return;}
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
@@ -902,11 +947,21 @@ function renderChips(list, isLocal) {
     const relTag      = isForOther?`<span class="chip-rel">(${p.relation||'Family'})</span>`:'';
     const isActive    = uid===activeId;
     const adminDot    = p.adminUpdatedAt ? `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;" title="Admin updated"></span>` : '';
+    // Info tooltip rows
+    const age    = p.age             ? `<div class="chip-tooltip-row"><span class="chip-tooltip-key">Age</span><span class="chip-tooltip-val">${p.age} yrs</span></div>` : '';
+    const gender = p.gender          ? `<div class="chip-tooltip-row"><span class="chip-tooltip-key">Gender</span><span class="chip-tooltip-val">${p.gender}</span></div>` : '';
+    const diet   = p.diet_preference ? `<div class="chip-tooltip-row"><span class="chip-tooltip-key">Diet</span><span class="chip-tooltip-val">${p.diet_preference}</span></div>` : '';
+    const cal    = p.daily_calories  ? `<div class="chip-tooltip-row"><span class="chip-tooltip-key">Calories</span><span class="chip-tooltip-val">${p.daily_calories} kcal</span></div>` : '';
+    const relRow = isForOther        ? `<div class="chip-tooltip-row"><span class="chip-tooltip-key">For</span><span class="chip-tooltip-val">${p.relation||'Family'}</span></div>` : '';
+    const tooltipBody = age+gender+diet+cal+relRow || `<div style="color:rgba(255,255,255,0.6);font-size:11.5px;">Click chip to view full details</div>`;
     return `<div class="chip ${isActive?'active':''}" data-uid="${uid}" onclick="selectProfile('${uid}',this)">
       <div class="chip-av">${initials}</div>
       <span>${displayName||'—'}</span>
       ${relTag}
       ${adminDot}
+      <span class="chip-info-btn" onclick="event.stopPropagation();this.classList.toggle('tt-open')" title="Quick info">&#x2139;
+        <div class="chip-tooltip">${tooltipBody}</div>
+      </span>
     </div>`;
   }).join('');
 }
@@ -923,6 +978,7 @@ window.selectProfile = async (userId, chipEl) => {
   const panel=document.getElementById('detail-panel');
   panel.classList.add('visible');
   panel.innerHTML=`<div class="loading-state"><div class="spinner"></div><p>Fetching profile data…</p></div>`;
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),50);
 
   try {
     let data=null;
