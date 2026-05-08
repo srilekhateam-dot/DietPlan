@@ -487,7 +487,7 @@
         </div>
         <div class="contact-row">
           <div class="form-group">
-            <label>Phone Number <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+            <label>Phone Number <span style="font-weight:700;color:var(--red);font-size:11px;">*required</span></label>
             <div class="phone-input-wrap"><div class="phone-prefix"><span>🇮🇳</span><span>+91</span></div><input type="tel" id="inp-phone" placeholder="98765 43210" maxlength="10" autocomplete="off"/></div>
           </div>
           <div class="form-group"><label>Email Address <span style="font-weight:400;color:var(--muted);">(optional)</span></label><input type="email" id="inp-email" placeholder="you@example.com" autocomplete="off"/></div>
@@ -498,6 +498,10 @@
         </div>
       </div>
       <button class="btn-primary" onclick="generateResult()">Click Here to Generate Result →</button>
+      <div id="generate-hint" style="margin-top:12px;background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:#92400e;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.3rem;">👆</span>
+        <span><strong>Important:</strong> Click "Generate Result" above to calculate your BMI and calorie targets before submitting the form. You must generate your result first — the Submit button will not work otherwise.</span>
+      </div>
 
       <!-- ── INLINE RESULTS ── -->
       <div id="inline-results" style="display:none; margin-top:32px; border-top:2px solid var(--teal); padding-top:28px;">
@@ -1146,6 +1150,26 @@
   </div>
 </div>
 
+<!-- Name Match Popup -->
+<div class="modal-overlay" id="nameMatchModal" style="z-index:1200;">
+  <div class="modal-box" style="max-width:420px; width:94%;">
+    <div class="modal-header">
+      <h3 style="font-family:'Fraunces',serif; font-size:1.1rem;">Profile Already Exists</h3>
+      <span class="close-btn" onclick="closeNameMatchModal()">✕</span>
+    </div>
+    <div style="padding:20px 22px;">
+      <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;font-size:13.5px;color:#92400e;">
+        <strong>⚠️ A profile named "<span id="name-match-name"></span>" already exists in your account.</strong>
+      </div>
+      <p style="font-size:13.5px; color:var(--muted); margin-bottom:18px;">Would you like to edit the existing profile, or continue filling in a new profile?</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button class="btn-primary" style="margin:0;" onclick="goEditExistingProfile()">✏️ Edit Existing Profile</button>
+        <button class="btn-secondary" style="margin:0;" onclick="closeNameMatchModal()">➕ Continue as New Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="accountModal" class="modal-overlay" style="z-index:1100;">
   <div class="modal-box" style="max-width:420px; width:94%;">
     <div class="modal-header"><h3 style="font-family:'Fraunces',serif; font-size:1.1rem;">Save Your Profile</h3><span class="close-btn" onclick="skipAccount()">✕</span></div>
@@ -1234,7 +1258,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC5U_ZtL6ki_LnOS-L6U0jIkWj3vVny1XQ",
@@ -1392,19 +1416,35 @@ window.proceedToAuth = function() {
 
 // Only two tabs now (no skip/save locally)
 window.switchAuthTab = function(tab) {
+  if (tab === 'create' && window._regClosed) {
+    applyModalRegClosedState(); return;
+  }
   ['create','login'].forEach(t => { document.getElementById('tab-'+t)?.classList.toggle('active', t===tab); });
   document.getElementById('auth-create').style.display = tab==='create'?'block':'none';
   document.getElementById('auth-login').style.display = tab==='login'?'block':'none';
 };
 
 async function checkRegistrationOpen() {
-  try { const snap = await getDoc(doc(db, "settings", "global")); if (snap.exists() && snap.data().registrationClosed === true) return false; } catch(e) {}
-  return true;
+  try {
+    const snap = await getDoc(doc(db, "settings", "global"));
+    if (snap.exists() && snap.data().registrationClosed === true) return false;
+    return true;
+  } catch(e) {
+    // On read error, fail open so a Firestore hiccup doesn't permanently
+    // lock the UI — the createAccount() submission check is the real gate.
+    return true;
+  }
 }
 
 async function checkFormSubmissionOpen() {
-  try { const snap = await getDoc(doc(db, "settings", "global")); if (snap.exists() && snap.data().formSubmissionClosed === true) return false; } catch(e) {}
-  return true;
+  try {
+    const snap = await getDoc(doc(db, "settings", "global"));
+    if (snap.exists() && snap.data().formSubmissionClosed === true) return false;
+    return true;
+  } catch(e) {
+    // Fail open: form visibility is not a security gate — show it on read errors
+    return true;
+  }
 }
 
 function applyFormClosedState(closed) {
@@ -1422,14 +1462,59 @@ async function checkUserNotRestricted(email) {
   return true;
 }
 
-(async () => { const open = await checkFormSubmissionOpen(); applyFormClosedState(!open); })();
+// Default to closed until Firestore confirms otherwise — prevents race where
+// a fast user clicks "Create Account" before the async check resolves.
+window._regClosed = true;
+
+// Live listener on settings/global — reflects admin changes instantly without reload
+onSnapshot(doc(db, "settings", "global"), (snap) => {
+  if (snap.exists()) {
+    const data = snap.data();
+    const formClosed = !!data.formSubmissionClosed;
+    const regClosed  = !!data.registrationClosed;
+    applyFormClosedState(formClosed);
+    window._regClosed = regClosed;
+    // If the account modal is currently open, update it live too
+    const modal = document.getElementById('accountModal');
+    if (modal && modal.style.display === 'flex') {
+      if (regClosed) {
+        applyModalRegClosedState();
+      } else {
+        // Restore Create Account tab when registrations re-open
+        ['create','login'].forEach(t => {
+          const tab = document.getElementById('tab-'+t);
+          if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.style.pointerEvents=''; tab.title=''; }
+        });
+        document.getElementById('tab-create')?.classList.add('active');
+        document.getElementById('auth-create').style.display = 'block';
+        document.getElementById('auth-login').style.display = 'none';
+        const notice = document.getElementById('modal-reg-closed-notice');
+        if (notice) notice.style.display = 'none';
+      }
+    }
+  } else {
+    // Document doesn’t exist yet — treat both as open
+    applyFormClosedState(false);
+    window._regClosed = false;
+  }
+}, (err) => {
+  // On read error, keep last known state — do NOT unlock registration on error
+  console.warn("settings read error:", err.message);
+});
 
 window.createAccount = async function() {
+  const errEl = document.getElementById('acct-err');
+  errEl.style.display = 'none';
+  // Synchronous check first — no async gap
+  if (window._regClosed) {
+    errEl.textContent = 'New registrations are currently closed.';
+    errEl.style.display = 'block';
+    applyModalRegClosedState();
+    return;
+  }
   const email = document.getElementById('acct-email').value.trim();
   const pass = document.getElementById('acct-pass').value;
   const pass2 = document.getElementById('acct-pass2').value;
-  const errEl = document.getElementById('acct-err');
-  errEl.style.display = 'none';
   if (!email || !/\S+@\S+\.\S+/.test(email)) { errEl.textContent = 'Enter a valid email address'; errEl.style.display='block'; return; }
   if (pass.length < 6) { errEl.textContent = 'Password must be at least 6 characters'; errEl.style.display='block'; return; }
   if (pass !== pass2) { errEl.textContent = 'Passwords do not match'; errEl.style.display='block'; return; }
@@ -1482,6 +1567,27 @@ function showAccountDone(title, msg) {
   _pendingFormData = null;
 }
 
+function applyModalRegClosedState() {
+  const createTab  = document.getElementById('tab-create');
+  const authCreate = document.getElementById('auth-create');
+  const authLogin  = document.getElementById('auth-login');
+  const loginTab   = document.getElementById('tab-login');
+  if (createTab) { createTab.style.opacity='0.45'; createTab.style.cursor='not-allowed'; createTab.style.pointerEvents='none'; createTab.title='Registrations closed'; createTab.classList.remove('active'); }
+  if (authCreate) authCreate.style.display = 'none';
+  if (authLogin)  authLogin.style.display  = 'block';
+  loginTab?.classList.add('active');
+  let closedNotice = document.getElementById('modal-reg-closed-notice');
+  if (!closedNotice) {
+    closedNotice = document.createElement('div');
+    closedNotice.id = 'modal-reg-closed-notice';
+    closedNotice.style.cssText = 'background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#7f1d1d;margin-bottom:12px;font-weight:600;';
+    closedNotice.innerHTML = '🔒 <strong>New registrations are currently closed.</strong> You can still sign in to an existing account to save your profile.';
+    const authStepAuth = document.getElementById('acct-step-auth');
+    if (authStepAuth) authStepAuth.insertBefore(closedNotice, authStepAuth.firstChild);
+  }
+  closedNotice.style.display = 'block';
+}
+
 function openAccountModal(formData) {
   _pendingFormData = formData;
   _isForSelf = formData.plan_for_self !== false;
@@ -1493,12 +1599,45 @@ function openAccountModal(formData) {
   document.getElementById('acct-err').style.display = 'none';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('accountModal').style.display = 'flex';
-  // Reset to Create tab
-  ['create','login'].forEach(t => document.getElementById('tab-'+t)?.classList.remove('active'));
-  document.getElementById('tab-create')?.classList.add('active');
-  document.getElementById('auth-create').style.display = 'block';
-  document.getElementById('auth-login').style.display = 'none';
+
+  // Reset tabs to a clean state
+  ['create','login'].forEach(t => {
+    const tab = document.getElementById('tab-'+t);
+    if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.title=''; }
+  });
+
+  // Immediately apply closed state from cached value — no async gap
+  if (window._regClosed) {
+    applyModalRegClosedState();
+  } else {
+    document.getElementById('tab-create')?.classList.add('active');
+    document.getElementById('auth-create').style.display = 'block';
+    document.getElementById('auth-login').style.display = 'none';
+    const notice = document.getElementById('modal-reg-closed-notice');
+    if (notice) notice.style.display = 'none';
+  }
+
+  // Also do a fresh Firestore check to keep the cached value up to date
+  (async () => {
+    const regOpen = await checkRegistrationOpen();
+    window._regClosed = !regOpen;
+    if (!regOpen) {
+      applyModalRegClosedState();
+    } else {
+      // Registrations are open — restore the Create Account tab if it was locked
+      ['create','login'].forEach(t => {
+        const tab = document.getElementById('tab-'+t);
+        if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.style.pointerEvents=''; tab.title=''; }
+      });
+      document.getElementById('tab-create')?.classList.add('active');
+      document.getElementById('auth-create').style.display = 'block';
+      document.getElementById('auth-login').style.display = 'none';
+      const notice = document.getElementById('modal-reg-closed-notice');
+      if (notice) notice.style.display = 'none';
+    }
+  })();
 }
+
 
 function setProgress(step) {
   const labels = ['Step 1 of 4 — Your Body Metrics','Step 2 of 4 — Health Info','Step 3 of 4 — Preferences','Step 4 of 4 — Symptoms & Submit'];
@@ -1579,6 +1718,28 @@ function validate() {
   ];
   let ok = true;
   fields.forEach(f => { const fg = document.getElementById(f.id); const valid = f.check(document.getElementById(f.inp).value); fg.classList.toggle('has-error', !valid); if(!valid) ok = false; });
+
+  // Phone number validation (required, must be 10 digits)
+  const phoneVal = (document.getElementById('inp-phone')?.value || '').replace(/\s/g,'');
+  const phoneWrap = document.getElementById('inp-phone')?.closest('.phone-input-wrap');
+  const phoneFg = document.getElementById('inp-phone')?.closest('.form-group');
+  const phoneValid = /^\d{10}$/.test(phoneVal);
+  if (phoneWrap) phoneWrap.style.borderColor = phoneValid ? '' : '#dc2626';
+  if (!phoneValid) {
+    ok = false;
+    if (!document.getElementById('phone-err-msg')) {
+      const msg = document.createElement('div');
+      msg.id = 'phone-err-msg';
+      msg.style.cssText = 'font-size:11.5px;color:#dc2626;margin-top:4px;font-weight:600;';
+      msg.textContent = '⚠️ Phone number is required (10 digits)';
+      if (phoneFg) phoneFg.appendChild(msg);
+    }
+    document.getElementById('phone-err-msg').style.display = 'block';
+  } else {
+    if (phoneWrap) phoneWrap.style.borderColor = '';
+    const msg = document.getElementById('phone-err-msg');
+    if (msg) msg.style.display = 'none';
+  }
   return ok;
 }
 
@@ -1818,6 +1979,8 @@ function generateResult() {
 
   const inlineRes = g('inline-results');
   inlineRes.style.display = 'block';
+  const genHint = document.getElementById('generate-hint');
+  if (genHint) genHint.style.display = 'none';
   setTimeout(() => inlineRes.scrollIntoView({behavior:'smooth', block:'start'}), 200);
 
   // Show health, prefs, symptoms sections
@@ -1847,6 +2010,54 @@ document.getElementById('inp-gender').addEventListener('change', function () {
   if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; document.getElementById('inp-preg').value=''; }
 });
 
+// ── NAME-MATCH CHECK ──
+let _nameMatchProfile = null;
+let _nameCheckTimeout = null;
+
+document.getElementById('inp-name')?.addEventListener('blur', function() {
+  const enteredName = this.value.trim().toLowerCase();
+  if (!enteredName) return;
+  const user = auth.currentUser;
+  if (!user) return; // Only check if signed in
+  // Check against Firestore profiles
+  clearTimeout(_nameCheckTimeout);
+  _nameCheckTimeout = setTimeout(async () => {
+    try {
+      const { collection: col, getDocs: gd } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+      const profilesSnap = await gd(col(db, "accounts", user.uid, "profiles"));
+      _nameMatchProfile = null;
+      profilesSnap.forEach(d => {
+        const pdata = d.data();
+        if ((pdata.name||'').trim().toLowerCase() === enteredName) {
+          _nameMatchProfile = { id: d.id, name: pdata.name };
+        }
+      });
+      if (_nameMatchProfile) {
+        document.getElementById('name-match-name').textContent = _nameMatchProfile.name;
+        document.getElementById('nameMatchModal').style.display = 'flex';
+      }
+    } catch(e) { /* ignore */ }
+  }, 400);
+});
+
+window.closeNameMatchModal = function() {
+  document.getElementById('nameMatchModal').style.display = 'none';
+};
+
+window.goEditExistingProfile = async function() {
+  if (!_nameMatchProfile) return;
+  closeNameMatchModal();
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
+    const { getDoc: gd2 } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const subSnap = await gd2(doc(db, "submissions", _nameMatchProfile.id));
+    if (!subSnap.exists()) { alert('Profile data not found. Please try editing from your Profile page.'); return; }
+    // Redirect to profile page to edit
+    window.location.href = 'profile.html';
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
 // ── CONFIRM CLEAR ──
 window.askClearConfirm = function() {
   document.getElementById('confirmClearModal').classList.add('show');
@@ -1873,6 +2084,36 @@ window.closeProfileUpdatedModal = function() {
 
 // ── SUBMIT ──
 async function submitForm() {
+  // Guard: require Generate Result to have been clicked first
+  if (!_lastCalcData) {
+    const genBtn = document.querySelector('[onclick="generateResult()"]');
+    const genHint = document.getElementById('generate-hint');
+    if (genBtn) {
+      genBtn.style.boxShadow = '0 0 0 5px rgba(220,38,38,0.35)';
+      genBtn.style.transform = 'scale(1.03)';
+      genBtn.style.background = '#dc2626';
+      genBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        genBtn.style.boxShadow = '';
+        genBtn.style.transform = '';
+        genBtn.style.background = '';
+      }, 2200);
+    }
+    if (genHint) {
+      genHint.style.display = 'flex';
+      genHint.style.background = '#fef2f2';
+      genHint.style.borderColor = '#fca5a5';
+      genHint.style.color = '#7f1d1d';
+      genHint.innerHTML = '<span style="font-size:1.3rem;">⚠️</span><span><strong>Action required:</strong> Please click "Click Here to Generate Result" above before submitting. Your BMI and calorie data must be calculated first.</span>';
+      setTimeout(() => {
+        genHint.style.background = '';
+        genHint.style.borderColor = '';
+        genHint.style.color = '#92400e';
+      }, 2200);
+    }
+    return;
+  }
+
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Submitting…'; btn.style.opacity = '0.7'; btn.style.cursor = 'not-allowed';
 
@@ -2286,6 +2527,18 @@ function restoreDraft() {
         submitBtn.parentElement.insertBefore(banner, submitBtn);
       }
     }
+
+    // Auto-generate results so the inline results section is populated when editing
+    setTimeout(() => {
+      const wt = parseFloat(document.getElementById('inp-weight')?.value);
+      const ht = parseFloat(document.getElementById('inp-height')?.value);
+      const age = parseFloat(document.getElementById('inp-age')?.value);
+      const gender = document.getElementById('inp-gender')?.value;
+      const activity = document.getElementById('inp-activity')?.value;
+      if (wt && ht && age && gender && activity) {
+        generateResult();
+      }
+    }, 350);
   }
 } // ← THIS CLOSING BRACE closes restoreDraft()
 
