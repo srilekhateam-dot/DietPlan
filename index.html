@@ -22,14 +22,14 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
 
   .landing-overview { background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 70%); border-bottom: 1px solid var(--border); padding: 52px 24px 36px; }
   .landing-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
   .landing-badge { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
   .landing-title { font-family: 'Fraunces', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 14px; }
   .landing-title em { color: var(--teal); font-style: italic; }
-  .landing-desc { color: #374151; font-size: 14.5px; line-height: 1.75; margin-bottom: 20px; }
+  .landing-desc { color: #374151; font-size: 16px; line-height: 1.75; margin-bottom: 20px; }
   .landing-nutrients { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
   .ln-chip { padding: 6px 14px; border-radius: 50px; background: var(--white); border: 1.5px solid var(--border); font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none; transition: all 0.2s; }
   .ln-chip:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
@@ -39,7 +39,7 @@
   .ln-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,158,143,0.1); }
   .ln-card-icon { font-size: 1.8rem; margin-bottom: 6px; }
   .ln-card-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 3px; }
-  .ln-card-sub { font-size: 11.5px; color: var(--muted); }
+  .ln-card-sub { font-size: 13px; color: var(--muted); font-weight: 700; }
   .landing-cta-row { text-align: center; margin-top: 32px; }
   .btn-get-started { display: inline-block; background: var(--teal); color: #fff; text-decoration: none; padding: 13px 36px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; transition: background 0.2s, transform 0.15s; }
   .btn-get-started:hover { background: var(--teal-dark); transform: translateY(-1px); }
@@ -50,13 +50,13 @@
   .nav-right { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; justify-content: flex-end; }
   .nav-links { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; flex: 1; justify-content: flex-end; }
   .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a { flex: 0 0 auto; white-space: nowrap; text-decoration: none; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
+  .nav-links a { flex: 0 0 auto; white-space: nowrap; text-decoration: none; color: var(--muted); font-size: 14.5px; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
   .nav-links a:hover, .nav-links a.active { background: var(--teal-light); color: var(--teal); }
 
   .hero { text-align: center; padding: 40px 24px 32px; background: linear-gradient(160deg, #f0faf9 0%, #f5f6f8 60%); border-bottom: 1px solid var(--border); }
   .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
   .hero h1 em { color: var(--teal); font-style: italic; }
-  .hero p { color: var(--muted); max-width: 460px; margin: 0 auto; font-size: 14.5px; }
+  .hero p { color: var(--muted); max-width: 460px; margin: 0 auto; font-size: 16px; }
 
   .progress-wrap { max-width: 1120px; margin: 0 auto 10px; display: flex; gap: 8px; align-items: center; }
   .progress-step { flex: 1; height: 4px; border-radius: 4px; background: var(--border); transition: background 0.5s; }
@@ -74,8 +74,8 @@
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group.full { grid-column: 1 / -1; }
-  .form-group label { font-size: 12.5px; font-weight: 600; color: var(--text); }
-  .form-group input, .form-group select, .form-group textarea { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+  .form-group label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .form-group input, .form-group select, .form-group textarea { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white); }
   .form-group textarea { resize: vertical; min-height: 80px; }
 
@@ -83,7 +83,7 @@
   .phone-input-wrap:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white); }
   .phone-prefix { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: #f0f2f4; border-right: 1.5px solid var(--border); font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; user-select: none; }
   .phone-input-wrap input { border: none !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; flex: 1; }
-  .contact-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 5px; padding: 5px 10px; background: #f0faf9; border-radius: 6px; border: 1px solid #c8ede9; width: 100%; grid-column: 1 / -1; }
+  .contact-hint { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); margin-top: 5px; padding: 5px 10px; background: #f0faf9; border-radius: 6px; border: 1px solid #c8ede9; width: 100%; grid-column: 1 / -1; }
   .contact-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 
   .btn-primary { background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; display: block; width: 100%; margin-top: 24px; }
@@ -92,7 +92,7 @@
   .btn-secondary { background: var(--bg); color: var(--muted); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 32px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 10px; }
   .btn-secondary:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
 
-  /* ── BMI RESULTS GRID (new layout) ── */
+  /* ── BMI RESULTS GRID ── */
   .bmi-results-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -101,22 +101,20 @@
   }
   .metric-card { background: var(--bg); border-radius: var(--radius-sm); padding: 20px 16px; text-align: center; border: 1px solid var(--border); }
   .metric-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  /* Inline unit display */
   .metric-value { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; justify-content: center; gap: 5px; }
   .metric-value .unit { font-size: 0.9rem; font-weight: 500; font-family: 'DM Sans', sans-serif; opacity: 0.75; }
-  .metric-sub { font-size: 12px; color: var(--muted); }
+  .metric-sub { font-size: 13.5px; font-weight: 700; color: var(--muted); }
 
   .bmi-bar-wrap { margin-top: 14px; }
   .bmi-bar-track { position: relative; height: 10px; border-radius: 6px; margin-bottom: 6px; overflow: visible; background: linear-gradient(to right, #5bc8f5 0% 23%, #60d394 23% 50%, #f4a742 50% 75%, #e74c3c 75% 100%); }
   .bmi-marker-pin { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: var(--white); border: 3px solid #1c2230; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: left 0.8s cubic-bezier(.4,0,.2,1), border-color 0.4s; z-index: 2; }
-  .bmi-zones { display: flex; font-size: 9.5px; margin-top: 2px; }
+  .bmi-zones { display: flex; font-size: 11px; margin-top: 2px; }
   .bmi-zone { flex: 1; text-align: center; font-weight: 600; }
   .bmi-zone:first-child { text-align: left; }
   .bmi-zone:last-child { text-align: right; }
-  .bmi-cat-label { margin-top: 6px; font-size: 12px; font-weight: 700; text-align: center; }
 
   .chip-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .chip { padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
+  .chip { padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
   .chip:hover { border-color: var(--teal); color: var(--teal); }
   .chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
 
@@ -125,7 +123,7 @@
   .time-chip:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
   .time-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
   .tc-hrs { font-size: 11px; opacity: 0.7; }
-  .time-chip-hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+  .time-chip-hint { font-size: 13px; font-weight: 700; color: var(--muted); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
 
   .accordion-item { border: 1.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden; }
   .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 14.5px; background: var(--bg); transition: background 0.2s; user-select: none; }
@@ -151,7 +149,7 @@
   .health-option-other-input { margin: 0 16px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: var(--bg); outline: none; width: calc(100% - 32px); display: none; }
   .health-option-other-input:focus { border-color: var(--teal); background: var(--white); }
   .selected-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .tag { background: var(--teal-light); color: var(--teal-dark); border-radius: 20px; padding: 3px 10px 3px 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .tag { background: var(--teal-light); color: var(--teal-dark); border-radius: 20px; padding: 3px 10px 3px 12px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 5px; }
   .tag-x { cursor: pointer; font-weight: 700; color: var(--teal); }
 
   .health-search-input { width: 100%; border: none; border-bottom: 1.5px solid var(--border); padding: 9px 14px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: #f8fafb; outline: none; transition: border-color 0.2s; }
@@ -171,35 +169,35 @@
   .msdd-option:hover { background: var(--teal-light); }
   .msdd-option input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
   .msdd-option-name { font-weight: 600; color: var(--text); }
-  .msdd-option-nutrients { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .msdd-option-nutrients { font-size: 13px; font-weight: 700; color: var(--muted); margin-top: 1px; }
   .msdd-option.hidden { display: none; }
   .msdd-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .msdd-empty { padding: 14px; font-size: 13px; color: var(--muted); text-align: center; }
 
-  .error-msg { font-size: 11.5px; color: #e74c3c; margin-top: 3px; display: none; }
+  .error-msg { font-size: 13px; font-weight: 700; color: #e74c3c; margin-top: 3px; display: none; }
   .form-group.has-error input, .form-group.has-error select { border-color: #e74c3c; }
   .form-group.has-error .error-msg { display: block; }
 
   .submit-row { display: flex; gap: 14px; margin-top: 24px; }
   .submit-row .btn-primary, .submit-row .btn-secondary { margin: 0; }
 
-  .read-more-link { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-weight: 600; font-size: 13.5px; text-decoration: none; margin-top: 10px; padding: 6px 0; border-bottom: 1.5px solid transparent; transition: border-color 0.2s; }
-  .read-more-link:hover { border-color: var(--teal); }
-
   .consent-box { display: flex; align-items: flex-start; gap: 12px; background: #f0faf9; border: 1.5px solid #c8ede9; border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 20px; cursor: pointer; }
   .consent-box input[type="checkbox"] { accent-color: var(--teal); width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
-  .consent-box label { font-size: 13px; color: #374151; line-height: 1.5; cursor: pointer; }
+  .consent-box label { font-size: 14.5px; color: #374151; line-height: 1.5; cursor: pointer; }
   .consent-box label strong { color: var(--teal-dark); }
   .whatsapp-icon { color: #25D366; font-weight: 700; }
 
   .section-divider { height: 1px; background: var(--border); margin: 24px 0; }
-  .sub-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
+  .sub-label { font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
   .sub-chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
   .sub-chip { padding: 6px 14px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--bg); font-size: 12.5px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.2s; user-select: none; }
   .sub-chip.active { background: var(--teal); border-color: var(--teal); color: #fff; }
   .drink-options { margin-top: 10px; }
   .meals-select { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); outline: none; width: 100%; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
   .meals-select:focus { border-color: var(--teal); }
+
+  /* Activity select — description text below option */
+  .form-group select option { font-size: 13.5px; padding: 6px 0; }
 
   .hidden-section {
     display: block;
@@ -258,10 +256,6 @@
   .forgot-link:hover { text-decoration:underline; }
 
   #forgotModal .modal-box { max-width:360px; }
-  .fp-step { }
-  .fp-msg { font-size:13px; color:var(--muted); margin-bottom:14px; line-height:1.6; }
-  .fp-err { display:none; font-size:12px; color:#dc2626; background:#fef2f2; padding:8px 12px; border-radius:8px; margin-bottom:10px; }
-  .fp-suc { display:none; font-size:13px; color:#065f46; background:#ecfdf5; padding:10px 14px; border-radius:8px; margin-bottom:10px; font-weight:600; }
 
   /* ── GOAL RATE BUTTONS ─── */
   .goal-rate-btn { transition: all 0.2s; cursor: pointer; }
@@ -272,18 +266,52 @@
   .goal-rate-btn.active-goal .grb-kcal { color: #fff !important; opacity: 1 !important; }
 
   /* ── HIGHLIGHTED GOAL CALORIES CARD ── */
-  .goal-cal-highlight {
+  /* .goal-cal-highlight {
     background: linear-gradient(135deg, #1a9e8f 0%, #14786c 100%) !important;
     border: none !important;
     box-shadow: 0 4px 20px rgba(26,158,143,0.35) !important;
   }
   .goal-cal-highlight .metric-label { color: rgba(255,255,255,0.8) !important; }
   .goal-cal-highlight .metric-value { color: #fff !important; font-size: 2.4rem !important; }
-  .goal-cal-highlight .metric-sub { color: rgba(255,255,255,0.75) !important; }
+  .goal-cal-highlight .metric-sub { color: rgba(255,255,255,0.75) !important; } */
+
+
+  .goal-cal-highlight{
+  background: #f3f4f6 !important;
+  border: 1px solid #066f89 !important;
+  border-left: 4px solid var(--teal) !important;
+  box-shadow: none !important;
+}
+
+.goal-cal-highlight .metric-label{
+  color: #6b7280 !important;
+}
+
+.goal-cal-highlight .metric-value{
+  color: var(--teal) !important;
+  font-size: 2.2rem !important;
+}
+
+.goal-cal-highlight .metric-sub{
+  color: #6b7280 !important;
+}
+
+.goal-cal-highlight .metric-sub *{
+  color: inherit !important;
+}
+.goal-cal-highlight .metric-value .unit{
+  font-size: 0.72rem !important;
+   color: var(--teal) !important;
+  font-weight: 500;
+  opacity: 0.9 !important;
+  position: relative;
+  top: -1px;
+
+}
   .goal-cal-highlight .gcal-badge {
     display: inline-block;
     background: rgba(255,255,255,0.2);
-    color: #fff;
+    color: var(--teal) ;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -291,6 +319,21 @@
     border-radius: 20px;
     margin-top: 6px;
   }
+
+  /* ── AFTER-GOAL ALL ACTIVITIES TABLE ── */
+  .activity-cal-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  .activity-cal-table th { background: #f0faf9; color: var(--teal-dark); font-weight: 700; font-size: 10.5px; letter-spacing: 0.5px; text-transform: uppercase; padding: 8px 12px; text-align: left; border-bottom: 1.5px solid #c8ede9; }
+  .activity-cal-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; line-height: 1.4; }
+  .activity-cal-table tr:last-child td { border-bottom: none; }
+  .activity-cal-table tr.active-row td { background: var(--teal); font-weight: 700; color: #fff; }
+  .activity-cal-table tr.active-row td:first-child { border-left: 3px solid var(--teal-dark); }
+  .activity-cal-table tr.active-row .act-name { color: #fff; }
+  .activity-cal-table tr.active-row .act-desc { color: rgba(255,255,255,0.8); }
+  .activity-cal-table tr.active-row .kcal-val { color: #fff; }
+  .activity-cal-table .act-name { font-weight: 600; color: var(--text); display: block; }
+  .activity-cal-table .act-desc { font-size: 12.5px; color: var(--muted); font-weight: 700; display: block; margin-top: 1px; }
+  .activity-cal-table .kcal-val { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--teal); font-weight: 600; }
+  .activity-cal-table .kcal-val.current { color: #fff; }
 
   #form-section {
     position: sticky;
@@ -307,7 +350,7 @@
   .confirm-modal-box { background: #fff; width: 90%; max-width: 380px; border-radius: 16px; padding: 28px 24px; animation: fadeUp 0.25s ease; text-align: center; }
   .confirm-modal-icon { font-size: 2.5rem; margin-bottom: 12px; }
   .confirm-modal-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
-  .confirm-modal-msg { font-size: 13.5px; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
+  .confirm-modal-msg { font-size: 15px; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
   .confirm-modal-btns { display: flex; gap: 12px; }
   .confirm-modal-btns button { flex: 1; padding: 12px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
   .confirm-cancel-btn { background: var(--bg); border: 1.5px solid var(--border); color: var(--muted); }
@@ -329,6 +372,7 @@
     .nav-links a { font-size: 12.5px; padding: 6px 10px; }
     .nav-signin-btn, .nav-profile-btn { flex-shrink: 0; }
     .grb-grid { grid-template-columns: 1fr !important; }
+    .goal-timeline-row { grid-template-columns: 1fr !important; }
   }
 </style>
 
@@ -465,18 +509,31 @@
         <div class="form-group" id="fg-gender"><label>Gender</label><select id="inp-gender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select><span class="error-msg">Please select gender</span></div>
         <div class="form-group" id="fg-height"><label>Height (cm)</label><input type="number" id="inp-height" placeholder="170" min="100" max="250"/><span class="converter-hint" onclick="openHeightModal()" style="cursor:pointer;">📐 ft-inch → cm converter</span><span class="error-msg">Please enter height (100–250 cm)</span></div>
         <div class="form-group" id="fg-weight"><label>Weight (kg)</label><input type="number" id="inp-weight" placeholder="70" min="20" max="300"/><span class="error-msg">Please enter weight</span></div>
-        <div class="form-group" id="fg-activity"><label>Activity Level</label>
+
+        <!-- ── ACTIVITY LEVEL — with descriptions ── -->
+        <div class="form-group" id="fg-activity">
+          <label>Physical Activity Level</label>
           <select id="inp-activity">
             <option value="">Select Activity Level</option>
-            <option value="1.2">Sedentary: little or no exercise</option>
-            <option value="1.375">Sedentary: Exercise 1–3 times/week</option>
-            <option value="1.46">Moderate: Exercise 4–5 times/week</option>
-            <option value="1.55">Moderate: Daily exercise or intense 3–4 times/week</option>
-            <option value="1.72">Heavy: Intense exercise 6–7 times/week</option>
-            <option value="1.9">Heavy: Very intense exercise daily, or physical job</option>
+            <optgroup label="Sedentary">
+              <option value="1.2">Sedentary — Little or no exercise (desk job, mostly sitting all day)</option>
+              <option value="1.375">Lightly Active — Exercise 1–3 days/week (light walks, gentle yoga, weekend activity)</option>
+            </optgroup>
+            <optgroup label="Moderate">
+              <option value="1.46">Moderately Active — Exercise 4–5 days/week (brisk walk daily, cycling, light gym)</option>
+              <option value="1.55">Active — Daily exercise or intense training 3–4 days/week (gym workouts, jogging, sports)</option>
+            </optgroup>
+            <optgroup label="Heavy">
+              <option value="1.72">Very Active — Intense exercise 6–7 days/week (heavy gym, running, athletic training)</option>
+              <option value="1.9">Extremely Active — Very intense daily exercise + physical job (manual labour, pro athlete)</option>
+            </optgroup>
           </select>
+          <!-- <div style="margin-top:6px; font-size:11.5px; color:var(--muted); background:#f8fafb; border:1px solid var(--border); border-radius:7px; padding:8px 12px; line-height:1.6;" id="activity-hint-box">
+            💡 <strong>Examples:</strong> Daily walking counts as Lightly Active. Gym 4–5×/week = Moderately/Active. Construction work or pro sports = Extremely Active.
+          </div> -->
           <span class="error-msg">Please select activity level</span>
         </div>
+
         <div class="form-group" id="fg-waist"><label>Waist (cm)</label><input type="number" id="inp-waist" placeholder="80"/><span class="converter-hint" onclick="openMeasureModal('waist')" style="cursor:pointer;">📏 inch → cm converter</span></div>
         <div class="form-group" id="fg-neck"><label>Neck (cm)</label><input type="number" id="inp-neck" placeholder="38"/><span class="converter-hint" onclick="openMeasureModal('neck')" style="cursor:pointer;">📏 inch → cm converter</span></div>
         <div id="female-extra-row" class="form-group full" style="display:none;">
@@ -508,15 +565,17 @@
         <div class="step-label">Your Result</div>
         <div style="font-family:'Fraunces',serif; font-size:1.3rem; font-weight:600; color:var(--text); margin-bottom:24px;">YOUR RESULT</div>
 
-        <!-- SECTION 1: BMI -->
+        <!-- ═══════════════════════════════════════════
+             SECTION 1: BMI Results
+        ════════════════════════════════════════════ -->
         <div style="margin-bottom:28px;">
           <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 1 — BMI Results</div>
           <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:14px;">BMI Results</div>
 
-          <!-- Row 1: BMI Card (combined) | Present Weight | Ideal Weight + Range -->
+          <!-- Row 1: BMI | Present Weight | Body Fat % -->
           <div class="bmi-results-grid" style="margin-bottom:14px;">
 
-            <!-- Card 1+4 combined: BMI with bar -->
+            <!-- Card 1: BMI with bar -->
             <div class="metric-card">
               <div class="metric-label">Body Mass Index</div>
               <div class="metric-value" id="r-bmi" style="font-size:2rem;">—</div>
@@ -539,21 +598,35 @@
               <div class="metric-sub">Current body weight</div>
             </div>
 
-            <!-- Card 5 combined: Ideal Weight + Range -->
+            <!-- Card 3: Body Fat % -->
             <div class="metric-card">
-              <div class="metric-label">Ideal Weight</div>
-              <div class="metric-value" id="r-ideal-wt" style="font-size:1.8rem; color:#60d394;">—</div>
-              <div class="metric-sub">Range: <span id="r-ideal-range" style="font-weight:700; color:var(--text);">—</span></div>
+              <div class="metric-label">Body Fat %</div>
+              <div class="metric-value" id="r-fat" style="font-size:1.8rem;">—</div>
+              <div class="metric-sub" id="r-fat-cat">Enter waist &amp; neck to calculate</div>
             </div>
 
           </div>
 
-          <!-- Row 2: Target Weight | Weight to Lose/Gain -->
-          <div class="bmi-results-grid" style="grid-template-columns: 1fr 1fr; margin-bottom:0;">
+          <!-- Row 2: Ideal Weight Range | Ideal Weight | To Lose/Gain -->
+          <div class="bmi-results-grid" style="margin-bottom:14px;">
 
-            <!-- Card 3: Target Weight -->
+            <!-- Card 4: Ideal Weight Range -->
             <div class="metric-card">
-              <div class="metric-label">Target Weight</div>
+              <div class="metric-label">Ideal Weight Range</div>
+              <!-- <div class="metric-value" id="r-ideal-range-val" style="font-size:1.3rem; color:#60d394; flex-direction:column; gap:2px;">—</div> -->
+              <div 
+              class="metric-value" 
+              id="r-ideal-range-val" 
+              style="font-size:1.3rem; color:#60d394; display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;"
+            >
+              —
+            </div>
+              <div class="metric-sub">Healthy BMI 18.5 – 24.9</div>
+            </div>
+
+            <!-- Card 5: Ideal Weight -->
+            <div class="metric-card">
+              <div class="metric-label">Ideal Weight</div>
               <div class="metric-value" id="r-target-wt" style="font-size:1.8rem;">—</div>
               <div class="metric-sub">Goal to reach</div>
             </div>
@@ -568,19 +641,45 @@
           </div>
         </div>
 
-        <!-- SECTION 2: Goal -->
+        <!-- ═══════════════════════════════════════════
+             SECTION 2: Your Goal + Calories (merged)
+        ════════════════════════════════════════════ -->
         <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
-          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 2 — Your Goal</div>
-          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:14px;">Your Goal</div>
+          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 2 — Your Goal &amp; Calories</div>
+          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:14px;">Present Weight  Calories</div>
 
-          <!-- Maintain -->
-          <div id="goal-maintain-block" style="display:none; background:#f0faf9; border:1.5px solid #c8ede9; border-radius:var(--radius-sm); padding:16px; text-align:center;">
+        
+
+            <!-- ── Row 3: BMR + Maintenance (before select rate) ── -->
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:20px;">
+              <div class="metric-card" style="border-left:4px solid #5bc8f5;">
+                <div class="metric-label">BMR — Basal Metabolic Rate</div>
+                <div class="metric-value" id="r-bmr" style="font-size:1.8rem; color:#5bc8f5;">—</div>
+                <div class="metric-sub" style="line-height:1.5;">
+                  <span id="r-bmr-activity-desc" style="font-size:12px; font-weight:600; color:var(--teal-dark); display:block; margin-bottom:3px;"></span>
+                  kcal/day at <strong>complete rest</strong><br/>
+                  <span style="font-size:10.5px; color:var(--muted);">The minimum calories your body burns just to keep you alive — breathing, heartbeat, organ function — with zero activity.</span>
+                </div>
+              </div>
+              <div class="metric-card" style="border-left:4px solid var(--teal);">
+                <div class="metric-label">Maintenance Calories</div>
+                <div class="metric-value" id="r-maintenance" style="font-size:1.8rem;">—</div>
+                <div class="metric-sub">
+                  <span id="r-maintenance-desc" style="font-size:12px; font-weight:600; color:var(--text); display:block; margin-bottom:2px;"></span>
+                  kcal/day · BMR × your activity factor
+                </div>
+              </div>
+            </div>
+
+             <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:14px;">Your Goal</div>
+              <!-- Maintain -->
+          <div id="goal-maintain-block" style="display:none; background:#f0faf9; border:1.5px solid #c8ede9; border-radius:var(--radius-sm); padding:16px; text-align:center; margin-bottom:18px;">
             <div style="font-size:1.1rem; font-weight:700; color:var(--teal);">🎯 Maintain Weight</div>
             <div style="font-size:13px; color:var(--muted); margin-top:6px;">Your current weight is within the ideal range. Focus on maintaining it.</div>
             <div style="margin-top:10px; font-size:14px;">Maintenance Calories: <strong id="goal-maintain-cal" style="color:var(--teal);">—</strong> kcal/day</div>
           </div>
 
-          <!-- Change -->
+          <!-- Change (with goal statement) -->
           <div id="goal-change-block" style="display:none;">
             <div id="goal-statement-banner" style="background:linear-gradient(135deg, #1a9e8f 0%, #14786c 100%); border-radius:var(--radius-sm); padding:18px 22px; margin-bottom:18px; display:flex; align-items:center; gap:14px;">
               <span style="font-size:2rem; flex-shrink:0;" id="goal-stmt-icon">🎯</span>
@@ -589,8 +688,9 @@
                 <div id="goal-stmt-sub" style="font-size:13px; color:rgba(255,255,255,0.9); margin-top:3px;"></div>
               </div>
             </div>
+
             <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:12px;">Select your weekly rate:</div>
-            <div class="grb-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+            <div class="grb-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px;">
               <div class="goal-rate-btn" data-rate="0.25" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--border); background:var(--bg); text-align:center;">
                 <div class="grb-title" style="font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px;"></div>
                 <div class="grb-rate" style="font-size:12px; color:var(--muted); margin-bottom:4px;">0.25 kg/week</div>
@@ -599,7 +699,7 @@
               <div class="goal-rate-btn active-goal" data-rate="0.5" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--teal); background:var(--teal); text-align:center;">
                 <div class="grb-title" style="font-weight:700; font-size:14px; color:#fff; margin-bottom:4px;"></div>
                 <div class="grb-rate" style="font-size:12px; color:rgba(255,255,255,0.85); margin-bottom:4px;">0.5 kg/week</div>
-                <div class="grb-kcal" style="font-size:11px; color:rgba(255,255,255,0.9); font-weight:600;">±500 kcal</div>
+                <div class="grb-kcal" style="font-size:11px; color:rgba(23, 146, 162, 0.9); font-weight:600;">±500 kcal</div>
               </div>
               <div class="goal-rate-btn" data-rate="1" onclick="selectGoalRate(this)" style="padding:18px 12px; border-radius:var(--radius-sm); border:2px solid var(--border); background:var(--bg); text-align:center;">
                 <div class="grb-title" style="font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px;"></div>
@@ -607,56 +707,85 @@
                 <div class="grb-kcal" style="font-size:11px; color:#f4a742; font-weight:600;">±1000 kcal</div>
               </div>
             </div>
-            <div id="extreme-warning" style="display:none; margin-top:12px; background:#fef9ec; border:1.5px solid #fde68a; border-radius:var(--radius-sm); padding:10px 14px; font-size:13px; color:#92400e;">
+            <div id="extreme-warning" style="display:none; margin-bottom:16px; background:#fef9ec; border:1.5px solid #fde68a; border-radius:var(--radius-sm); padding:10px 14px; font-size:13px; color:#92400e;">
               ⚠️ <strong>Not generally recommended</strong> — Extreme calorie deficits/surpluses can be hard to sustain and may impact health. Consider the Standard plan.
             </div>
-          </div>
-        </div>
 
-        <!-- SECTION 3: Calories -->
-        <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
-          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 3 — Calories</div>
-          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:16px;">Calorie Breakdown</div>
-          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:14px;">
-            <div class="metric-card" style="border-left:4px solid #5bc8f5;">
-              <div class="metric-label">BMR (Basal Metabolic Rate)</div>
-              <div class="metric-value" id="r-bmr" style="font-size:1.8rem; color:#5bc8f5;">—</div>
-              <div class="metric-sub">kcal/day (at complete rest)</div>
-            </div>
-            <div class="metric-card" style="border-left:4px solid var(--teal);">
-              <div class="metric-label">Maintenance Calories</div>
-              <div class="metric-value" id="r-maintenance" style="font-size:1.8rem;">—</div>
-              <div class="metric-sub">kcal/day (BMR × activity)</div>
-            </div>
-          </div>
-          <div class="metric-card goal-cal-highlight" id="goal-cal-card" style="margin-bottom:14px; border-radius:var(--radius-sm); padding:22px 20px; text-align:center;">
-            <div class="metric-label" style="color:rgba(255,255,255,0.75); font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">⭐ Your Daily Calorie Target</div>
-            <div class="metric-value" id="r-goal-cal" style="font-size:2.6rem; color:#fff; font-family:'Fraunces',serif; font-weight:600; justify-content:center;">—</div>
-            <div class="metric-sub" id="r-goal-cal-desc" style="color:rgba(255,255,255,0.75); font-size:13px; margin-top:4px;">kcal/day</div>
-            <div class="gcal-badge" id="r-goal-cal-badge">Goal Calories</div>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:14px;">
-            <div class="metric-card" style="border-left:4px solid #f4a742;">
-              <div class="metric-label">Timeline to Goal</div>
-              <div class="metric-value" id="r-timeline" style="font-size:1.5rem; color:#f4a742;">—</div>
-              <div class="metric-sub" id="r-timeline-desc">-</div>
-            </div>
-            <div class="metric-card" style="border-left:4px solid #a78bfa;">
-              <div class="metric-label">After-Goal Maintenance</div>
-              <div class="metric-value" id="r-after-goal-cal" style="font-size:1.8rem; color:#a78bfa;">—</div>
-              <div class="metric-sub" id="r-after-goal-sub">kcal/day at ideal weight</div>
+            <!-- ── Daily Calorie Target + Timeline ── -->
+            <div class="goal-timeline-row" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+              <div class="metric-card goal-cal-highlight" id="goal-cal-card" style="border-radius:var(--radius-sm); padding:22px 20px; text-align:center;">
+                <div class="metric-label" style="color:rgba(255,255,255,0.75); font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">⭐ Your Daily Calorie Target</div>
+                <div class="metric-value" id="r-goal-cal" style="font-size:2.6rem; color:#fff; font-family:'Fraunces',serif; font-weight:600; justify-content:center;">—</div>
+                <div class="metric-sub" id="r-goal-cal-desc" style="color:rgba(255,255,255,0.75); font-size:13px; margin-top:4px;">kcal/day</div>
+                <div class="gcal-badge" id="r-goal-cal-badge">Goal Calories</div>
+              </div>
+              <div class="metric-card" style="border-left:4px solid #f4a742;">
+                <div class="metric-label">Timeline to Goal</div>
+                <div class="metric-value" id="r-timeline" style="font-size:1.5rem; color:#f4a742;">—</div>
+                <div class="metric-sub" id="r-timeline-desc">-</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- SECTION 4: Body Fat -->
-        <div style="margin-bottom:28px; border-top:1px solid var(--border); padding-top:22px;">
-          <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:10px;">Section 4 — Body Fat</div>
-          <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:600; margin-bottom:16px;">Body Fat Analysis</div>
-          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px;">
-            <div class="metric-card"><div class="metric-label">Body Fat %</div><div class="metric-value" id="r-fat">—</div><div class="metric-sub" id="r-fat-cat">—</div></div>
-            <div class="metric-card"><div class="metric-label">Daily Calories (Goal)</div><div class="metric-value" id="r-cal">—</div><div class="metric-sub">kcal / day</div></div>
+          <!-- Maintain: show BMR + Maintenance + Calorie target too -->
+          <div id="goal-maintain-extras" style="display:none;">
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:14px;">
+              <div class="metric-card" style="border-left:4px solid #5bc8f5;">
+                <div class="metric-label">BMR — Basal Metabolic Rate</div>
+                <div class="metric-value" id="r-bmr-maintain" style="font-size:1.8rem; color:#5bc8f5;">—</div>
+                <div class="metric-sub" style="line-height:1.5;">
+                  <span id="r-bmr-activity-desc-m" style="font-size:12px; font-weight:600; color:var(--teal-dark); display:block; margin-bottom:3px;"></span>
+                  kcal/day at <strong>complete rest</strong>
+                </div>
+              </div>
+              <div class="metric-card" style="border-left:4px solid var(--teal);">
+                <div class="metric-label">Maintenance Calories</div>
+                <div class="metric-value" id="r-maintenance-maintain" style="font-size:1.8rem;">—</div>
+                <div class="metric-sub">
+                  <span id="r-maintenance-desc-m" style="font-size:12px; font-weight:600; color:var(--text); display:block; margin-bottom:2px;"></span>
+                  kcal/day · BMR × your activity factor
+                </div>
+              </div>
+            </div>
+            <div class="goal-timeline-row" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+              <div class="metric-card goal-cal-highlight" style="border-radius:var(--radius-sm); padding:22px 20px; text-align:center;">
+                <div class="metric-label" style="color:rgba(255,255,255,0.75); font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">⭐ Your Daily Calorie Target</div>
+                <div class="metric-value" id="r-goal-cal-m" style="font-size:2.6rem; color:#fff; font-family:'Fraunces',serif; font-weight:600; justify-content:center;">—</div>
+                <div class="metric-sub" style="color:rgba(255,255,255,0.75); font-size:13px; margin-top:4px;">kcal/day — maintaining your ideal weight</div>
+                <div class="gcal-badge">🎯 Maintenance</div>
+              </div>
+              <div class="metric-card" style="border-left:4px solid #60d394;">
+                <div class="metric-label">Status</div>
+                <div class="metric-value" style="font-size:1.5rem; color:#60d394;">✅</div>
+                <div class="metric-sub">Already at your ideal weight!</div>
+              </div>
+            </div>
           </div>
+
+          <!-- ── After-Goal Maintenance across ALL activity levels ── -->
+          <div style="background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-sm); overflow:hidden;">
+            <div style="padding:14px 16px; background:#f0faf9; border-bottom:1.5px solid #c8ede9; display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.1rem;">🎯</span>
+              <div>
+                <div style="font-size:12px; font-weight:700; color:var(--teal-dark); text-transform:uppercase; letter-spacing:0.5px;">After-Goal Maintenance Calories</div>
+                <div style="font-size:11.5px; color:var(--muted); margin-top:2px;">Calories needed to maintain your <strong id="after-goal-ideal-wt">ideal weight</strong> at each activity level — <span style="color:var(--teal); font-weight:700;">teal row</span> is your present activity level</div>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="activity-cal-table" id="after-goal-table">
+                <thead>
+                  <tr>
+                    <th style="width:60%">Activity Level</th>
+                    <th style="width:40%; text-align:right;">Calories / Day</th>
+                  </tr>
+                </thead>
+                <tbody id="after-goal-tbody">
+                  <!-- Filled by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
 
         <!-- Completion message -->
@@ -697,8 +826,22 @@
         </div>
         <div class="selected-tags" id="conditions-tags"></div>
       </div>
-    <div class="form-group"><label>Allergies</label><input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..." autocomplete="off"/></div>
-    </div>
+    
+    <div class="form-group"><label>Current Symptoms</label> </div>
+    <div class="chip-group" id="symptoms-group">
+        <div class="chip" onclick="toggleChip(this)">Fatigue</div><div class="chip" onclick="toggleChip(this)">Hair Fall</div><div class="chip" onclick="toggleChip(this)">Weak Immunity</div><div class="chip" onclick="toggleChip(this)">Joint Pain</div><div class="chip" onclick="toggleChip(this)">Poor Sleep</div><div class="chip" onclick="toggleChip(this)">Lack of Focus</div><div class="chip" onclick="toggleChip(this)">Bloating</div><div class="chip" onclick="toggleChip(this)">Low Energy</div><div class="chip" onclick="toggleChip(this)">Frequent Illness</div><div class="chip" onclick="toggleChip(this)">Mood Swings</div><div class="chip" onclick="toggleChip(this)">Breathlessness</div><div class="chip" onclick="toggleChip(this)">Skin Issues</div>
+      </div>
+    <!-- <div class="form-group"><label>Allergies</label><input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..." autocomplete="off"/></div> -->
+  <div class="form-group" style="margin-top:18px;">
+  <label>Food Allergies</label>
+  <input type="text" id="inp-allergies" placeholder="e.g. Peanuts, Dairy, Gluten..." autocomplete="off"/>
+  <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please type if you have any food allergy</div>
+</div>
+  
+  
+  
+  
+  </div>
 
     <!-- STEP 3 -->
     <div class="card hidden-section wide-card" id="prefs-section">
@@ -725,6 +868,36 @@
         <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Tap your preferred eating window for the day</div>
         <input type="hidden" id="eat-window-val" value=""/>
       </div>
+
+      <div class="form-group" style="margin-top:18px;">
+        <label>Fasting Days (if any)</label>
+        <div class="chip-group" id="meal-types"><div class="chip" onclick="toggleChip(this)">Monday</div><div class="chip" onclick="toggleChip(this)">Tuesday</div><div class="chip" onclick="toggleChip(this)">Wednesday</div><div class="chip" onclick="toggleChip(this)">Thursday</div><div class="chip" onclick="toggleChip(this)">Friday</div><div class="chip" onclick="toggleChip(this)">Saturday</div><div class="chip" onclick="toggleChip(this)">Sunday</div></div>
+        <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Select the days that you fast</div>
+      </div>
+      
+
+      
+      <div class="form-group" style="margin-top:16px;">
+        <label>When Do You Eat on Fasting Days?</label>
+        <input 
+          type="text" 
+          id="inp-fasting-time" 
+          placeholder="e.g. Only after sunset, One meal at noon, Fruits in evening..." 
+          autocomplete="off"
+        />
+      </div>
+       <div class="time-chip-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Mention the days you fast and your usual eating pattern on those days to help us plan meals better</div>
+
+
+
+
+
+
+
+
+
+
+
       <div class="section-divider"></div>
       <div class="form-group" style="margin-top:4px; margin-bottom:18px;">
         <label>Number of Curries Per Day</label>
@@ -855,7 +1028,7 @@
         </div>
       </div>
 
-      <!-- ── NEW: Sprouts ── -->
+      <!-- Sprouts -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Sprouts</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
@@ -880,11 +1053,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Milkshakes & Smoothies ── -->
+      <!-- Milkshakes & Smoothies -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Milkshakes &amp; Smoothies</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Milkshakes and Smoothies from the dropdown</div>
+          <div class="sub-label">Choose Milkshakes and Smoothies from the dropdown</div>
           <div class="sub-label">Milkshakes</div>
           <div class="msdd-wrap" id="msdd-milkshakes">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-milkshakes')"><span id="msdd-milkshakes-label">Select milkshakes…</span><span>▾</span></div>
@@ -916,11 +1089,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Porridge & Malt Drinks ── -->
+      <!-- Porridge & Malt Drinks -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Porridge &amp; Malt Drinks</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Porridge & Malt drinks from the dropdown</div>
+          <div class="sub-label">Choose Porridge & Malt drinks from the dropdown</div>
           <div class="msdd-wrap" id="msdd-porridge">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-porridge')"><span id="msdd-porridge-label">Select porridge / malt drinks…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-porridge-panel">
@@ -950,11 +1123,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Main Breakfast ── -->
+      <!-- Main Breakfast -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Main Breakfast</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Breakfast from the dropdown</div>
+          <div class="sub-label">Choose Breakfast from the dropdown</div>
           <div class="msdd-wrap" id="msdd-breakfast">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-breakfast')"><span id="msdd-breakfast-label">Select breakfast items…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-breakfast-panel">
@@ -975,11 +1148,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Chutney ── -->
+      <!-- Chutney -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Chutney</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Chutneys from the dropdown</div>
+          <div class="sub-label">Choose Chutneys from the dropdown</div>
           <div class="msdd-wrap" id="msdd-chutney">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-chutney')"><span id="msdd-chutney-label">Select chutneys…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-chutney-panel">
@@ -996,11 +1169,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Powders ── -->
+      <!-- Powders -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Powders</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Powders from the dropdown</div>
+          <div class="sub-label">Choose Powders from the dropdown</div>
           <div class="msdd-wrap" id="msdd-powders">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-powders')"><span id="msdd-powders-label">Select powders…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-powders-panel">
@@ -1018,17 +1191,17 @@
         </div>
       </div>
 
-      <!-- ── NEW: Non Veg ── -->
+      <!-- Non Veg -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Non Veg</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Non veg items from the dropdown</div>
+          <div class="sub-label">Choose Non veg items from the dropdown</div>
           <div class="msdd-wrap" id="msdd-nonveg">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-nonveg')"><span id="msdd-nonveg-label">Select non-veg items…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-nonveg-panel">
               <input type="text" class="msdd-search" placeholder="🔍 Search non-veg…" oninput="filterMsdd('msdd-nonveg',this.value)" autocomplete="off"/>
               <div class="msdd-list" id="msdd-nonveg-list">
-                 <label class="msdd-option"><input type="checkbox" value="Egg" onchange="msddChange('msdd-nonveg')"/><div><div class="msdd-option-name">Egg</div></div></label>
+                <label class="msdd-option"><input type="checkbox" value="Egg" onchange="msddChange('msdd-nonveg')"/><div><div class="msdd-option-name">Egg</div></div></label>
                 <label class="msdd-option"><input type="checkbox" value="Chicken" onchange="msddChange('msdd-nonveg')"/><div><div class="msdd-option-name">Chicken</div></div></label>
                 <label class="msdd-option"><input type="checkbox" value="Mutton" onchange="msddChange('msdd-nonveg')"/><div><div class="msdd-option-name">Mutton</div></div></label>
                 <label class="msdd-option"><input type="checkbox" value="Prawns" onchange="msddChange('msdd-nonveg')"/><div><div class="msdd-option-name">Prawns</div></div></label>
@@ -1043,11 +1216,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Rice ── -->
+      <!-- Rice -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Rice</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Rice from the dropdown</div>
+          <div class="sub-label">Choose Rice from the dropdown</div>
           <div class="msdd-wrap" id="msdd-rice">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-rice')"><span id="msdd-rice-label">Select rice varieties…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-rice-panel">
@@ -1062,11 +1235,11 @@
         </div>
       </div>
 
-      <!-- ── NEW: Millets / Grains ── -->
+      <!-- Millets / Grains -->
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)"><span>Millets / Grains</span><span class="chevron">▾</span></div>
         <div class="accordion-body">
-            <div class="sub-label">Choose Millets / Grains from the dropdown</div>
+          <div class="sub-label">Choose Millets / Grains from the dropdown</div>
           <div class="msdd-wrap" id="msdd-millets">
             <div class="msdd-trigger" onclick="toggleMsdd('msdd-millets')"><span id="msdd-millets-label">Select millets / grains…</span><span>▾</span></div>
             <div class="msdd-panel" id="msdd-millets-panel">
@@ -1095,20 +1268,20 @@
         </div>
       </div>
 
-      <div class="section-divider"></div>
-      <div class="step-label" style="margin-bottom:8px;">Step 3 · Dislikes</div>
+   
+      <!-- <div class="step-label" style="margin-bottom:8px;">Step 3 · Dislikes</div>
       <div class="section-title" style="margin-bottom:10px;">Food Dislikes</div>
-      <div class="form-group"><label>Foods You Dislike or Avoid <span style="font-family:'DM Sans'; font-size:13px; color:var(--muted); font-weight:400;">(optional)</span></label><textarea id="inp-dislikes" placeholder="e.g. Bitter gourd, Mushrooms, Raw onion..."></textarea></div>
+      <div class="form-group"><label>Foods You Dislike or Avoid <span style="font-family:'DM Sans'; font-size:13px; color:var(--muted); font-weight:400;">(optional)</span></label><textarea id="inp-dislikes" placeholder="e.g. Bitter gourd, Mushrooms, Raw onion..."></textarea></div> -->
     </div>
 
     <!-- STEP 4 -->
     <div class="card hidden-section wide-card" id="symptoms-section">
-      <div class="step-label">Step 4</div>
-      <div class="section-title">Current Symptoms</div>
+      <!-- <div class="step-label">Step 4</div> -->
+      <!-- <div class="section-title">Current Symptoms</div>
       <div class="chip-group" id="symptoms-group">
         <div class="chip" onclick="toggleChip(this)">Fatigue</div><div class="chip" onclick="toggleChip(this)">Hair Fall</div><div class="chip" onclick="toggleChip(this)">Weak Immunity</div><div class="chip" onclick="toggleChip(this)">Joint Pain</div><div class="chip" onclick="toggleChip(this)">Poor Sleep</div><div class="chip" onclick="toggleChip(this)">Lack of Focus</div><div class="chip" onclick="toggleChip(this)">Bloating</div><div class="chip" onclick="toggleChip(this)">Low Energy</div><div class="chip" onclick="toggleChip(this)">Frequent Illness</div><div class="chip" onclick="toggleChip(this)">Mood Swings</div><div class="chip" onclick="toggleChip(this)">Breathlessness</div><div class="chip" onclick="toggleChip(this)">Skin Issues</div>
-      </div>
-      <div class="section-divider"></div>
+      </div> -->
+    
       <div class="section-title" style="margin-bottom:12px;">Any Queries or Comments <span style="font-family:'DM Sans'; font-size:13px; color:var(--muted); font-weight:400;">(optional)</span></div>
       <div class="form-group"><textarea id="inp-comments" placeholder="Write your questions, goals, or any special requirements here..."></textarea></div>
       <div class="consent-box" onclick="document.getElementById('consent-wa').click(); event.stopPropagation();">
@@ -1121,7 +1294,7 @@
       </div>
     </div>
 
-    <!-- SUCCESS — hidden by default, shown only after successful submission -->
+    <!-- SUCCESS -->
     <div class="card hidden-section wide-card" id="success-section" style="display:none; text-align:center; padding:48px 32px;">
       <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
       <div class="section-title" style="margin-bottom:8px;">Plan Request Submitted!</div>
@@ -1136,7 +1309,6 @@
 </div>
 </div><!-- end form-content-wrap -->
 
-<!-- Account Modal (No "Save Locally" option) -->
 <!-- Profile Updated Success Modal -->
 <div class="confirm-modal-overlay" id="profileUpdatedModal">
   <div class="confirm-modal-box">
@@ -1180,7 +1352,6 @@
     </div>
     <div id="acct-step-auth" style="display:none;">
       <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Create an account to access your profiles from any device.</p>
-      <!-- Only two tabs: Create Account and Sign In (no Save Locally) -->
       <div class="hcb-tabs" style="margin-bottom:14px;">
         <div class="hcb-tab active" id="tab-create" onclick="switchAuthTab('create')">Create Account</div>
         <div class="hcb-tab" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
@@ -1359,7 +1530,6 @@ async function sendToSheet(data) {
 async function saveToFirestore(formData, accountUid, forSelf, relName, relation) {
   try {
     const isEdit = !!(formData._editUid);
-    // When editing, keep existing accountUid from Firestore if available
     let resolvedAccountUid = accountUid || null;
     if (isEdit) {
       try {
@@ -1375,10 +1545,8 @@ async function saveToFirestore(formData, accountUid, forSelf, relName, relation)
       forSelf: forSelf !== false,
       relName: relName || '',
       relation: relation || '',
-      // Clear admin update flag on user re-submit; preserve createdAt if editing
       ...(isEdit ? { updatedAt: serverTimestamp(), adminUpdatedAt: null } : { createdAt: serverTimestamp() })
     };
-    // Remove internal draft key from Firestore entry
     delete entry._editUid;
     await setDoc(doc(db, "submissions", formData.userId), entry, isEdit ? { merge: false } : {});
     if (resolvedAccountUid) {
@@ -1414,7 +1582,6 @@ window.proceedToAuth = function() {
   }
 };
 
-// Only two tabs now (no skip/save locally)
 window.switchAuthTab = function(tab) {
   if (tab === 'create' && window._regClosed) {
     applyModalRegClosedState(); return;
@@ -1429,11 +1596,7 @@ async function checkRegistrationOpen() {
     const snap = await getDoc(doc(db, "settings", "global"));
     if (snap.exists() && snap.data().registrationClosed === true) return false;
     return true;
-  } catch(e) {
-    // On read error, fail open so a Firestore hiccup doesn't permanently
-    // lock the UI — the createAccount() submission check is the real gate.
-    return true;
-  }
+  } catch(e) { return true; }
 }
 
 async function checkFormSubmissionOpen() {
@@ -1441,10 +1604,7 @@ async function checkFormSubmissionOpen() {
     const snap = await getDoc(doc(db, "settings", "global"));
     if (snap.exists() && snap.data().formSubmissionClosed === true) return false;
     return true;
-  } catch(e) {
-    // Fail open: form visibility is not a security gate — show it on read errors
-    return true;
-  }
+  } catch(e) { return true; }
 }
 
 function applyFormClosedState(closed) {
@@ -1462,11 +1622,8 @@ async function checkUserNotRestricted(email) {
   return true;
 }
 
-// Default to closed until Firestore confirms otherwise — prevents race where
-// a fast user clicks "Create Account" before the async check resolves.
 window._regClosed = true;
 
-// Live listener on settings/global — reflects admin changes instantly without reload
 onSnapshot(doc(db, "settings", "global"), (snap) => {
   if (snap.exists()) {
     const data = snap.data();
@@ -1474,13 +1631,11 @@ onSnapshot(doc(db, "settings", "global"), (snap) => {
     const regClosed  = !!data.registrationClosed;
     applyFormClosedState(formClosed);
     window._regClosed = regClosed;
-    // If the account modal is currently open, update it live too
     const modal = document.getElementById('accountModal');
     if (modal && modal.style.display === 'flex') {
       if (regClosed) {
         applyModalRegClosedState();
       } else {
-        // Restore Create Account tab when registrations re-open
         ['create','login'].forEach(t => {
           const tab = document.getElementById('tab-'+t);
           if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.style.pointerEvents=''; tab.title=''; }
@@ -1493,19 +1648,14 @@ onSnapshot(doc(db, "settings", "global"), (snap) => {
       }
     }
   } else {
-    // Document doesn’t exist yet — treat both as open
     applyFormClosedState(false);
     window._regClosed = false;
   }
-}, (err) => {
-  // On read error, keep last known state — do NOT unlock registration on error
-  console.warn("settings read error:", err.message);
-});
+}, (err) => { console.warn("settings read error:", err.message); });
 
 window.createAccount = async function() {
   const errEl = document.getElementById('acct-err');
   errEl.style.display = 'none';
-  // Synchronous check first — no async gap
   if (window._regClosed) {
     errEl.textContent = 'New registrations are currently closed.';
     errEl.style.display = 'block';
@@ -1599,14 +1749,10 @@ function openAccountModal(formData) {
   document.getElementById('acct-err').style.display = 'none';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('accountModal').style.display = 'flex';
-
-  // Reset tabs to a clean state
   ['create','login'].forEach(t => {
     const tab = document.getElementById('tab-'+t);
     if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.title=''; }
   });
-
-  // Immediately apply closed state from cached value — no async gap
   if (window._regClosed) {
     applyModalRegClosedState();
   } else {
@@ -1616,15 +1762,12 @@ function openAccountModal(formData) {
     const notice = document.getElementById('modal-reg-closed-notice');
     if (notice) notice.style.display = 'none';
   }
-
-  // Also do a fresh Firestore check to keep the cached value up to date
   (async () => {
     const regOpen = await checkRegistrationOpen();
     window._regClosed = !regOpen;
     if (!regOpen) {
       applyModalRegClosedState();
     } else {
-      // Registrations are open — restore the Create Account tab if it was locked
       ['create','login'].forEach(t => {
         const tab = document.getElementById('tab-'+t);
         if (tab) { tab.classList.remove('active'); tab.style.opacity=''; tab.style.cursor=''; tab.style.pointerEvents=''; tab.title=''; }
@@ -1637,7 +1780,6 @@ function openAccountModal(formData) {
     }
   })();
 }
-
 
 function setProgress(step) {
   const labels = ['Step 1 of 4 — Your Body Metrics','Step 2 of 4 — Health Info','Step 3 of 4 — Preferences','Step 4 of 4 — Symptoms & Submit'];
@@ -1719,7 +1861,6 @@ function validate() {
   let ok = true;
   fields.forEach(f => { const fg = document.getElementById(f.id); const valid = f.check(document.getElementById(f.inp).value); fg.classList.toggle('has-error', !valid); if(!valid) ok = false; });
 
-  // Phone number validation (required, must be 10 digits)
   const phoneVal = (document.getElementById('inp-phone')?.value || '').replace(/\s/g,'');
   const phoneWrap = document.getElementById('inp-phone')?.closest('.phone-input-wrap');
   const phoneFg = document.getElementById('inp-phone')?.closest('.form-group');
@@ -1743,6 +1884,16 @@ function validate() {
   return ok;
 }
 
+// ── ACTIVITY LEVELS DATA ──
+const ACTIVITY_LEVELS = [
+  { value: '1.2',   factor: 1.2,   label: 'Sedentary',       desc: 'Little/no exercise · desk job, mostly sitting' },
+  { value: '1.375', factor: 1.375, label: 'Lightly Active',   desc: '1–3 days/week · light walks, gentle yoga' },
+  { value: '1.46',  factor: 1.46,  label: 'Moderately Active',desc: '4–5 days/week · brisk walk, cycling, light gym' },
+  { value: '1.55',  factor: 1.55,  label: 'Active',           desc: 'Daily or intense 3–4×/week · gym, jogging, sports' },
+  { value: '1.72',  factor: 1.72,  label: 'Very Active',      desc: 'Intense 6–7×/week · heavy gym, athletic training' },
+  { value: '1.9',   factor: 1.9,   label: 'Extremely Active', desc: 'Very intense daily + physical job · pro athlete' },
+];
+
 // ── CALCULATIONS ──
 function calcBMI(wt,ht) { return (wt/((ht/100)**2)).toFixed(1); }
 function bmiCategory(b) { if(b<18.5) return 'Underweight'; if(b<25) return 'Normal weight'; if(b<30) return 'Overweight'; return 'Obese'; }
@@ -1753,14 +1904,6 @@ function calcBodyFat(gender, waist, neck, hip, height) {
   if (gender === 'Female') { const log1 = Math.log10(waist + hip - neck); const log2 = Math.log10(height); bfp = 495 / (1.29579 - 0.35004 * log1 + 0.22100 * log2) - 450; }
   else { const log1 = Math.log10(waist - neck); const log2 = Math.log10(height); bfp = 495 / (1.0324 - 0.19077 * log1 + 0.15456 * log2) - 450; }
   return Math.max(3, bfp).toFixed(1);
-}
-
-// Helper: set metric-value with inline unit
-function setMetricValue(id, numText, unit) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (numText === '—') { el.innerHTML = '—'; return; }
-  el.innerHTML = `${numText}<span class="unit">${unit}</span>`;
 }
 
 function formatDuration(days) {
@@ -1783,9 +1926,9 @@ let _currentDirection = 'maintain';
 
 function getGoalRateLabels(direction) {
   return {
-    '0.25': direction === 'loss' ? 'Mild Loss'     : 'Mild Gain',
-    '0.5':  direction === 'loss' ? 'Standard Loss'  : 'Standard Gain',
-    '1':    direction === 'loss' ? 'Extreme Loss'   : 'Extreme Gain',
+    '0.25': direction === 'loss' ? 'Mild Weight Loss'     : 'Mild Weight Gain',
+    '0.5':  direction === 'loss' ? 'Standard Weight Loss'  : 'Standard Weight Gain',
+    '1':    direction === 'loss' ? 'Extreme Weight Loss'   : 'Extreme Weight Gain',
   };
 }
 
@@ -1818,6 +1961,32 @@ window.selectGoalRate = function(btn) {
   if (_lastCalcData) updateGoalCalSection(_lastCalcData);
 };
 
+// Build the after-goal table for all activity levels
+function buildAfterGoalTable(d) {
+  const { gender, idealWeight, ht, age, activity } = d;
+  const tbody = document.getElementById('after-goal-tbody');
+  if (!tbody) return;
+
+  const afterBmrBase = gender === 'Female'
+    ? (10 * idealWeight) + (6.25 * ht) - (5 * age) - 161
+    : (10 * idealWeight) + (6.25 * ht) - (5 * age) + 5;
+
+  tbody.innerHTML = ACTIVITY_LEVELS.map(lvl => {
+    const cal = Math.round(afterBmrBase * lvl.factor);
+    const isCurrent = lvl.value === activity;
+    return `<tr class="${isCurrent ? 'active-row' : ''}">
+      <td>
+        <span class="act-name">${lvl.label}${isCurrent ? ' <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9.5px;padding:2px 7px;border-radius:10px;font-weight:700;vertical-align:middle;">YOUR LEVEL</span>' : ''}</span>
+        <span class="act-desc">${lvl.desc}</span>
+      </td>
+      <td style="text-align:right;">
+        <span class="kcal-val${isCurrent ? ' current' : ''}">${cal.toLocaleString()}</span>
+        <span style="font-size:11px; ${isCurrent ? 'color:rgba(255,255,255,0.8)' : 'color:var(--muted)'}; margin-left:3px;">kcal/day</span>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
 function updateGoalCalSection(d) {
   const { maintenance, bmr, gender, wt, ht, age, activity, idealWeight, kgDiff, direction } = d;
   const calAdj  = _currentGoalRate === 0.25 ? 250 : _currentGoalRate === 0.5 ? 500 : 1000;
@@ -1833,10 +2002,11 @@ function updateGoalCalSection(d) {
   const afterGoalCal = Math.round(afterBmr * (parseFloat(activity) || 1.2));
 
   const g = id => document.getElementById(id);
-  // Use inline unit format for goal calories
+
+  // Goal cal card (teal)
   const gcEl = g('r-goal-cal');
   if (gcEl) gcEl.innerHTML = `${goalCal}<span class="unit" style="font-size:1rem;color:rgba(255,255,255,0.8);">kcal</span>`;
-  g('r-cal').innerHTML = `${goalCal}<span class="unit">kcal</span>`;
+  g('r-cal') && (g('r-cal').innerHTML = `${goalCal}<span class="unit">kcal</span>`);
 
   const rateName = _currentGoalRate === 0.25 ? 'Mild' : _currentGoalRate === 0.5 ? 'Standard' : 'Extreme';
   const dirLabel = direction === 'loss' ? 'Weight Loss' : direction === 'gain' ? 'Weight Gain' : 'Maintenance';
@@ -1853,9 +2023,13 @@ function updateGoalCalSection(d) {
     g('r-timeline').innerHTML = '—';
     g('r-timeline-desc').textContent = 'Already at ideal weight';
   }
-  g('r-after-goal-cal').innerHTML = `${afterGoalCal}<span class="unit">kcal</span>`;
-  const afterGoalSub = g('r-after-goal-sub');
-  if (afterGoalSub) afterGoalSub.textContent = `kcal/day at goal weight (${idealWeight.toFixed(1)} kg)`;
+
+  // Update after-goal ideal weight label
+  const afterGoalLabel = document.getElementById('after-goal-ideal-wt');
+  if (afterGoalLabel) afterGoalLabel.innerHTML = `<strong>${idealWeight.toFixed(1)} kg ideal weight</strong>`;
+
+  // Rebuild after-goal table
+  buildAfterGoalTable(d);
 }
 
 window.syncOtherNameToStep1 = function(val) {
@@ -1902,8 +2076,7 @@ function generateResult() {
 
   const g = id => document.getElementById(id);
 
-  // ── Section 1: BMI Results (new layout with inline units) ──
-  // BMI card (combined 1+4)
+  // ── Section 1: BMI Results ──
   const bmiEl = g('r-bmi');
   bmiEl.innerHTML = `${bmi}`;
   bmiEl.style.color = color;
@@ -1912,17 +2085,30 @@ function generateResult() {
   g('bmi-marker').style.left = bmiToBarPct(bmiNum);
   g('bmi-marker').style.borderColor = color;
 
-  // Present Weight (inline kg)
+  // Present Weight
   g('r-present-wt').innerHTML = `${wt.toFixed(1)}<span class="unit">kg</span>`;
 
-  // Ideal Weight + Range (combined card)
-  g('r-ideal-wt').innerHTML = `${idealWeight.toFixed(1)}<span class="unit">kg</span>`;
-  g('r-ideal-range').textContent = `${minWeight.toFixed(1)} – ${maxWeight.toFixed(1)} kg`;
+  // Ideal Weight Range (min – max)
+  g('r-ideal-range-val').innerHTML = `${minWeight.toFixed(1)}<span class="unit">kg</span><span style="font-size:0.9rem;color:#60d394;font-weight:500;margin:0 2px;">–</span>${maxWeight.toFixed(1)}<span class="unit">kg</span>`;
 
-  // Target Weight (inline kg)
-  g('r-target-wt').innerHTML = `${targetWeight.toFixed(1)}<span class="unit">kg</span>`;
+  // Ideal Weight (bottom row card 4 — was Target Weight)
+  g('r-target-wt').innerHTML = `${idealWeight.toFixed(1)}<span class="unit">kg</span>`;
 
-  // Weight to Lose/Gain (inline kg)
+  // Body Fat % (bottom row card 5 — moved from Section 4)
+  const fatNum = parseFloat(fat);
+  if (fat !== '—') {
+    g('r-fat').innerHTML = `${fat}<span class="unit">%</span>`;
+  } else {
+    g('r-fat').innerHTML = '—';
+  }
+  let fatCat = '';
+  if (!isNaN(fatNum)) {
+    if (gender === 'Female') fatCat = fatNum<14?'Essential fat':fatNum<21?'Athletic':fatNum<25?'Fit':fatNum<32?'Average':'Obese';
+    else fatCat = fatNum<6?'Essential fat':fatNum<14?'Athletic':fatNum<18?'Fit':fatNum<25?'Average':'Obese';
+  } else { fatCat = 'Enter waist, neck' + (gender === 'Female' ? ' & hip' : '') + ' to calculate'; }
+  g('r-fat-cat').textContent = fatCat;
+
+  // Weight to Lose/Gain
   g('r-wl-total').innerHTML = `${kgDiff.toFixed(1)}<span class="unit">kg</span>`;
   g('r-wl-label').textContent = direction === 'maintain' ? 'Status' : (direction === 'loss' ? 'To Lose' : 'To Gain');
   g('r-wl-direction').textContent = direction === 'maintain' ? 'Already ideal! 🎉' : (direction === 'loss' ? 'Weight loss needed' : 'Weight gain needed');
@@ -1930,8 +2116,21 @@ function generateResult() {
   // ── Section 2: Goal ──
   g('goal-maintain-block').style.display = direction === 'maintain' ? 'block' : 'none';
   g('goal-change-block').style.display   = direction !== 'maintain' ? 'block' : 'none';
+  const maintainExtras = g('goal-maintain-extras');
+  if (maintainExtras) maintainExtras.style.display = direction === 'maintain' ? 'block' : 'none';
+
+  // Activity label for BMR/maintenance cards
+  const activityLabel = document.getElementById('inp-activity')?.options[document.getElementById('inp-activity')?.selectedIndex]?.text?.split('—')[0]?.trim() || '';
+  const activityFactor = parseFloat(activity) || 1.2;
+
   if (direction === 'maintain') {
     g('goal-maintain-cal').textContent = maintenance;
+    // Populate maintain extras
+    if (g('r-bmr-maintain')) g('r-bmr-maintain').innerHTML = `${Math.round(bmr)}<span class="unit">kcal</span>`;
+    if (g('r-maintenance-maintain')) g('r-maintenance-maintain').innerHTML = `${maintenance}<span class="unit">kcal</span>`;
+    if (g('r-bmr-activity-desc-m')) g('r-bmr-activity-desc-m').textContent = activityLabel ? `For ${activityLabel}` : '';
+    if (g('r-maintenance-desc-m')) g('r-maintenance-desc-m').textContent = `For ${wt.toFixed(1)} kg present weight`;
+    if (g('r-goal-cal-m')) g('r-goal-cal-m').innerHTML = `${maintenance}<span class="unit" style="font-size:1rem;color:rgba(255,255,255,0.8);">kcal</span>`;
   } else {
     const stmtIcon = g('goal-stmt-icon');
     const stmtText = g('goal-stmt-text');
@@ -1945,6 +2144,10 @@ function generateResult() {
       stmtText.textContent = `Gain ${kgDiff.toFixed(1)} kg to reach your ideal weight`;
       stmtSub.textContent  = `Target: ${targetWeight.toFixed(1)} kg — currently ${wt.toFixed(1)} kg`;
     }
+    // BMR activity desc and maintenance desc for change block
+    if (g('r-bmr-activity-desc')) g('r-bmr-activity-desc').textContent = activityLabel ? `For ${activityLabel}` : '';
+    if (g('r-maintenance-desc')) g('r-maintenance-desc').textContent = `For ${wt.toFixed(1)} kg present weight`;
+
     updateGoalRateButtonLabels(direction);
     _currentGoalRate = 0.5;
     document.querySelectorAll('.goal-rate-btn').forEach(b => {
@@ -1958,24 +2161,14 @@ function generateResult() {
     g('extreme-warning').style.display = 'none';
   }
 
-  // ── Section 3: Calories (inline units) ──
-  g('r-bmr').innerHTML = `${Math.round(bmr)}<span class="unit">kcal</span>`;
-  g('r-maintenance').innerHTML = `${maintenance}<span class="unit">kcal</span>`;
-  updateGoalCalSection(_lastCalcData);
+  // ── Section 2 continued: Calories (change block) ──
+  if (g('r-bmr')) g('r-bmr').innerHTML = `${Math.round(bmr)}<span class="unit">kcal</span>`;
+  if (g('r-maintenance')) g('r-maintenance').innerHTML = `${maintenance}<span class="unit">kcal</span>`;
 
-  // ── Section 4: Body Fat ──
-  const fatNum = parseFloat(fat);
-  if (fat !== '—') {
-    g('r-fat').innerHTML = `${fat}<span class="unit">%</span>`;
-  } else {
-    g('r-fat').innerHTML = '—';
-  }
-  let fatCat = '';
-  if (!isNaN(fatNum)) {
-    if (gender === 'Female') fatCat = fatNum<14?'Essential fat':fatNum<21?'Athletic':fatNum<25?'Fit':fatNum<32?'Average':'Obese';
-    else fatCat = fatNum<6?'Essential fat':fatNum<14?'Athletic':fatNum<18?'Fit':fatNum<25?'Average':'Obese';
-  } else { fatCat = 'Enter waist, neck' + (gender === 'Female' ? ' & hip' : ''); }
-  g('r-fat-cat').textContent = fatCat;
+  // Maintain block cal
+  if (direction === 'maintain') g('goal-maintain-cal').textContent = maintenance;
+
+  updateGoalCalSection(_lastCalcData);
 
   const inlineRes = g('inline-results');
   inlineRes.style.display = 'block';
@@ -1983,7 +2176,6 @@ function generateResult() {
   if (genHint) genHint.style.display = 'none';
   setTimeout(() => inlineRes.scrollIntoView({behavior:'smooth', block:'start'}), 200);
 
-  // Show health, prefs, symptoms sections
   ['health-section','prefs-section','symptoms-section'].forEach((id,i)=>{
     setTimeout(()=>{ const el=document.getElementById(id); el.style.display='block'; setTimeout(()=>el.classList.add('revealed'),20); }, 400 + i*160);
   });
@@ -2010,6 +2202,30 @@ document.getElementById('inp-gender').addEventListener('change', function () {
   if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; document.getElementById('inp-preg').value=''; }
 });
 
+// Activity hint update
+document.getElementById('inp-activity').addEventListener('change', function() {
+  const hints = {
+    '1.2':   '🪑 Typical for office workers, drivers, or anyone who sits most of the day with minimal movement.',
+    '1.375': '🚶 Applies to people who go for daily walks, do light household chores, or exercise 1–3 days a week.',
+    '1.46':  '🚴 For those who exercise most days — brisk walking, cycling, or gym 4–5 times a week.',
+    '1.55':  '🏃 Daily gym-goers, joggers, or people doing intense exercise 3–4 days a week.',
+    '1.72':  '🏋️ Athletes or those doing heavy gym training, running, or sports 6–7 days a week.',
+    '1.9':   '⚡ For pro athletes, military personnel, or people with physically demanding jobs who also train intensively.',
+  };
+  const box = document.getElementById('activity-hint-box');
+  if (box && this.value && hints[this.value]) {
+    box.textContent = hints[this.value];
+    box.style.background = '#f0faf9';
+    box.style.borderColor = '#c8ede9';
+    box.style.color = '#14786c';
+  } else if (box) {
+    box.innerHTML = '💡 <strong>Examples:</strong> Daily walking counts as Lightly Active. Gym 4–5×/week = Moderately/Active. Construction work or pro sports = Extremely Active.';
+    box.style.background = '#f8fafb';
+    box.style.borderColor = 'var(--border)';
+    box.style.color = 'var(--muted)';
+  }
+});
+
 // ── NAME-MATCH CHECK ──
 let _nameMatchProfile = null;
 let _nameCheckTimeout = null;
@@ -2018,8 +2234,7 @@ document.getElementById('inp-name')?.addEventListener('blur', function() {
   const enteredName = this.value.trim().toLowerCase();
   if (!enteredName) return;
   const user = auth.currentUser;
-  if (!user) return; // Only check if signed in
-  // Check against Firestore profiles
+  if (!user) return;
   clearTimeout(_nameCheckTimeout);
   _nameCheckTimeout = setTimeout(async () => {
     try {
@@ -2036,13 +2251,11 @@ document.getElementById('inp-name')?.addEventListener('blur', function() {
         document.getElementById('name-match-name').textContent = _nameMatchProfile.name;
         document.getElementById('nameMatchModal').style.display = 'flex';
       }
-    } catch(e) { /* ignore */ }
+    } catch(e) {}
   }, 400);
 });
 
-window.closeNameMatchModal = function() {
-  document.getElementById('nameMatchModal').style.display = 'none';
-};
+window.closeNameMatchModal = function() { document.getElementById('nameMatchModal').style.display = 'none'; };
 
 window.goEditExistingProfile = async function() {
   if (!_nameMatchProfile) return;
@@ -2053,30 +2266,18 @@ window.goEditExistingProfile = async function() {
     const { getDoc: gd2 } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
     const subSnap = await gd2(doc(db, "submissions", _nameMatchProfile.id));
     if (!subSnap.exists()) { alert('Profile data not found. Please try editing from your Profile page.'); return; }
-    // Redirect to profile page to edit
     window.location.href = 'profile.html';
   } catch(e) { alert('Error: ' + e.message); }
 };
 
 // ── CONFIRM CLEAR ──
-window.askClearConfirm = function() {
-  document.getElementById('confirmClearModal').classList.add('show');
-};
-window.closeClearConfirm = function() {
-  document.getElementById('confirmClearModal').classList.remove('show');
-};
-window.confirmClearForm = function() {
-  closeClearConfirm();
-  clearForm();
-};
+window.askClearConfirm = function() { document.getElementById('confirmClearModal').classList.add('show'); };
+window.closeClearConfirm = function() { document.getElementById('confirmClearModal').classList.remove('show'); };
+window.confirmClearForm = function() { closeClearConfirm(); clearForm(); };
 window.closeProfileUpdatedModal = function() {
   document.getElementById('profileUpdatedModal').classList.remove('show');
-  // After closing, open all form sections so the form is ready for fresh use
   ['health-section','prefs-section','symptoms-section'].forEach((id, i) => {
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) { el.style.display = 'block'; setTimeout(() => el.classList.add('revealed'), 20); }
-    }, i * 120);
+    setTimeout(() => { const el = document.getElementById(id); if (el) { el.style.display = 'block'; setTimeout(() => el.classList.add('revealed'), 20); } }, i * 120);
   });
   setProgress(1);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2084,7 +2285,6 @@ window.closeProfileUpdatedModal = function() {
 
 // ── SUBMIT ──
 async function submitForm() {
-  // Guard: require Generate Result to have been clicked first
   if (!_lastCalcData) {
     const genBtn = document.querySelector('[onclick="generateResult()"]');
     const genHint = document.getElementById('generate-hint');
@@ -2093,23 +2293,15 @@ async function submitForm() {
       genBtn.style.transform = 'scale(1.03)';
       genBtn.style.background = '#dc2626';
       genBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => {
-        genBtn.style.boxShadow = '';
-        genBtn.style.transform = '';
-        genBtn.style.background = '';
-      }, 2200);
+      setTimeout(() => { genBtn.style.boxShadow = ''; genBtn.style.transform = ''; genBtn.style.background = ''; }, 2200);
     }
     if (genHint) {
       genHint.style.display = 'flex';
       genHint.style.background = '#fef2f2';
       genHint.style.borderColor = '#fca5a5';
       genHint.style.color = '#7f1d1d';
-      genHint.innerHTML = '<span style="font-size:1.3rem;">⚠️</span><span><strong>Action required:</strong> Please click "Click Here to Generate Result" above before submitting. Your BMI and calorie data must be calculated first.</span>';
-      setTimeout(() => {
-        genHint.style.background = '';
-        genHint.style.borderColor = '';
-        genHint.style.color = '#92400e';
-      }, 2200);
+      genHint.innerHTML = '<span style="font-size:1.3rem;">⚠️</span><span><strong>Action required:</strong> Please click "Click Here to Generate Result" above before submitting.</span>';
+      setTimeout(() => { genHint.style.background = ''; genHint.style.borderColor = ''; genHint.style.color = '#92400e'; }, 2200);
     }
     return;
   }
@@ -2120,7 +2312,6 @@ async function submitForm() {
   const g = id => document.getElementById(id);
   const chips = sel => [...document.querySelectorAll(sel+'.active')].map(c=>c.textContent.trim());
 
-  // If editing an existing profile, reuse its userId; otherwise generate a new one
   let _existingEditUid = null;
   try { const _d = JSON.parse(sessionStorage.getItem('nutriplan_draft')||'null'); _existingEditUid = _d?._editUid||null; } catch(e){}
   const userId = _existingEditUid || generateUserId();
@@ -2131,7 +2322,7 @@ async function submitForm() {
 
   const formData = {
     userId,
-    _editUid: _existingEditUid || null,  // track if this is an edit
+    _editUid: _existingEditUid || null,
     timestamp: new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
     name: g('inp-name').value.trim(),
     plan_for_self: planForSelf,
@@ -2152,21 +2343,20 @@ async function submitForm() {
     bmi_category: g('r-bmi-cat').textContent,
     body_fat: g('r-fat').textContent,
     body_fat_category: g('r-fat-cat').textContent,
-    daily_calories: g('r-cal').textContent,
-    // ── Computed fields from _lastCalcData ──
+    daily_calories: g('r-goal-cal').textContent.replace(/[^\d]/g,''),
     present_weight: _lastCalcData ? _lastCalcData.wt.toFixed(1) + ' kg' : '',
     ideal_weight: _lastCalcData ? _lastCalcData.idealWeight.toFixed(1) + ' kg' : '',
     ideal_range: _lastCalcData ? ((18.5*(_lastCalcData.ht/100)**2).toFixed(1) + ' – ' + (24.9*(_lastCalcData.ht/100)**2).toFixed(1) + ' kg') : '',
-    target_weight: _lastCalcData ? (_lastCalcData.direction==='maintain' ? _lastCalcData.wt.toFixed(1) : _lastCalcData.idealWeight.toFixed(1)) + ' kg' : '',
+    target_weight: _lastCalcData ? _lastCalcData.idealWeight.toFixed(1) + ' kg' : '',
     weight_change: _lastCalcData ? _lastCalcData.kgDiff.toFixed(1) + ' kg' : '',
     weight_direction: _lastCalcData ? _lastCalcData.direction : '',
     bmr: _lastCalcData ? String(_lastCalcData.bmr) : '',
     maintenance_calories: _lastCalcData ? String(_lastCalcData.maintenance) : '',
     goal_rate: _currentGoalRate ? String(_currentGoalRate) : '',
     goal_rate_label: _lastCalcData ? (
-      _currentGoalRate === 0.25 ? (_lastCalcData.direction==='loss'?'Mild Loss':'Mild Gain') :
-      _currentGoalRate === 1    ? (_lastCalcData.direction==='loss'?'Extreme Loss':'Extreme Gain') :
-                                  (_lastCalcData.direction==='loss'?'Standard Loss':'Standard Gain')
+      _currentGoalRate === 0.25 ? (_lastCalcData.direction==='loss'?'Mild Weight Loss':'Mild Weight Gain') :
+      _currentGoalRate === 1    ? (_lastCalcData.direction==='loss'?'Extreme Weight Loss':'Extreme Weight Gain') :
+                                  (_lastCalcData.direction==='loss'?'Standard Weight Loss':'Standard Weight Gain')
     ) : '',
     goal_statement: _lastCalcData && _lastCalcData.direction !== 'maintain' ? (
       _lastCalcData.direction==='loss'
@@ -2175,13 +2365,11 @@ async function submitForm() {
     ) : '',
     timeline_days: (()=>{
       if (!_lastCalcData || _lastCalcData.direction==='maintain') return '';
-      const d = Math.round((_lastCalcData.kgDiff / _currentGoalRate) * 7);
-      return String(d);
+      return String(Math.round((_lastCalcData.kgDiff / _currentGoalRate) * 7));
     })(),
     timeline_label: (()=>{
       if (!_lastCalcData || _lastCalcData.direction==='maintain') return 'Already at ideal weight';
-      const d = Math.round((_lastCalcData.kgDiff / _currentGoalRate) * 7);
-      return '≈ ' + formatDuration(d);
+      return '≈ ' + formatDuration(Math.round((_lastCalcData.kgDiff / _currentGoalRate) * 7));
     })(),
     after_goal_calories: (()=>{
       if (!_lastCalcData) return '';
@@ -2219,7 +2407,6 @@ async function submitForm() {
 
   await sendToSheet(formData);
 
-  // ── If user is already logged in, save directly to Firestore ──
   const currentUser = auth.currentUser;
   if (currentUser) {
     await saveToFirestore(formData, currentUser.uid, planForSelf, planOtherName, planOtherRelation);
@@ -2229,32 +2416,22 @@ async function submitForm() {
   const wasEdit = !!_existingEditUid;
 
   if (wasEdit) {
-    // ── EDIT flow: show popup, then clean up form ──
     btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer';
-
-    // Clear edit state
     try { sessionStorage.removeItem(SS_KEY); sessionStorage.removeItem('nutriplan_submitted'); } catch(e){}
     clearForm();
     const banner = document.getElementById('edit-mode-banner');
     if (banner) banner.remove();
     btn.textContent = 'Submit My Plan Request';
-
-    // Show success popup
     document.getElementById('profileUpdatedModal').classList.add('show');
   } else {
-    // ── NEW submission flow ──
     const ss = g('success-section');
     ss.style.display = 'block';
     setTimeout(()=>ss.classList.add('revealed'), 20);
     setProgress(4);
     setTimeout(()=>ss.scrollIntoView({behavior:'smooth'}), 100);
     try { sessionStorage.setItem('nutriplan_submitted', '1'); } catch(e){}
-
     btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer';
-
-    if (!currentUser) {
-      setTimeout(() => openAccountModal(formData), 600);
-    }
+    if (!currentUser) setTimeout(() => openAccountModal(formData), 600);
   }
 }
 
@@ -2265,7 +2442,6 @@ function clearForm() {
   document.querySelectorAll('.chip,.time-chip').forEach(el=>el.classList.remove('active'));
   document.getElementById('eat-window-val').value='';
 
-  // Reset all msdd dropdowns (including new ones)
   const allMsdd = ['msdd-drinks','msdd-nuts','msdd-seeds','msdd-fruits','msdd-veggies',
     'msdd-sprouts','msdd-milkshakes','msdd-smoothies','msdd-porridge','msdd-breakfast',
     'msdd-chutney','msdd-powders','msdd-nonveg','msdd-rice','msdd-millets'];
@@ -2282,14 +2458,12 @@ function clearForm() {
   _lastCalcData = null;
   _currentGoalRate = 0.5;
 
-  // After clear: hide steps 2-4 so form returns to its initial Step 1-only state
   ['health-section','prefs-section','symptoms-section'].forEach(id=>{
     const el=document.getElementById(id);
     el.style.display='none';
     el.classList.remove('revealed');
   });
 
-  // Hide success section after clear
   const ss = document.getElementById('success-section');
   if (ss) { ss.style.display = 'none'; ss.classList.remove('revealed'); }
 
@@ -2424,7 +2598,6 @@ const SS_KEY = 'nutriplan_draft';
 function saveDraft() {
   const g = id => document.getElementById(id);
   const activeChips = sel => [...document.querySelectorAll(sel)].filter(c=>c.classList.contains('active')).map(c=>c.textContent.trim());
-  // Preserve _editUid across keystrokes — read it from the existing draft
   let existingEditUid = null;
   try { existingEditUid = JSON.parse(sessionStorage.getItem(SS_KEY)||'null')?._editUid || null; } catch(e){}
   const draft = {
@@ -2446,7 +2619,6 @@ function saveDraft() {
     drinkYes: document.querySelector('.yn-btn.yes')?.classList.contains('active'),
     planForOther: g('plan-for-other-fields')?.style.display === 'block',
     planOtherName: g('plan-other-name')?.value, planOtherRelation: g('plan-other-relation')?.value,
-    // Always carry forward _editUid so submit knows this is an edit
     _editUid: existingEditUid || null,
   };
   try { sessionStorage.setItem(SS_KEY, JSON.stringify(draft)); } catch(e){}
@@ -2475,7 +2647,6 @@ function restoreDraft() {
   if (g('inp-diet') && draft.diet) g('inp-diet').value = draft.diet;
   if (g('consent-wa')) g('consent-wa').checked = !!draft.waConsent;
 
-  // Restore all msdd
   const msddMap = {
     drinks:'msdd-drinks',nuts:'msdd-nuts',seeds:'msdd-seeds',fruits:'msdd-fruits',veggies:'msdd-veggies',
     sprouts:'msdd-sprouts',milkshakes:'msdd-milkshakes',smoothies:'msdd-smoothies',porridge:'msdd-porridge',
@@ -2485,10 +2656,7 @@ function restoreDraft() {
   Object.entries(msddMap).forEach(([k,id])=>{
     const vals = draft[k];
     if (!vals || !vals.length) return;
-    vals.forEach(v=>{
-      const cb=document.querySelector('#'+id+'-list input[value="'+v+'"]');
-      if(cb){ cb.checked=true; }
-    });
+    vals.forEach(v=>{ const cb=document.querySelector('#'+id+'-list input[value="'+v+'"]'); if(cb){ cb.checked=true; } });
     msddChange(id);
   });
 
@@ -2512,8 +2680,7 @@ function restoreDraft() {
     setProgress(maxStep);
   }
 
-  // If editing an existing profile, update the submit button text
- if (draft._editUid) {
+  if (draft._editUid) {
     const btn = document.getElementById('submitBtn');
     if (btn) { btn.textContent = '✏️ Update Profile'; }
     const existing = document.getElementById('edit-mode-banner');
@@ -2523,24 +2690,18 @@ function restoreDraft() {
       banner.style.cssText = 'background:#e6f7f5;border:1.5px solid #1a9e8f;border-radius:10px;padding:10px 16px;margin-bottom:14px;font-size:13px;color:#14786c;font-weight:600;display:flex;align-items:center;gap:8px;';
       banner.innerHTML = '✏️ Editing existing profile — submitting will update this profile, not create a new one. <button onclick="sessionStorage.removeItem(\'nutriplan_draft\');location.reload();" style="margin-left:auto;padding:4px 12px;border:1.5px solid #14786c;border-radius:20px;background:transparent;color:#14786c;font-size:12px;font-weight:600;cursor:pointer;">Cancel Edit</button>';
       const submitBtn = document.getElementById('submitBtn');
-      if (submitBtn && submitBtn.parentElement) {
-        submitBtn.parentElement.insertBefore(banner, submitBtn);
-      }
+      if (submitBtn && submitBtn.parentElement) submitBtn.parentElement.insertBefore(banner, submitBtn);
     }
-
-    // Auto-generate results so the inline results section is populated when editing
     setTimeout(() => {
       const wt = parseFloat(document.getElementById('inp-weight')?.value);
       const ht = parseFloat(document.getElementById('inp-height')?.value);
       const age = parseFloat(document.getElementById('inp-age')?.value);
       const gender = document.getElementById('inp-gender')?.value;
       const activity = document.getElementById('inp-activity')?.value;
-      if (wt && ht && age && gender && activity) {
-        generateResult();
-      }
+      if (wt && ht && age && gender && activity) generateResult();
     }, 350);
   }
-} // ← THIS CLOSING BRACE closes restoreDraft()
+}
 
 function attachPersistenceListeners() {
   document.querySelectorAll('input, select, textarea').forEach(el => {
@@ -2551,11 +2712,6 @@ function attachPersistenceListeners() {
     el.addEventListener('click', () => setTimeout(saveDraft, 50));
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  attachPersistenceListeners();
-  restoreDraft();
-});
 
 document.addEventListener('DOMContentLoaded', () => { attachPersistenceListeners(); restoreDraft(); });
 </script>
