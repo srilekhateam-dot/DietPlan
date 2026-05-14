@@ -176,6 +176,8 @@
 
   .error-msg { font-size: 13px; font-weight: 700; color: #e74c3c; margin-top: 3px; display: none; }
   .form-group.has-error input, .form-group.has-error select { border-color: #e74c3c; }
+  .form-group.has-error .height-selector-wrap { border-color: #e74c3c; }
+  .form-group.has-error .meas-selector-wrap { border-color: #e74c3c; }
   .form-group.has-error .error-msg { display: block; }
 
   .submit-row { display: flex; gap: 14px; margin-top: 24px; }
@@ -358,6 +360,325 @@
   .confirm-clear-btn { background: #ef4444; border: none; color: #fff; }
   .confirm-clear-btn:hover { background: #dc2626; }
 
+  /* ── HEIGHT UNIT SELECTOR ── */
+  .height-selector-wrap {
+    display: flex;
+    align-items: stretch;      /* children fill the full height */
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    overflow: visible;          /* let dropdown escape */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 43px;               /* match other inputs (10px top+bottom padding + 15px font ≈ 43px) */
+    /* clip the children (pill bg, input area) to the rounded border */
+    /* use a pseudo-clip via the pill's own border-radius on leftmost edge */
+  }
+  .height-selector-wrap:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(26,158,143,0.12);
+    background: var(--white);
+  }
+
+  /* ── pill / dropdown trigger ── */
+  .height-unit-pill {
+    position: relative;         /* anchor the dropdown */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px;
+    background: #f0f2f4;
+    border-right: 1.5px solid var(--border);
+    border-radius: calc(var(--radius-sm) - 2px) 0 0 calc(var(--radius-sm) - 2px);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    flex: 0 0 auto;             /* never shrink or grow */
+    width: 80px;               /* fixed pill width */
+    box-sizing: border-box;
+    transition: background 0.15s;
+  }
+  .height-unit-pill:hover { background: #e4e7ec; }
+
+  .height-unit-chevron {
+    width: 12px;
+    height: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  .height-unit-chevron.open { transform: rotate(180deg); }
+
+  /* ── dropdown panel (floats outside the overflow:hidden wrapper via position:absolute) ── */
+  .height-unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: -1.5px;
+    min-width: 210px;
+    background: var(--white);
+    border: 1.5px solid var(--teal);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+    z-index: 500;
+    overflow: hidden;
+  }
+  .height-unit-dropdown.open { display: block; }
+
+  .height-unit-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.13s;
+  }
+  .height-unit-option:hover { background: var(--teal-light); }
+  .height-unit-option.selected { background: var(--teal); }
+  .huo-icon  { font-size: 1.1rem; flex-shrink: 0; }
+  .huo-label { font-weight: 600; color: var(--text); flex: 1; }
+  .height-unit-option.selected .huo-label { color: #fff; }
+  .huo-abbr  { font-size: 12px; font-weight: 700; color: var(--teal); background: rgba(26,158,143,0.1); padding: 2px 7px; border-radius: 10px; }
+  .height-unit-option.selected .huo-abbr { color: #fff; background: rgba(255,255,255,0.25); }
+
+  /* ── input area (fills the remaining space) ── */
+  /* .height-inputs-cm,
+  .height-inputs-ftin {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  } */
+
+
+.height-inputs-cm,
+.height-inputs-ftin {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  padding: 0 12px;
+  gap: 6px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+  /* bare number inputs inside the wrapper */
+  /* .height-raw-input {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    padding: 0 4px;
+    height: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  } */
+
+  .height-raw-input {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+
+  
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+
+  height: 100%;
+  line-height: 1;
+
+  padding: 0;
+  margin: 0;
+
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+
+
+
+  /* cm: let the single input expand */
+  .height-inputs-cm .height-raw-input {   flex: 1; }
+
+  /* ft/in: fixed small widths so labels stay inside */
+  /* .height-ft-input {
+    width: 38px;
+    flex: 0 0 38px;
+    text-align: center;
+  }
+     */
+
+  .height-ft-input {
+  width: 42px;
+  text-align: center;
+}
+
+
+
+
+  /* .height-in-input {
+    width: 38px;
+    flex: 0 0 38px;
+    text-align: center;
+  } */
+
+
+
+  .height-in-input {
+  width: 42px;
+  text-align: center;
+}
+
+
+
+  /* unit labels ( ft / in / cm ) */
+  /* .height-unit-suffix {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 0 6px 0 2px;
+  } */
+
+
+
+.height-unit-suffix {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
+
+
+
+
+  /* divider between ft-group and in-group */
+  /* .height-ftin-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    flex: 0 0 1px;
+    margin: 0 6px;
+  } */
+
+
+
+  .height-ftin-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+
+  align-self: center;
+
+  margin: 0 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* spinner removal */
+  .height-raw-input::-webkit-inner-spin-button,
+  .height-raw-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .height-raw-input { -moz-appearance: textfield; }
+
+  /* ── MEAS UNIT SELECTOR (waist / neck / hip) ── */
+  .meas-selector-wrap {
+    display: flex; align-items: stretch; width: 100%;
+    border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--bg); overflow: visible;
+    transition: border-color 0.2s, box-shadow 0.2s; height: 43px;
+  }
+  .meas-selector-wrap:focus-within {
+    border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,158,143,0.12); background: var(--white);
+  }
+  .meas-unit-pill {
+    position: relative; display: flex; align-items: center; gap: 5px;
+    padding: 0 10px; background: #f0f2f4; border-right: 1.5px solid var(--border);
+    border-radius: calc(var(--radius-sm) - 2px) 0 0 calc(var(--radius-sm) - 2px);
+    font-size: 13px; font-weight: 700; color: var(--text);
+    cursor: pointer; user-select: none; white-space: nowrap;
+    flex: 0 0 auto; width: 80px; box-sizing: border-box; transition: background 0.15s;
+  }
+  .meas-unit-pill:hover { background: #e4e7ec; }
+  .meas-unit-chevron {
+    width: 12px; height: 12px; color: var(--muted); margin-left: auto; flex-shrink: 0;
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  .meas-unit-chevron.open { transform: rotate(180deg); }
+  .meas-unit-dropdown {
+    display: none; position: absolute; top: calc(100% + 6px); left: -1.5px;
+    min-width: 180px; background: var(--white);
+    border: 1.5px solid var(--teal); border-radius: var(--radius-sm);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.14); z-index: 500; overflow: hidden;
+  }
+  .meas-unit-dropdown.open { display: block; }
+  .meas-unit-option {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    cursor: pointer; font-size: 14px; transition: background 0.13s;
+  }
+  .meas-unit-option:hover { background: var(--teal-light); }
+  .meas-unit-option.selected { background: var(--teal); }
+  .meas-unit-option .muo-label { font-weight: 600; color: var(--text); flex: 1; }
+  .meas-unit-option.selected .muo-label { color: #fff; }
+  .meas-unit-option .muo-abbr { font-size: 12px; font-weight: 700; color: var(--teal); background: rgba(26,158,143,0.1); padding: 2px 7px; border-radius: 10px; }
+  .meas-unit-option.selected .muo-abbr { color: #fff; background: rgba(255,255,255,0.25); }
+  .meas-input-area {
+    display: flex; align-items: center; flex: 1; min-width: 0;
+    padding: 0 12px; gap: 6px;
+  }
+  .meas-raw-input {
+    border: none !important; border-radius: 0 !important;
+    background: transparent !important; box-shadow: none !important; outline: none !important;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--text);
+    flex: 1; min-width: 0; height: 100%; padding: 0; margin: 0; box-sizing: border-box;
+    -moz-appearance: textfield;
+  }
+  .meas-raw-input::-webkit-inner-spin-button,
+  .meas-raw-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .meas-unit-label {
+    font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; flex-shrink: 0;
+  }
+
   @media (max-width: 820px) {
     .page-outer { max-width: 1350px; margin: 0 auto; padding: 0 12px 80px; display: block; }
     nav { padding: 0 16px; }
@@ -507,7 +828,47 @@
         <div class="form-group" id="fg-name"><label>Name</label><input type="text" id="inp-name" placeholder="John Doe"/><span class="error-msg">Please enter your name</span></div>
         <div class="form-group" id="fg-age"><label>Age</label><input type="number" id="inp-age" placeholder="30" min="10" max="100"/><span class="error-msg">Please enter a valid age</span></div>
         <div class="form-group" id="fg-gender"><label>Gender</label><select id="inp-gender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select><span class="error-msg">Please select gender</span></div>
-        <div class="form-group" id="fg-height"><label>Height (cm)</label><input type="number" id="inp-height" placeholder="170" min="100" max="250"/><span class="converter-hint" onclick="openHeightModal()" style="cursor:pointer;">📐 ft-inch → cm converter</span><span class="error-msg">Please enter height (100–250 cm)</span></div>
+        <div class="form-group" id="fg-height">
+          <label>Height </label>
+          <!-- Hidden cm field used by all calculations -->
+          <input type="hidden" id="inp-height"/>
+          <!-- Unit selector + inputs -->
+          <div class="height-selector-wrap" id="height-selector-wrap">
+            <!-- Unit dropdown pill -->
+            <div class="height-unit-pill" id="height-unit-pill" onclick="toggleHeightUnitDropdown(event)">
+          
+              <span id="height-unit-label">cm</span>
+              <svg class="height-unit-chevron" id="height-unit-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <div class="height-unit-dropdown" id="height-unit-dropdown">
+                <div class="height-unit-option" data-unit="cm" onclick="selectHeightUnit('cm',event)">
+                
+                  <span class="huo-label">Centimeters</span>
+                  <span class="huo-abbr">cm</span>
+                </div>
+                <div class="height-unit-option" data-unit="ftin" onclick="selectHeightUnit('ftin',event)">
+              
+                  <span class="huo-label">Feet &amp; Inches</span>
+                  <span class="huo-abbr">ft / in</span>
+                </div>
+              </div>
+            </div>
+            <!-- cm input -->
+            <div class="height-inputs-cm" id="height-inputs-cm">
+              <input type="number" id="inp-height-cm" placeholder="170" min="50" max="300" class="height-raw-input" oninput="onHeightCmInput()"/>
+              <span class="height-unit-suffix">cm</span>
+            </div>
+            <!-- ft/in inputs -->
+            <div class="height-inputs-ftin" id="height-inputs-ftin" style="display:none;">
+              <input type="number" id="inp-height-ft" placeholder="5" min="1" max="9" class="height-raw-input height-ft-input" oninput="onHeightFtInInput()"/>
+              <span class="height-unit-suffix">ft</span>
+              <div class="height-ftin-sep"></div>
+              <input type="number" id="inp-height-in" placeholder="8" min="0" max="11" class="height-raw-input height-in-input" oninput="onHeightFtInInput()"/>
+              <span class="height-unit-suffix">in</span>
+            </div>
+          </div>
+          <span class="error-msg" id="height-error-msg">Please enter a valid height</span>
+          
+        </div>
         <div class="form-group" id="fg-weight"><label>Weight (kg)</label><input type="number" id="inp-weight" placeholder="70" min="20" max="300"/><span class="error-msg">Please enter weight</span></div>
 
         <!-- ── ACTIVITY LEVEL — with descriptions ── -->
@@ -534,11 +895,66 @@
           <span class="error-msg">Please select activity level</span>
         </div>
 
-        <div class="form-group" id="fg-waist"><label>Waist (cm)</label><input type="number" id="inp-waist" placeholder="80"/><span class="converter-hint" onclick="openMeasureModal('waist')" style="cursor:pointer;">📏 inch → cm converter</span></div>
-        <div class="form-group" id="fg-neck"><label>Neck (cm)</label><input type="number" id="inp-neck" placeholder="38"/><span class="converter-hint" onclick="openMeasureModal('neck')" style="cursor:pointer;">📏 inch → cm converter</span></div>
+        <!-- WAIST -->
+        <div class="form-group" id="fg-waist">
+          <label>Waist</label>
+          <input type="hidden" id="inp-waist"/>
+          <div class="meas-selector-wrap" id="waist-selector-wrap">
+            <div class="meas-unit-pill" onclick="toggleMeasUnitDropdown('waist',event)">
+              <span id="waist-unit-label">cm</span>
+              <svg class="meas-unit-chevron" id="waist-unit-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <div class="meas-unit-dropdown" id="waist-unit-dropdown">
+                <div class="meas-unit-option selected" data-unit="cm" onclick="selectMeasUnit('waist','cm',event)"><span class="muo-label">Centimetres</span><span class="muo-abbr">cm</span></div>
+                <div class="meas-unit-option" data-unit="inch" onclick="selectMeasUnit('waist','inch',event)"><span class="muo-label">Inches</span><span class="muo-abbr">in</span></div>
+              </div>
+            </div>
+            <div class="meas-input-area">
+              <input type="number" class="meas-raw-input" id="waist-raw-input" placeholder="80" step="0.1" oninput="onMeasInput('waist')"/>
+              <span class="meas-unit-label" id="waist-unit-suffix">cm</span>
+            </div>
+          </div>
+          <span class="error-msg">Please enter a valid waist measurement</span>
+        </div>
+        <!-- NECK -->
+        <div class="form-group" id="fg-neck">
+          <label>Neck</label>
+          <input type="hidden" id="inp-neck"/>
+          <div class="meas-selector-wrap" id="neck-selector-wrap">
+            <div class="meas-unit-pill" onclick="toggleMeasUnitDropdown('neck',event)">
+              <span id="neck-unit-label">cm</span>
+              <svg class="meas-unit-chevron" id="neck-unit-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <div class="meas-unit-dropdown" id="neck-unit-dropdown">
+                <div class="meas-unit-option selected" data-unit="cm" onclick="selectMeasUnit('neck','cm',event)"><span class="muo-label">Centimetres</span><span class="muo-abbr">cm</span></div>
+                <div class="meas-unit-option" data-unit="inch" onclick="selectMeasUnit('neck','inch',event)"><span class="muo-label">Inches</span><span class="muo-abbr">in</span></div>
+              </div>
+            </div>
+            <div class="meas-input-area">
+              <input type="number" class="meas-raw-input" id="neck-raw-input" placeholder="15" step="0.1" oninput="onMeasInput('neck')"/>
+              <span class="meas-unit-label" id="neck-unit-suffix">cm</span>
+            </div>
+          </div>
+          <span class="error-msg">Please enter a valid neck measurement</span>
+        </div>
         <div id="female-extra-row" class="form-group full" style="display:none;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%;">
-            <div class="form-group"><label>Hip (cm)</label><input type="number" id="inp-hip" placeholder="95"/><span class="converter-hint" onclick="openMeasureModal('hip')" style="cursor:pointer;">📏 inch → cm converter</span></div>
+            <div class="form-group" id="fg-hip">
+              <label>Hip</label>
+              <input type="hidden" id="inp-hip"/>
+              <div class="meas-selector-wrap" id="hip-selector-wrap">
+                <div class="meas-unit-pill" onclick="toggleMeasUnitDropdown('hip',event)">
+                  <span id="hip-unit-label">cm</span>
+                  <svg class="meas-unit-chevron" id="hip-unit-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  <div class="meas-unit-dropdown" id="hip-unit-dropdown">
+                    <div class="meas-unit-option selected" data-unit="cm" onclick="selectMeasUnit('hip','cm',event)"><span class="muo-label">Centimetres</span><span class="muo-abbr">cm</span></div>
+                    <div class="meas-unit-option" data-unit="inch" onclick="selectMeasUnit('hip','inch',event)"><span class="muo-label">Inches</span><span class="muo-abbr">in</span></div>
+                  </div>
+                </div>
+                <div class="meas-input-area">
+                  <input type="number" class="meas-raw-input" id="hip-raw-input" placeholder="95" step="0.1" oninput="onMeasInput('hip')"/>
+                  <span class="meas-unit-label" id="hip-unit-suffix">cm</span>
+                </div>
+              </div>
+            </div>
             <div class="form-group"><label>Pregnant/Lactating</label><select id="inp-preg"><option value="">Select</option><option>No</option><option>Pregnant</option><option>Lactating</option></select></div>
           </div>
         </div>
@@ -1397,7 +1813,10 @@
       <button class="hcb-use-btn" onclick="useHcbValue('hcb-inch-result')">Use This Height</button>
     </div>
   </div>
+
+  
 </div>
+
 
 <!-- Measure Converter Modal -->
 <div id="measureModal" class="modal-overlay">
@@ -1788,28 +2207,193 @@ function setProgress(step) {
 }
 setProgress(1);
 
-// ── HEIGHT MODAL ──
-function switchHcbTab(tab, panel) {
-  document.querySelectorAll('.hcb-tab').forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  document.getElementById('hcb-panel-ft-in').style.display = panel === 'ft-in' ? '' : 'none';
-  document.getElementById('hcb-panel-in').style.display  = panel === 'in'    ? '' : 'none';
+// ── HEIGHT UNIT SELECTOR ──
+let _heightUnit = 'cm'; // 'cm' | 'ftin'
+
+/* Conversion helpers */
+function cmToFtIn(cm) {
+  const totalInches = cm / 2.54;
+  const ft = Math.floor(totalInches / 12);
+  const inches = Math.round(totalInches % 12);
+  // handle edge case where inches rounds to 12
+  if (inches === 12) return { ft: ft + 1, inches: 0 };
+  return { ft, inches };
 }
-function convertModalFtIn() {
-  const ft = parseFloat(document.getElementById('modal-ft').value) || 0;
-  const inch = parseFloat(document.getElementById('modal-in').value) || 0;
-  const cm = Math.round((ft * 30.48) + (inch * 2.54));
-  document.getElementById('modal-result').textContent = (ft||inch) ? cm : '—';
+function ftInToCm(ft, inches) {
+  return (ft * 30.48) + (inches * 2.54);
 }
-function convertInchOnly() {
-  const inch = parseFloat(document.getElementById('hcb-inch-only').value);
-  const cm = Math.round(inch * 2.54);
-  document.getElementById('hcb-inch-result').textContent = (!isNaN(cm)&&inch>0) ? cm : '—';
+
+/* Push calculated cm into the hidden #inp-height field */
+function syncHiddenHeight(cm) {
+  const hidden = document.getElementById('inp-height');
+  if (hidden) hidden.value = isNaN(cm) || cm <= 0 ? '' : parseFloat(cm.toFixed(2));
 }
-function openHeightModal() { document.getElementById('heightModal').style.display = 'flex'; }
-function closeHeightModal() { document.getElementById('heightModal').style.display = 'none'; }
-function applyHeight() { const val = document.getElementById('modal-result').textContent; if(val && val !== '—') { document.getElementById('inp-height').value = val; closeHeightModal(); } }
-function useHcbValue(resultId) { const val = document.getElementById(resultId).textContent; if(val && val !== '—') { document.getElementById('inp-height').value = val; document.getElementById('fg-height').classList.remove('has-error'); closeHeightModal(); } }
+
+/* Called when cm input changes */
+function onHeightCmInput() {
+  const cm = parseFloat(document.getElementById('inp-height-cm').value);
+  syncHiddenHeight(cm);
+}
+
+/* Called when ft or in inputs change */
+function onHeightFtInInput() {
+  const ft = parseFloat(document.getElementById('inp-height-ft').value) || 0;
+  const inches = parseFloat(document.getElementById('inp-height-in').value) || 0;
+  // clamp inches 0-11
+  if (inches > 11) { document.getElementById('inp-height-in').value = 11; }
+  const cm = ftInToCm(ft, Math.min(inches, 11));
+  syncHiddenHeight(cm);
+}
+
+/* Toggle the unit dropdown */
+function toggleHeightUnitDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('height-unit-dropdown');
+  const chevron = document.getElementById('height-unit-chevron');
+  const isOpen = dd.classList.contains('open');
+  dd.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+/* Select a unit from the dropdown */
+function selectHeightUnit(unit, e) {
+  if (e) e.stopPropagation();
+  if (unit === _heightUnit) {
+    // just close dropdown
+    document.getElementById('height-unit-dropdown').classList.remove('open');
+    document.getElementById('height-unit-chevron').classList.remove('open');
+    return;
+  }
+
+  // Read current hidden value for conversion
+  const currentCm = parseFloat(document.getElementById('inp-height').value) || 0;
+
+  _heightUnit = unit;
+
+  // Update pill label
+  const label = document.getElementById('height-unit-label');
+  const flag  = document.getElementById('height-unit-flag');
+  const cmBlock   = document.getElementById('height-inputs-cm');
+  const ftinBlock = document.getElementById('height-inputs-ftin');
+
+  // Mark selected option
+  document.querySelectorAll('.height-unit-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.unit === unit);
+  });
+
+  if (unit === 'cm') {
+    label.textContent = 'cm';
+
+    cmBlock.style.display   = '';
+    ftinBlock.style.display = 'none';
+    // Convert back from ft/in → cm
+    if (currentCm > 0) {
+      document.getElementById('inp-height-cm').value = Math.round(currentCm);
+    }
+    syncHiddenHeight(parseFloat(document.getElementById('inp-height-cm').value));
+  } else {
+    label.textContent = 'ft / in';
+  
+    cmBlock.style.display   = 'none';
+    ftinBlock.style.display = '';
+    // Convert cm → ft/in
+    if (currentCm > 0) {
+      const { ft, inches } = cmToFtIn(currentCm);
+      document.getElementById('inp-height-ft').value = ft;
+      document.getElementById('inp-height-in').value = inches;
+      syncHiddenHeight(currentCm); // already correct
+    }
+  }
+
+  // Close dropdown
+  document.getElementById('height-unit-dropdown').classList.remove('open');
+  document.getElementById('height-unit-chevron').classList.remove('open');
+}
+
+// ── MEASUREMENT UNIT SELECTOR (waist / neck / hip) ──
+const _measUnit = { waist: 'cm', neck: 'cm', hip: 'cm' };
+
+function inchToCm(val) { return Math.round(val * 2.54 * 10) / 10; }
+
+function syncHiddenMeas(field, cm) {
+  const hidden = document.getElementById('inp-' + field);
+  if (hidden) hidden.value = isNaN(cm) || cm <= 0 ? '' : parseFloat(cm.toFixed(1));
+}
+
+window.onMeasInput = function(field) {
+  const raw = parseFloat(document.getElementById(field + '-raw-input').value);
+  const cm = _measUnit[field] === 'inch' ? inchToCm(raw) : raw;
+  syncHiddenMeas(field, cm);
+};
+
+window.toggleMeasUnitDropdown = function(field, e) {
+  e.stopPropagation();
+  const dd = document.getElementById(field + '-unit-dropdown');
+  const ch = document.getElementById(field + '-unit-chevron');
+  const isOpen = dd.classList.contains('open');
+  ['waist','neck','hip'].forEach(f => {
+    if (f !== field) {
+      document.getElementById(f+'-unit-dropdown').classList.remove('open');
+      document.getElementById(f+'-unit-chevron').classList.remove('open');
+    }
+  });
+  dd.classList.toggle('open', !isOpen);
+  ch.classList.toggle('open', !isOpen);
+};
+
+window.selectMeasUnit = function(field, unit, e) {
+  if (e) e.stopPropagation();
+  const dd = document.getElementById(field + '-unit-dropdown');
+  const ch = document.getElementById(field + '-unit-chevron');
+  dd.classList.remove('open');
+  ch.classList.remove('open');
+  if (unit === _measUnit[field]) return;
+  const currentCm = parseFloat(document.getElementById('inp-' + field).value) || 0;
+  _measUnit[field] = unit;
+  document.getElementById(field + '-unit-label').textContent = unit === 'cm' ? 'cm' : 'inch';
+  document.getElementById(field + '-unit-suffix').textContent = unit === 'cm' ? 'cm' : 'in';
+  document.querySelectorAll('#' + field + '-unit-dropdown .meas-unit-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.unit === unit);
+  });
+  const rawInput = document.getElementById(field + '-raw-input');
+  const cmDefaults = { waist: '80', neck: '38', hip: '95' };
+  const inDefaults = { waist: '32', neck: '15', hip: '38' };
+  if (unit === 'inch') {
+    rawInput.placeholder = inDefaults[field];
+    rawInput.value = currentCm > 0 ? (Math.round(currentCm / 2.54 * 10) / 10) : '';
+  } else {
+    rawInput.placeholder = cmDefaults[field];
+    rawInput.value = currentCm > 0 ? (Math.round(currentCm * 10) / 10) : '';
+  }
+};
+
+/* Close dropdown when clicking outside */
+document.addEventListener('click', function(e) {
+  const pill = document.getElementById('height-unit-pill');
+  if (pill && !pill.contains(e.target)) {
+    document.getElementById('height-unit-dropdown').classList.remove('open');
+    document.getElementById('height-unit-chevron').classList.remove('open');
+  }
+  // close meas dropdowns
+  ['waist','neck','hip'].forEach(field => {
+    const wrap = document.getElementById(field + '-selector-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      const dd = document.getElementById(field + '-unit-dropdown');
+      const ch = document.getElementById(field + '-unit-chevron');
+      if (dd) dd.classList.remove('open');
+      if (ch) ch.classList.remove('open');
+    }
+  });
+});
+
+/* ── legacy modal stubs (kept so older references don't throw) ── */
+function openHeightModal() {}
+function closeHeightModal() {}
+function applyHeight() {}
+function useHcbValue() {}
+function switchHcbTab() {}
+function convertModalFtIn() {}
+function convertInchOnly() {}
 
 // ── MEASURE MODAL ──
 let _measureTarget = null;
@@ -1852,7 +2436,7 @@ function validate() {
     {id:'fg-name',    inp:'inp-name',    check: v=>v.trim().length>0},
     {id:'fg-age',     inp:'inp-age',     check: v=>v>=5&&v<=110},
     {id:'fg-gender',  inp:'inp-gender',  check: v=>v!=''},
-    {id:'fg-height',  inp:'inp-height',  check: v=>v>=100&&v<=250},
+    {id:'fg-height',  inp:'inp-height',  check: v=>v>=50&&v<=300},
     {id:'fg-weight',  inp:'inp-weight',  check: v=>v>=20&&v<=300},
     {id:'fg-activity',inp:'inp-activity',check: v=>v!=''},
     {id:'fg-waist',   inp:'inp-waist',   check: v=>v>=40&&v<=200},
@@ -2199,7 +2783,7 @@ function removeCondition(v){ selectedConditions.delete(v); const cb=document.que
 document.getElementById('inp-gender').addEventListener('change', function () {
   const femaleRow = document.getElementById('female-extra-row');
   femaleRow.style.display = this.value === 'Female' ? 'grid' : 'none';
-  if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; document.getElementById('inp-preg').value=''; }
+  if(this.value !== 'Female'){ document.getElementById('inp-hip').value=''; var hipRaw=document.getElementById('hip-raw-input'); if(hipRaw) hipRaw.value=''; document.getElementById('inp-preg').value=''; }
 });
 
 // Activity hint update
@@ -2591,6 +3175,10 @@ window.openMeasureModal = openMeasureModal;
 window.closeMeasureModal = closeMeasureModal;
 window.convertMeasureInch = convertMeasureInch;
 window.applyMeasure = applyMeasure;
+window.toggleHeightUnitDropdown = toggleHeightUnitDropdown;
+window.selectHeightUnit = selectHeightUnit;
+window.onHeightCmInput = onHeightCmInput;
+window.onHeightFtInInput = onHeightFtInInput;
 
 // ── SESSION PERSISTENCE ──
 const SS_KEY = 'nutriplan_draft';
@@ -2631,8 +3219,24 @@ function restoreDraft() {
 
   const g = id => document.getElementById(id);
   const setVal = (id, v) => { if(g(id) && v !== undefined && v !== null) g(id).value = v; };
-  setVal('inp-name', draft.name); setVal('inp-age', draft.age); setVal('inp-height', draft.height); setVal('inp-weight', draft.weight);
-  setVal('inp-waist', draft.waist); setVal('inp-hip', draft.hip); setVal('inp-neck', draft.neck); setVal('inp-phone', draft.phone);
+  setVal('inp-name', draft.name); setVal('inp-age', draft.age);
+  // Restore height into cm field (hidden field holds cm always)
+  if (draft.height) {
+    document.getElementById('inp-height').value = draft.height;
+    document.getElementById('inp-height-cm').value = Math.round(draft.height);
+  }
+  setVal('inp-weight', draft.weight);
+  // Restore waist/neck/hip into hidden fields + raw inputs
+  ['waist','neck','hip'].forEach(function(m) {
+    var cm = draft[m];
+    if (cm !== undefined && cm !== null && cm !== '') {
+      var raw = document.getElementById(m+'-raw-input');
+      var hidden = document.getElementById('inp-'+m);
+      if (raw) raw.value = cm;
+      if (hidden) hidden.value = cm;
+    }
+  });
+  setVal('inp-phone', draft.phone);
   setVal('inp-email', draft.email); setVal('inp-allergies', draft.allergies); setVal('inp-dislikes', draft.dislikes); setVal('inp-comments', draft.comments);
   setVal('eat-window-val', draft.eatWindow); setVal('plan-other-name', draft.planOtherName); setVal('plan-other-relation', draft.planOtherRelation);
 
